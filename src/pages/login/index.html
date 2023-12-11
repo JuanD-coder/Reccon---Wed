@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/7db13a2d0e.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/src/styles/main.css">
+    <title>Reccon Wed</title>
+</head>
+
+<body>
+
+    <div class="container" id="container">
+      <div class="form-container sign-up">
+        <form>
+            <h1>Create Account</h1>
+            <span>Or use your email for registeration</span>
+            <input type="text" placeholder="Name">
+            <input type="email" placeholder="Email">
+            <input type="password" placeholder="Password">
+            <button>Sign Up</button>
+        </form>
+      </div>
+      <div class="form-container sign-in">
+        <form id="sigup-form">
+            <h1>Iniciar Sesión</h1>
+            <img src="../../assets/images/logo/reccon_LOGO.png" width="85px">
+            <span> <b>Recolección y Contabilidad</b> </span>
+
+            <i class="fa-solid fa-envelope" id="gmail_icon"> </i>
+            <input type="email" id="sigup-email" placeholder="E-mail" required> 
+
+            <i class="fa-solid fa-lock" id="password_icon"></i>
+            <input type="password" id="sigup-password" placeholder="Contraseña" required>
+
+            <a href="#">¿ Olvidaste tu contraseña ?</a>
+            <button>Iniciar Sesión</button>
+        </form>
+      </div>
+
+      <!-- Mensajes del Login -->
+
+      <div class="toggle-container">
+        <div class="toggle">
+          <div class="toggle-panel toggle-left">
+            <h1>Welcome back!</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur enim labore, porro, excepturi unde ipsum numquam dolores dolore beatae cum perspiciatis sint, eius corrupti asperiores illum optio animi consectetur nobis?</p>
+            <button class="hidden" id="login"> Iniciar Sesión </button>
+          </div>
+
+          <div class="toggle-panel toggle-right">
+            <h1>¡Bienvenido a Reccon Wed!</h1>
+            <p>"Supervisa la recolección de tus lotes cafeteros desde cualquier dispositivo en cualquier lugar. 
+               Con nuestra plataforma, tendrás acceso a la gestión y seguimiento de la recolección de café, 
+               permitiéndote estar al tanto de todo el proceso sin importar dónde te encuentres."</p>
+            <button class="hidden" id="register"> Acerca de nosotros </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./main.js"></script>
+    <script src="/dist/bundle.js"></script>
+
+</body>
+</html>
