@@ -6,7 +6,7 @@
     <script src="https://kit.fontawesome.com/7db13a2d0e.js" crossorigin="anonymous"></script>
     <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="/src/styles/main.css">
-    <script src="/src/index.js" type="module"></script>
+    <!-- <script src="/src/firebase/index.js" type="module"></script> -->
     <title>Reccon Wed</title>
 </head>
 
@@ -30,10 +30,10 @@
             <span> <b>Recolección y Contabilidad</b> </span>
 
             <i class="fa-solid fa-envelope" id="gmail_icon"> </i>
-            <input type="email" id="sigup-email" placeholder="E-mail" required> 
+            <input type="email" name="email" id="sigup-email" placeholder="E-mail" required> 
 
             <i class="fa-solid fa-lock" id="password_icon"></i>
-            <input type="password" id="sigup-password" placeholder="Contraseña" required>
+            <input type="password" name="password" id="sigup-password" placeholder="Contraseña" required>
 
             <a href="#">¿ Olvidaste tu contraseña ?</a>
             <button>Iniciar Sesión</button>
@@ -62,6 +62,7 @@
     </div>   
     
     <script src="./main.js" ></script>
+    <script src="/dist/bundle.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,20 @@
+{
+  "name": "reccon-wed",
+  "version": "1.0.0",
+  "description": "Pagina wed para que ver o monitorear los datos que se añaden a la aplicacion de RECCON",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "firebase": "^10.7.1"
+  }
+}
