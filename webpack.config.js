@@ -3,10 +3,13 @@ const path = require('path');
 module.exports = {
   mode: 'development',
   devtool: 'eval-source-map',
-  entry: './src/firebase/index.js',
+  entry: {
+    index: './src/pages/login/index.js',
+    home: './src/pages/home/user-home.js'
+  },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist')
   },
   watch: true
 };

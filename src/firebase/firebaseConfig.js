@@ -1,8 +1,5 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
-import '../pages/login/sing-up' // Autenticacion
 
 const firebaseConfig = {
   apiKey: "AIzaSyCdQvgdfBV1MESRPFeXJokJBAA1ZlaTcxk",
@@ -16,13 +13,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-export const auth = getAuth(app);
 
-console.log("hello from FireBase conecct")
-
-
+console.log("Se conecto con FireBase")
 
 
 
