@@ -1,81 +1,95 @@
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { app } from "../../firebase/firebaseConfig";
+import { getUserData } from "./getUserData";
 
 export const auth = getAuth(app);
 
 /* ID HTML */
-const singnUpForm = document.querySelector("#sigup-form");
+const signUpForm = document.querySelector("#sigup-form");
+const errorMessage = document.getElementById("error-message");
 
 /* User Autentication */
-if (singnUpForm) {
-  singnUpForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+const handleSignIn = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password)
+    const user = userCredential.user;
 
-    const email = singnUpForm['sigup-email'].value //document.querySelector("#sigup-email").value;
-    const password = singnUpForm['sigup-password'].value; //document.querySelector("#sigup-password").value;
+    //window.location.href = "../home/user-home.html";
+    return user;
 
-    await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("user logge in: ", user);
-        window.location.href = "../home/user-home.html";
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+  } catch (error) {
+    const errorCode = error.code;
+    const errorMessageText = handleAuthError(errorCode);
+    errorMessage.style.display = "block";
+    return errorMessage.textContent = errorMessageText;
+  }
+};
 
-        switch (errorCode) {
-          case 'auth/invalid-credential':
-            console.log("COrreo o COntraseña es incorrecta")
-            break;
+/* Manejar Errores */
+const handleAuthError = (error) => {
 
-          case 'auth/invalid-email':
-            console.log("Email Invalido");
-            break;
+  switch (error) {
+    case 'auth/invalid-credential':
+      return "Correo o Contraseña es incorrecta";
 
-          case 'auth/wrong-password':
-            console.log("contraseña incorrecta");
-            break;
+    case 'auth/invalid-email':
+      return "Email Invalido"
 
-          case 'auth/user-disabled':
-            console.log("Cuenta baneada");
-            break;
+    case 'auth/wrong-password':
+      return "Contraseña incorrecta"
 
-          case 'auth/user-not-found':
-            console.log("No se Encontro el email");
-            break;
+    case 'auth/user-disabled':
+      return "Cuenta baneada";
 
-          case 'auth/network-request-failed':
-            console.log("Problema de conexion");
-            break;
+    case 'auth/user-not-found':
+      return "No se Encontro el email";
 
-          case 'auth/too-many-requests':
-            console.log("Muchos intentos fallidos");
-            break;
+    case 'auth/network-request-failed':
+      return "Problema de conexion";
 
-          default:
-            console.log(`Error: ${errorCode}, Mensaje: ${errorMessage}`);
-        }
-      });
+    case 'auth/too-many-requests':
+      return "Muchos intentos fallidos";
 
+    default:
+      return `Error: ${errorCode}, Mensaje: ${errorMessage}`;
+  }
+};
+
+/* funcion para verificar el estado de autenticacion */
+const checkAuthState = async () => {
+  const user = await new Promise((resolve) => {
+    onAuthStateChanged(auth, (user) => {
+      resolve(user);
+    });
   });
-} else console.log("No se encontro el id");
 
-/* Verificacion de Inicio de seseion */
-await onAuthStateChanged(auth, async (user) => {
-  let isLoggedIn = user !== null;
-  let currentPage = window.location.pathname.split('/').pop();
+  const isLoggedIn = user !== null;
+  const currentPage = window.location.pathname.split('/').pop();
 
   if (isLoggedIn && currentPage !== 'user-home.html') {
     const uid = user.uid;
+    console.log("Usuario encontrado:", uid);
+    await getUserData(uid);
 
-    console.log("Usuario encontrado: ", user);
     window.location.href = "../home/user-home.html";
   }
 
   if (!isLoggedIn && currentPage !== 'index.html') {
-    console.log("usuario no encontrado o autenticado");
+    console.log("Usuario no autenticado o no encontrado");
     window.location.href = "../login/index.html";
   }
+};
 
-});
+/* Manejar envio del Login */
+if (signUpForm) {
+  signUpForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = signUpForm['sigup-email'].value //document.querySelector("#sigup-email").value;
+    const password = signUpForm['sigup-password'].value; //document.querySelector("#sigup-password").value;
+
+    await handleSignIn(email, password);
+  });
+}
+
+/* Verificar el estado del usuario */
+checkAuthState();

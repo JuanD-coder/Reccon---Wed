@@ -1,0 +1,26 @@
+@import '../assets/colors/colors.css';
+
+@font-face {
+  font-family: 'Confortaa';
+  src: url('../assets/fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
+}
+
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Confortaa', sans-serif;
+}
+
+body{
+    background-image: url(../assets/images/background_main.jpeg);
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+  }

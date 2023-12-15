@@ -95,24 +95,6 @@ body{
   outline: none;
 }
 
-#gmail_icon {
-  position: absolute;
-  margin-bottom: 15px; 
-  display: flex;
-  right: 55px; 
-  top: 53.5%;
-  transform: translateY(-50%);
-}
-
-#password_icon {
-  position: absolute;
-  margin-bottom: 15px; 
-  display: flex;
-  right: 55px; 
-  top: 62.5%;
-  transform: translateY(-50%);
-}
-
 .form-container {
   position: absolute;
   top: 0;
@@ -135,6 +117,22 @@ body{
   width: 50%;
   opacity: 0;
   z-index: 1;
+}
+
+.input-with-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.input-with-icon input {
+  padding-right: 75px; /* Espacio para el ícono */
+}
+
+.input-with-icon i {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Ajusta la posición horizontal del ícono */
+  transform: translateY(-50%);
 }
 
 .container.active .sign-up{
