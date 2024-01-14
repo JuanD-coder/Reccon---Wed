@@ -5,22 +5,191 @@
   src: url('../assets/fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
 }
 
-*{
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
-   font-family: 'Confortaa', sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Confortaa', sans-serif;
+  text-align: center;
 }
 
-body{
-    background-image: url(../assets/images/background_main.jpeg);
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    backdrop-filter: blur(3px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100vh;
-  }
+body {
+  background-image: url(../assets/images/background_main.jpeg);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh; /* desenfocar imagen */
+  color: #ffff;
+  overflow: hidden;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Botom de cerrar sesion */
+#singOut {
+  background-color: var(--color-cinnabar);
+  color: #ffff;
+  font-size: 12px;
+  padding: 12px 30px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Confortaa', sans-serif;
+  position: absolute;
+  bottom: 10px; /* Ajusta la posición vertical */
+  right: 4%;
+}
+
+.column-left {
+  flex-basis: 23%; /* tamaño de la columna */
+  padding-left: 20px; /* Espacio a la izquierda */
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.selection-card{
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card {
+  width: 80%;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  background-color: var(--color-white);
+  border-radius: 10px;
+}
+
+.card-header {
+  padding: 10px;
+  width: 100%; /* Ancho del título */
+  color: var(--color-white);
+}
+
+.card-body {
+  padding: 10px;
+  font-weight: bold;
+  color: black;
+}
+
+.recoleccion-header {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px; /* Esquinas redondeadas */
+  background-color: #ff0000; /* Color de fondo rojo */
+}
+
+.informe-header {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px; /* Esquinas redondeadas */
+  background-color: green;
+}
+
+.column-center {
+  flex-basis: 40%; /* Tamaño de cada columna */
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 25px 10px 10px 10px;
+}
+
+.scroll-bar {
+  padding-right: 12px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.scroll-bar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.753);
+  border-radius: 10px;
+}
+
+.recolectors {
+  width: 320px;
+  background: transparent;
+}
+
+.recolection-header {
+  display: flex;
+  padding: 5px;
+  flex-direction: row;
+  align-items: center;
+  background-color: #ff0000;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px; /* Esquinas redondeadas */
+}
+
+.recolection-body {
+  padding: 0px;
+  display: flex;
+  color: white;
+  flex-direction: row;
+  align-items: center;
+  background-color: #ff0000;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.recolection-body p {
+  font-size: 20px;
+  margin-top: 12px;
+}
+
+.card-left {
+  width: 50%;
+  padding: 15px 15px 15px 5px;
+  color: black;
+  margin-right: 10px;
+  background-color: white;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  border-bottom-left-radius: 9px;
+}
+
+.column-right {
+  flex-basis: 22%; /* Tamaño de cada columna */
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 20px;
+  margin: 10px;
+}
+
+.name_recolector {
+  width: 38px;
+  height: 38px;
+  margin-right: 8px;
+}
+
+.price {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border: #ff0000 solid 1px;
+  border-radius: 20px;
+}

@@ -1,6 +1,7 @@
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+
 import { app } from "../../firebase/firebaseConfig";
-import { getUserData } from "./getUserData";
+import { getUserData } from "../../components/getUserData";
 
 export const auth = getAuth(app);
 
@@ -14,12 +15,13 @@ const handleSignIn = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
     const user = userCredential.user;
 
-    //window.location.href = "../home/user-home.html";
+    window.location.href = "../home/user-home.html";
     return user;
 
   } catch (error) {
     const errorCode = error.code;
     const errorMessageText = handleAuthError(errorCode);
+    
     errorMessage.style.display = "block";
     return errorMessage.textContent = errorMessageText;
   }
@@ -56,7 +58,7 @@ const handleAuthError = (error) => {
 };
 
 /* funcion para verificar el estado de autenticacion */
-const checkAuthState = async () => {
+export const checkAuthState = async () => {
   const user = await new Promise((resolve) => {
     onAuthStateChanged(auth, (user) => {
       resolve(user);
@@ -78,9 +80,11 @@ const checkAuthState = async () => {
     console.log("Usuario no autenticado o no encontrado");
     window.location.href = "../login/index.html";
   }
+
+  return user.uid;
 };
 
-/* Manejar envio del Login */
+/* Manejar envio y evento del Login */
 if (signUpForm) {
   signUpForm.addEventListener("submit", async (e) => {
     e.preventDefault();
