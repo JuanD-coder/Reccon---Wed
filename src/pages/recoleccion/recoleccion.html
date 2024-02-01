@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/src/styles/navegation-bar.css">
+  <link rel="stylesheet" href="/src/styles/recoleccion.css">
+  <title>Recolección</title>
+</head>
+
+<body>
+  <header>
+    <div class="navbar">
+      <div class="logo"><a href="#">Bienvenido</a></div>
+      <ul class="links">
+        <li><a href="../home/user-home.html">Home</a></li>
+        <li><a href="../informes/informes.html">Informes</a></li>
+        <li><a href="Ayuda">Ayuda</a></li>
+      </ul>
+      <a href="#" class="singOut" id="singOut">Cerrar Sesion</a>
+      <div class="toggle-btn" id="toggle-btn">
+        <i class="fa-solid fa-bars" id="toggle-btn i"></i>
+      </div>
+    </div>
+
+    <div class="dropdown-menu" id="dropdown-menu">
+      <li><a href="../home/user-home.html">Inicio/a></li>
+      <li><a href="../informes/informes.html">Informes</a></li>
+      <li><a href="Ayuda">Ayuda</a></li>
+      <li><a href="#" class="singOut" id="singOut">Cerrar Sesion</a></li>
+    </div>
+  </header>
+
+  <main>
+    <section class="container">
+
+      <div class="colum-left">
+        <h1>Recolectores</h1>
+        <div class="scroll-bar">
+          <div class="card recolectors" id="cardRecolector">
+            <p> Recolectores registrados</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="colum-rigth">
+        <div id="header" class="title-information">
+          <h1 id="titleName">Informacion del recolector "Selecionado"</h1>
+          <h1 id="titleHarverst">Total Recolectado: 0 KG</h1>
+          <h1 id="titlePay">Total a Pagar: $0 </h1>
+        </div>
+
+        <div id="select-recolector" class="select-recolector">
+          <div class="card-info">
+            <img id="imgRecolection" src="/src/assets/images/icons/ic_recolector.svg" alt="recolector">
+            <p id="txtNotReclector">Selecione un recolector para mas Información</p>
+          </div>
+        </div>
+
+        <div class="scroll-bar">
+          <div id="information-recolector" class="information-recolector">
+            <!-- Contenido -->
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="/dist/recoleccion.bundle.js" type="module"></script>
+
+</body>
+
+</html>

@@ -68,7 +68,7 @@ export const checkAuthState = async () => {
   const isLoggedIn = user !== null;
   const currentPage = window.location.pathname.split('/').pop();
 
-  if (isLoggedIn && currentPage !== 'user-home.html') {
+  if (isLoggedIn && currentPage == 'index.html') {
     const uid = user.uid;
     console.log("Usuario encontrado:", uid);
     await getUserData(uid);

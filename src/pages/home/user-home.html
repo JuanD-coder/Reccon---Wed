@@ -2,110 +2,91 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/src/styles/user-home.css">
-    <link rel="stylesheet" href="/src/styles/calendar.css"> <!-- Estilos del calendario -->
-    <title>Inicio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/src/styles/navegation-bar.css"> <!-- barra de navegacion -->
+  <link rel="stylesheet" href="/src/styles/user-home.css">
+  <title>Inicio</title>
 </head>
 
 <body>
-    <div class="container">
-
-        <div class="column-left">
-            <div class="calendar">
-                <div class="calendar-header">
-                  <span class="month-picker" id="month-picker"> May </span>
-                  <div class="year-picker" id="year-picker">
-                    <span class="year-change" id="pre-year">
-                      <pre><</pre>
-                    </span>
-                    <span id="year">2020 </span>
-                    <span class="year-change" id="next-year">
-                      <pre>></pre>
-                    </span>
-                  </div>
-                </div>
-         
-                <div class="calendar-body">
-                  <div class="calendar-week-days">
-                    <div>Dom</div>
-                    <div>Lun</div>
-                    <div>Mar</div>
-                    <div>Mie</div>
-                    <div>Jue</div>
-                    <div>Vie</div>
-                    <div>Sab</div>
-                  </div>
-                  <div class="calendar-days">
-                  </div>
-                </div>
-                <div class="calendar-footer">
-                </div>
-                <div class="date-time-formate">
-                  <div class="day-text-formate">TODAY</div>
-                  <div class="date-time-value">
-                    <div class="time-formate">02:51:20</div>
-                    <div class="date-formate">23 - july - 2022</div>
-                  </div>
-                </div>
-                <div class="month-list"></div>
-              </div>
-            <div class="selection-card">
-                <h1 id="userName"> Paso </h1>
-                <div class="card">
-                    <div class="card-header recoleccion-header">
-                        <h2>Recolección</h2>
-                    </div>
-                    <div class="card-body">
-                        Registra cada detalle y mantén un control preciso de tu actividad cafetera. ¡Optimiza tus
-                        procesos y
-                        maximiza tu productividad!
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header informe-header">
-                        <h2>Informe</h2>
-                    </div>
-                    <div class="card-body">
-                        Obtén una visión completa de tu producción cafetera y toma decisiones informadas para el éxito
-                        de tu
-                        negocio.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="column-center">
-            <div class="scroll-bar">
-                <h1>Recolectores</h1>
-                <div class="card recolectors" id="cardRecolector">
-                    <p> Recolectores registrados</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="column-right">
-            <h1>Precios actuales</h1>
-            <div class="price">
-                <img src="/src/assets/images/icons/ic_alimentacion.svg" alt="alimentación" width="50px">
-                <h1 id="yesFeeding">$0</h1>
-                <h2>Precio por kilo con alimentación</h2>
-            </div>
-            <div class="price">
-                <img src="/src/assets/images/icons/ic_no_alimentacion.svg" alt="ic_no_alimentacion" width="50px">
-                <h1 id="notFeeding">$0</h1>
-                <h2>Precio por kilo sin alimentación</h2>
-            </div>
-        </div>
-
-        <button id="singOut"> Cerrar Sesion </button>
+  <header>
+    <div class="navbar">
+      <div class="logo"><a href="#">Bienvenido</a></div>
+      <ul class="links">
+        <li><a href="./user-home.html">Inicio</a></li>
+        <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>
+        <li><a href="../informes/informes.html">Informes</a></li>
+        <li><a href="Ayuda">Ayuda</a></li>
+      </ul>
+      <a href="#" class="singOut" id="singOut">Cerrar Sesion</a>
+      <div class="toggle-btn" id="toggle-btn">
+        <i class="fa-solid fa-bars" id="toggle-btn i"></i>
+      </div>
     </div>
 
-    <script src="/dist/home.bundle.js" type="module"></script>
-    <script src="/src/components/calendar.js"></script>
+    <div class="dropdown-menu" id="dropdown-menu">
+      <li><a href="./user-home.html">Inicio</a></li>
+      <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>
+      <li><a href="../informes/informes.html">Informes</a></li>
+      <li><a href="Ayuda">Ayuda</a></li>
+      <li><a href="#" class="singOut" id="singOut">Cerrar Sesión</a></li>
+    </div>
+  </header>
 
+  <main>
+    <section class="container">
+      <div class="column-left">
+        <h1 id="userName"> Nombre del lote </h1>
+        <div id="card-recoleccion" class="card">
+          <div class="card-header recoleccion-header">
+            <h2>Recolección</h2>
+          </div>
+          <div class="card-body">
+            Registra cada detalle y mantén un control preciso de tu actividad cafetera. ¡Optimiza tus
+            procesos y
+            maximiza tu productividad!
+          </div>
+        </div>
+
+        <div id="card-informe" class="card">
+          <div class="card-header informe-header">
+            <h2>Informe</h2>
+          </div>
+          <div class="card-body">
+            Obtén una visión completa de tu producción cafetera y toma decisiones informadas para el éxito
+            de tu
+            negocio.
+          </div>
+        </div>
+      </div>
+
+      <div class="column-center">
+        <h1>Lotes</h1>
+        <img src="/src/assets/images/logo/reccon_pdf_white.png" alt="Logo" width="300px">
+        <p>Nombre de todos los lotes</p>
+        <div id="column-center"></div>
+      </div>
+
+      <div class="column-right">
+        <h1>Precios actuales</h1>
+        <div class="price">
+          <img src="/src/assets/images/icons/ic_alimentacion.svg" alt="alimentación" width="50px">
+          <h1 id="yesFeeding">$0</h1>
+          <h2>Precio por kilo con alimentación</h2>
+        </div>
+        <div class="price">
+          <img src="/src/assets/images/icons/ic_no_alimentacion.svg" alt="ic_no_alimentacion" width="50px">
+          <h1 id="notFeeding">$0</h1>
+          <h2>Precio por kilo sin alimentación</h2>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/dist/home.bundle.js" type="module"></script>
+  <script src="https://kit.fontawesome.com/7db13a2d0e.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -1,319 +1,320 @@
 @import '../assets/colors/colors.css';
 
 .calendar {
-    width: 370px;
-    height: 610px;
-    background-color: rgba(255, 255, 255, 0.856);
-    border-radius: 25px;
-    overflow: hidden;
-    padding: 20px 50px 0px 50px;
+  width: max-content;
+  height: 660px;
+  background-color: rgba(255, 255, 255, 0.856);
+  border-radius: 25px;
+  overflow: hidden;
+  padding: 20px 50px 0px 50px;
+  margin-bottom: 10px;
 }
 
 .calendar {
-    box-shadow: var(--shadow);
-    overflow-y: auto;
+  box-shadow: var(--shadow);
+  overflow-y: auto;
 }
 
 .calendar::-webkit-scrollbar {
-    width: 4px;
+  width: 4px;
 }
 
 .calendar-header {
-    background: var(--color-hippie-green);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;
-    color: var(--white);
-    padding: 10px;
-    border-radius: 2.5px;
+  background: var(--color-hippie-green);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  color: var(--white);
+  padding: 10px;
+  border-radius: 2.5px;
 }
 
 .calendar-body {
-    pad: 10px;
+  pad: 10px;
 }
 
 .calendar-week-days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    font-weight: 600;
-    cursor: pointer;
-    color: rgb(17, 17, 17);
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-weight: 600;
+  cursor: pointer;
+  color: rgb(17, 17, 17);
 }
 
 .calendar-week-days div:hover {
-    color: black;
-    transform: scale(1.2);
-    transition: all .2s ease-in-out;
+  color: black;
+  transform: scale(1.2);
+  transition: all .2s ease-in-out;
 }
 
 .calendar-week-days div {
-    display: grid;
-    place-items: center;
-    color: var(--bg-second);
-    height: 50px;
+  display: grid;
+  place-items: center;
+  color: var(--bg-second);
+  height: 50px;
 }
 
 .calendar-days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 2px;
-    color: black;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  color: black;
 }
 
 .calendar-days div {
-    width: 37px;
-    height: 33px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    position: relative;
-    cursor: pointer;
-    animation: to-top 1s forwards;
+  width: 37px;
+  height: 33px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  position: relative;
+  cursor: pointer;
+  animation: to-top 1s forwards;
 }
 
 .month-picker {
-    padding: 5px 10px;
-    border-radius: 10px;
-    cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .month-picker:hover {
-    background-color: var(--color-hover);
+  background-color: var(--color-hover);
 }
 
 .month-picker:hover {
-    color: var(--color-txt);
+  color: var(--color-txt);
 }
 
 .year-picker {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .year-change {
-    height: 30px;
-    width: 30px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    margin: 0px 10px;
-    cursor: pointer;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin: 0px 10px;
+  cursor: pointer;
 }
 
 .year-change:hover {
-    background-color: var(--light-btn);
-    transition: all .2s ease-in-out;
-    transform: scale(1.12);
+  background-color: var(--light-btn);
+  transition: all .2s ease-in-out;
+  transform: scale(1.12);
 }
 
 .year-change:hover pre {
-    color: var(--bg-body);
+  color: var(--bg-body);
 }
 
 .calendar-footer {
-    padding: 10px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 #year:hover {
-    cursor: pointer;
-    transform: scale(1.2);
-    transition: all 0.2 ease-in-out;
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: all 0.2 ease-in-out;
 }
 
 .calendar-days div span {
-    position: absolute;
+  position: absolute;
 }
 
 .calendar-days div:hover {
-    transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
-    background-color: var(--color-Ligth-Green);
-    border-radius: 20%;
-    color: var(--dark-text);
+  transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+  background-color: var(--color-Ligth-Green);
+  border-radius: 20%;
+  color: var(--dark-text);
 }
 
 .calendar-days div.current-date {
-    color: var(--dark-text);
-    background-color: var(--color-hippie-green);
-    border-radius: 20%;
+  color: var(--dark-text);
+  background-color: var(--color-hippie-green);
+  border-radius: 20%;
 }
 
 .month-list {
-    position: relative;
-    left: 0;
-    top: -18px;
-    background-color: #fcf1f1;
-    color: var(--light-text);
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    gap: 5px;
-    border-radius: 20px;
+  position: relative;
+  left: 0;
+  top: -18px;
+  background-color: #fcf1f1;
+  color: var(--light-text);
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 5px;
+  border-radius: 20px;
 }
 
 .month-list>div {
-    display: grid;
-    place-content: center;
-    margin: 5px 10px;
-    transition: all 0.2s ease-in-out;
+  display: grid;
+  place-content: center;
+  margin: 5px 10px;
+  transition: all 0.2s ease-in-out;
 }
 
 .month-list>div>div {
-    border-radius: 15px;
-    padding: 10px;
-    cursor: pointer;
+  border-radius: 15px;
+  padding: 10px;
+  cursor: pointer;
 }
 
 .month-list>div>div:hover {
-    background-color: var(--color-hippie-green);
-    color: var(--dark-text);
-    transform: scale(0.9);
-    transition: all 0.2s ease-in-out;
+  background-color: var(--color-hippie-green);
+  color: var(--dark-text);
+  transform: scale(0.9);
+  transition: all 0.2s ease-in-out;
 }
 
 .month-list.show {
-    visibility: visible;
-    pointer-events: visible;
-    transition: 0.6s ease-in-out;
-    animation: to-left .71s forwards;
+  visibility: visible;
+  pointer-events: visible;
+  transition: 0.6s ease-in-out;
+  animation: to-left .71s forwards;
 }
 
 .month-list.hideonce {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .month-list.hide {
-    animation: to-right 1s forwards;
-    visibility: none;
-    pointer-events: none;
+  animation: to-right 1s forwards;
+  visibility: none;
+  pointer-events: none;
 }
 
 .date-time-formate {
-    width: max-content;
-    height: max-content;
-    font-family: Dubai Light, Century Gothic;
-    position: relative;
-    display: inline-table;
-    top: 60px;
-    justify-content: center;
-    color: black;
+  width: max-content;
+  height: max-content;
+  font-family: Dubai Light, Century Gothic;
+  position: relative;
+  display: inline-table;
+  top: 90px;
+  justify-content: center;
+  color: black;
 }
 
 .day-text-formate {
-    font-family: Microsoft JhengHei UI;
-    font-size: 1.4rem;
-    padding-right: 5%;
-    border-right: 3px solid var(--color-hippie-green);
-    position: absolute;
+  font-family: Microsoft JhengHei UI;
+  font-size: 1.4rem;
+  padding-right: 5%;
+  border-right: 3px solid var(--color-hippie-green);
+  position: absolute;
 }
 
 .date-time-value {
-    display: flex;
-    height: max-content;
-    width: max-content;
-    align-items: center;
-    flex-direction: column;
-    justify-content: flex-start;
-    top: -80px;
-    text-align: center;
+  display: flex;
+  height: max-content;
+  width: max-content;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 1px;
+  text-align: center;
 }
 
 .time-formate {
-    font-size: 1.3rem;
-    margin-left: 105px;
-    margin-top: 2px;
+  font-size: 1.3rem;
+  margin-left: 105px;
+  margin-top: 2px;
 }
 
 .time-formate.hideTime {
-    animation: hidetime 1.5s forwards;
+  animation: hidetime 1.5s forwards;
 }
 
 .day-text-formate.hidetime {
-    animation: hidetime 1.5s forwards;
+  animation: hidetime 1.5s forwards;
 }
 
 .date-formate.hideTime {
-    animation: hidetime 1.5s forwards;
+  animation: hidetime 1.5s forwards;
 }
 
 .day-text-formate.showtime {
-    animation: showtime 1s forwards;
+  animation: showtime 1s forwards;
 }
 
 .time-formate.showtime {
-    animation: showtime 1s forwards;
+  animation: showtime 1s forwards;
 }
 
 .date-formate.showtime {
-    animation: showtime 1s forwards;
+  animation: showtime 1s forwards;
 }
 
 @keyframes to-top {
-    0% {
-        transform: translateY(0);
-        opacity: 0;
-    }
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
 
-    100% {
-        transform: translateY(100%);
-        opacity: 1;
-    }
+  100% {
+    transform: translateY(100%);
+    opacity: 1;
+  }
 }
 
 @keyframes to-left {
-    0% {
-        transform: translatex(230%);
-        opacity: 1;
-    }
+  0% {
+    transform: translatex(230%);
+    opacity: 1;
+  }
 
-    100% {
-        transform: translatex(0);
-        opacity: 1;
-    }
+  100% {
+    transform: translatex(0);
+    opacity: 1;
+  }
 }
 
 @keyframes to-right {
-    10% {
-        transform: translatex(0);
-        opacity: 1;
-    }
+  10% {
+    transform: translatex(0);
+    opacity: 1;
+  }
 
-    100% {
-        transform: translatex(-150%);
-        opacity: 1;
-    }
+  100% {
+    transform: translatex(-150%);
+    opacity: 1;
+  }
 }
 
 @keyframes showtime {
-    0% {
-        transform: translatex(250%);
-        opacity: 1;
-    }
+  0% {
+    transform: translatex(250%);
+    opacity: 1;
+  }
 
-    100% {
-        transform: translatex(0%);
-        opacity: 1;
-    }
+  100% {
+    transform: translatex(0%);
+    opacity: 1;
+  }
 }
 
 @keyframes hidetime {
-    0% {
-        transform: translatex(0%);
-        opacity: 1;
-    }
+  0% {
+    transform: translatex(0%);
+    opacity: 1;
+  }
 
-    100% {
-        transform: translatex(-370%);
-        opacity: 1;
-    }
+  100% {
+    transform: translatex(-370%);
+    opacity: 1;
+  }
 }
 
 @media (max-width:375px) {
-    .month-list>div {
+  .month-list>div {
 
-        margin: 5px 0px;
-    }
+    margin: 5px 0px;
+  }
 }

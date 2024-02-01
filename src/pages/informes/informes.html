@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/src/styles/informes.css">
+    <link rel="stylesheet" href="/src/styles/calendar.css"> <!-- Estilos del calendario -->
+    <link rel="stylesheet" href="/src/styles/navegation-bar.css">
+    <title>Informes</title>
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+          <div class="logo"><a href="#">Bienvenido</a></div>
+          <ul class="links">
+            <li><a href="../home/user-home.html">Inicio</a></li>
+            <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>
+            <li><a href="Ayuda">Ayuda</a></li>
+          </ul>
+          <a href="#" class="singOut" id="singOut">Cerrar Sesión</a>
+          <div class="toggle-btn" id="toggle-btn">
+            <i class="fa-solid fa-bars" id="toggle-btn i"></i>
+          </div>
+        </div>
+    
+        <div class="dropdown-menu" id="dropdown-menu">
+          <<li><a href="../home/user-home.html">Inicio</a></li>
+          <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>>
+          <li><a href="Ayuda">Ayuda</a></li>
+          <li><a href="#" class="singOut" id="singOut">Cerrar Sesión</a></li>
+        </div>
+      </header> 
+
+    <div class="container">
+        <div class="column-left">
+            <div class="calendar">
+                <div class="calendar-header">
+                    <span class="month-picker" id="month-picker"> May </span>
+                    <div class="year-picker" id="year-picker">
+                        <span class="year-change" id="pre-year">
+                            <pre><</pre>
+                        </span>
+                        <span id="year">2020 </span>
+                        <span class="year-change" id="next-year">
+                            <pre>></pre>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="calendar-body">
+                    <div class="calendar-week-days">
+                        <div>Dom</div>
+                        <div>Lun</div>
+                        <div>Mar</div>
+                        <div>Mie</div>
+                        <div>Jue</div>
+                        <div>Vie</div>
+                        <div>Sab</div>
+                    </div>
+                    <div class="calendar-days">
+                    </div>
+                </div>
+                <div class="calendar-footer">
+                </div>
+                <div class="date-time-formate">
+                    <div class="day-text-formate">TODAY</div>
+                    <div class="date-time-value">
+                        <div class="time-formate">02:51:20</div>
+                        <div class="date-formate">23 - july - 2022</div>
+                    </div>
+                </div>
+                <div class="month-list"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="/src/components/calendar.js"></script>
+    <script src="/dist/informes.bundle.js" type="module"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+@import '../assets/colors/colors.css';
+
+@font-face {
+  font-family: 'Confortaa';
+  src: url('../assets/fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Confortaa', sans-serif;
+  text-align: center;
+}
+
+body {
+  background-image: url(../assets/images/background_main.jpeg);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh; /* desenfocar imagen */
+  color: #ffff;
+  overflow: hidden;
+}
+
+.container {
+  height: calc(100vh - 60px);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.column-left {
+    flex-basis: 23%; /* tamaño de la columna */
+    padding-left: 20px; /* Espacio a la izquierda */
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }

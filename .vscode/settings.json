@@ -3,7 +3,7 @@
     "doki.statusbar.name": "Miku",
     "doki.sticker.css": "z-index:100;background-position:105% 101%; background-size: 300px;",
     "workbench.preferredDarkColorTheme": "Default Dark Modern",
-    "workbench.iconTheme": "material-icon-theme",
+    "workbench.iconTheme": "gruvbox-material-icons",
     "doki.background.path": "",
     "doki.wallpaper.path": "/home/bocchi/Imágenes/Wallpapers/rika.jpp",
     "doki.wallpaper.enabled": true

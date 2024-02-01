@@ -1,26 +1,46 @@
 import { signOut } from "firebase/auth";
 
 import { auth, checkAuthState } from "../login";
-import { consultarDatosLotes, getUserData, getDataSettings, getNameRecolector, getCollecionRecolector } from "../../components/getUserData";
+import { consultarDatosLotes, getUserData, getDataSettings } from "../../components/getUserData";
 
 /* ID HTML */
 const logout = document.getElementById("singOut");
 const textUser = document.getElementById("userName");
 const priceFeed = document.getElementById("yesFeeding");
 const priceNotFeed = document.getElementById("notFeeding");
+const cardReport = document.getElementById("card-informe");
+const cardHarvest = document.getElementById("card-recoleccion");
+const toggleBtn = document.getElementById("toggle-btn");
+const toggleBtnIcon = document.getElementById("toggle-btn i");
+const dropDownMenu = document.getElementById("dropdown-menu");
+const contenedor = document.getElementById('column-center');
 
-const userID = await checkAuthState();
+export const userID = await checkAuthState();
 const getData = await getUserData(userID);
 const getUserSettings = await getDataSettings(userID);
-const getNameRecolectors = await getNameRecolector(userID);
+const getNameLotes = await consultarDatosLotes(userID);
 
+/* Show Lotes */
+getNameLotes.forEach((doc) => {
+  let lotes = doc.data();
+  let nameLoteDiv = document.createElement('p');
 
-textUser.textContent = getData.user_name
-/* obtenerIDsDocumentosLotes(userID) */
-consultarDatosLotes(userID)
+  nameLoteDiv.textContent = lotes.lote_name; 
+  if(contenedor) contenedor.appendChild(nameLoteDiv);
+})
+
+if(textUser) textUser.textContent = getData.user_name
+
+if(cardReport) cardReport.addEventListener('click', function () {
+  window.location.href = '../informes/informes.html';
+});
+
+if(cardHarvest) cardHarvest.addEventListener('click', function () {
+  window.location.href = '../recoleccion/recoleccion.html'
+});
 
 /* Sing Out */
-logout.addEventListener("click", async () => {
+if(logout) logout.addEventListener("click", async () => {
   try {
     await signOut(auth);
     window.location.href = "../login/index.html";
@@ -36,50 +56,20 @@ getUserSettings.forEach((doc) => {
 
   if (userData.state == "active") {
     if (userData.aliment == "yes") {
-      priceFeed.textContent = `$${userData.price}`
+      if(!!priceFeed) priceFeed.textContent = `$${userData.price}`
     } else {
-      priceNotFeed.textContent = `$${userData.price}`
+      if(!!priceNotFeed) priceNotFeed.textContent = `$${userData.price}`
     }
   }
 
 });
 
-async function generaraElemento() {
-  var contenedor = document.getElementById('cardRecolector');
-  contenedor.innerHTML = '';
+/* Menu desplegable */
+if(toggleBtn) toggleBtn.addEventListener('click', function() {
+  dropDownMenu.classList.toggle('open');
+  const isOpen = dropDownMenu.classList.contains('open');
 
-  getNameRecolectors.forEach(async (doc) => {
-    var recolectorData = doc.data();
-    var recolectorID = doc.id
-
-    try {
-      const querySnapshot = await getCollecionRecolector(userID, recolectorID);
-      let totalKG = 0
-
-      let nuevoDiv = document.createElement('div');
-        nuevoDiv.innerHTML = `  
-        <div class="card recolectors">
-          <div class="card-header recolection-header">
-            <img src="/src/assets/images/icons/ic_recolector.svg" alt="recolector" class="name_recolector">
-            <h2 id="recolectorName">${recolectorData.recolector_name}</h2>
-          </div>
-          <div class="card-body recolection-body">
-            <div class="card-left">
-                <!-- <a href="https://www.flaticon.es/iconos-gratis/granos-de-cafe" title="granos-de-cafe iconos">Granos-de-cafe iconos creados por Freepik - Flaticon</a> -->
-                <img src="/src/assets/images/icons/bolsa-de-cafe.png" alt="granos-de-cafe" width="45px">
-                <p>Detalle</p>
-            </div>
-            <div class="card-right">
-                <h1>${querySnapshot} KG</h1>
-                <p>Total Recolectado</p>
-            </div>
-          </div>
-        </div>`;
-        contenedor.appendChild(nuevoDiv);
-        
-    } catch (error) { console.error('Error al obtener datos de recolecciones:', error); }
-  });
-}
-
-generaraElemento();
-
+  toggleBtnIcon.classList = isOpen
+  ? 'fa-solid fa-xmark' 
+  : 'fa-solid fa-bars'
+});

@@ -95,6 +95,7 @@ const generateCalendar = (month, year) => {
     }
 };
 
+/* Obtener dias del mes selecionado */
 month_names.forEach((e, index) => {
     let month = document.createElement('div');
     month.innerHTML = `<div>${e}</div>`;
