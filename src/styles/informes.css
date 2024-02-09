@@ -1,33 +1,5 @@
 @import '../assets/colors/colors.css';
 
-@font-face {
-  font-family: 'Confortaa';
-  src: url('../assets/fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Confortaa', sans-serif;
-  text-align: center;
-}
-
-body {
-  background-image: url(../assets/images/background_main.jpeg);
-  background-position: center;
-  background-size: cover;
-  background-attachment: fixed;
-  backdrop-filter: blur(3px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: 100vh; /* desenfocar imagen */
-  color: #ffff;
-  overflow: hidden;
-}
-
 .container {
   height: calc(100vh - 60px);
   width: 100%;
@@ -35,12 +7,118 @@ body {
   justify-content: space-between;
 }
 
+.navbar {
+  background-color: #4a784aa2;
+}
+
+.singOut {
+  color: var(--color-hippie-green)
+}
+
+.singOut:hover {
+  scale: 1.05;
+  color: green;
+}
+
 .column-left {
-    flex-basis: 23%; /* tamaño de la columna */
-    padding-left: 20px; /* Espacio a la izquierda */
-    margin: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
+  flex: 0.1; 
+  padding-left: 20px; /* Espacio a la izquierda */
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.recolector-info {
+  flex: 0.7;
+  width: 100%;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.header-info-calendar {
+  background-color: var(--color-hippie-green);
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  display: none;
+}
+
+.header-info-calendar p {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+}
+
+.recolector-calendar {
+  width: 55%;
+  padding-right: 8px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.recolector-calendar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.recolector-calendar::-webkit-scrollbar-thumb {
+  background-color: rgba(239, 253, 200, 0.39);
+  border-radius: 10px;
+}
+
+.card-body, .card-header {
+  background-color: var(--color-hippie-green);
+}
+
+.informes {
+  flex: 0.55;
+  width: 100%;
+  margin: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.generateInforme {
+  background-color: var(--color-hippie-green);
+  width: 80%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+}
+
+.generateInforme img {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.column-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.column-info span{
+  font-size: 1.5
+  rem;
+}
+
+.column-info select {
+  padding: 3px 8px 3px 8px;
+  border-radius: 5px;
+}
+
+.column-info a {
+  color: black;
+}
+
+

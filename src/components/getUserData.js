@@ -1,6 +1,200 @@
 import { getDoc, doc, collection, getDocs } from "firebase/firestore";
 import { database } from "../firebase/firebaseConfig";
 
+class FirestoreCollection {
+  static getCollecionRef = async (id, subcollectionName) => {
+    const userRef = doc(database, 'Usuario', id);
+    const subCollecion = collection(userRef, subcollectionName);
+
+    return await getDocs(subCollecion)
+  }
+
+  static getSubCollecionRef = async (id, collectionName, collectionID, subcollectionName) => {
+    const userRef = doc(database, 'Usuario', id);
+    const collectionRef = collection(userRef, collectionName);
+    const collectionDocRef = doc(collectionRef, collectionID)
+    const subCollectionRef = collection(collectionDocRef, subcollectionName);
+
+    return await getDocs(subCollectionRef);
+  }
+}
+
+export class recolectores {
+  constructor(userId) {
+    this.userId = userId
+    this.settings = new settings(userId)
+    this.recoleciones = 'recoleciones'
+    this.recolectores = 'recolectores'
+  }
+
+  /* Obtener los recolectores */
+  async getRecolectores() {
+    try {
+      const recolectores = FirestoreCollection.getCollecionRef(this.userId, this.recolectores);
+
+      return recolectores;
+
+    } catch (error) {
+      console.error(`Error al obtener los datos de la subcolección: ${error}`);
+    };
+  }
+
+  /* Obtener Detalle, total de kg y a pagar del recolector */
+  async getHarverst(recolectorId) {
+    try {
+      const recolecion = await FirestoreCollection.getSubCollecionRef(this.userId, this.recolectores, recolectorId, this.recoleciones);
+
+      let totalPay = 0;
+      let totalKg = 0;
+
+      for (const recoletorDoc of recolecion.docs) {
+        const hasvertsData = recoletorDoc.data();
+        const price = await this.settings.getPriceRecolection(hasvertsData.settings_id);
+
+        totalKg += hasvertsData.total;
+        totalPay += hasvertsData.total * price.price
+      };
+
+      return { recolecion, totalKg, totalPay }
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  async getHarverstDate(Date) {
+    try {
+      const recolector = await FirestoreCollection.getCollecionRef(this.userId, this.recolectores);
+      const recoleccion = [];
+      let totalPay = 0;
+      let totalharvest = 0;
+
+      for (const recoletorDoc of recolector.docs) {
+        const recolectorData = recoletorDoc.data();
+
+        const recoleccionesRef = collection(recoletorDoc.ref, this.recoleciones);
+        const recolecionesSnapshot = await getDocs(recoleccionesRef);
+
+        const filteredRecolecciones = recolecionesSnapshot.docs
+          .filter(recoleccionDoc => recoleccionDoc.data().date === Date);
+
+        for (const recoleccionDoc of filteredRecolecciones) {
+          const recolectionData = recoleccionDoc.data();
+          const total = await this.settings.getPriceRecolection(recolectionData.settings_id);
+
+          recoleccion.push({
+            recoleccion: recolectionData,
+            recolector_name: recolectorData.recolector_name,
+            recoleccion_total: totalPay += recolectionData.total,
+            recoleccion_pay: totalharvest += recolectionData.total * total.price
+          });
+        }
+      }
+
+      const recolecciones = await Promise.all(recoleccion);
+      console.log("Get date recolection: ", recolecciones)
+
+      return recoleccion;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+}
+
+export class lotes {
+  constructor(userId) {
+    this.userId = userId
+    this.lote = 'lotes'
+  }
+
+  /* Obtener los lotes */
+  async getLotesData() {
+    try {
+      const lotesConsulta = FirestoreCollection.getCollecionRef(this.userId, this.lote);
+
+      return lotesConsulta;
+    } catch (error) {
+      console.error(`Error de lotes: ${error}`)
+    }
+  }
+
+
+  async getNameLote(lotesId) {
+    try {
+      const querySnapshot = await FirestoreCollection.getCollecionRef(this.userId, this.lote)
+      let nameLote = ""
+
+      querySnapshot.forEach((doc) => {
+        let dataLote = doc.data();
+        let id = doc.id
+
+        if (id === lotesId) {
+          nameLote = dataLote.lote_name;
+        }
+      });
+
+      return nameLote;
+
+    } catch (error) {
+      console.log(`Error al obtener el nombre del lote ${error}`)
+    }
+  }
+}
+
+export class settings {
+  constructor(userId) {
+    this.userId = userId;
+    this.settings = 'Settings'
+  }
+
+  /*  Obtener las conficuraciones */
+  async getSettings() {
+    try {
+      const settingsRef = await FirestoreCollection.getCollecionRef(this.userId, this.settings)
+
+      return settingsRef;
+    } catch (error) {
+      console.error(`Error al obtener las configuraciones ${error}`)
+    }
+  }
+
+  /*  Obtener el tipo y el presion de las configuracion ID */
+  async getPriceRecolection(settingsID) {
+    try {
+      const settingsRef = await FirestoreCollection.getCollecionRef(this.userId, this.settings)
+      let price = 0;
+      let type = ""
+
+      for (let doc of settingsRef.docs) {
+        const data = doc.data();
+        const id = doc.id;
+
+        if (id === settingsID) {
+          price = data.price
+
+          if (data.aliment === "yes") {
+            type = "Si"
+          } else {
+            type = "No"
+          }
+
+          break;
+        }
+      }
+
+      if (price === 0) {
+        throw new Error(`No se encontró un documento con ID ${settingsID}`);
+      }
+
+      return { price, type };
+    } catch (error) {
+      console.error(`Error al obtener presios ${error}`)
+    }
+
+  }
+}
+
 /* Obtener datos del usuario */
 export async function getUserData(userID) {
   try {
@@ -9,10 +203,7 @@ export async function getUserData(userID) {
 
     if (docSnapshot.exists()) {
       const userData = docSnapshot.data();
-      console.log('Datos del usuario:', userData);
-
       return userData;
-
     } else {
       console.log('No se encontraron datos para el usuario con el ID:', userID);
       return null
@@ -21,215 +212,6 @@ export async function getUserData(userID) {
   } catch (error) {
     console.error('Error al obtener datos del usuario:', error);
     throw error;
-  }
-};
-
-/* Obtener los lotes */
-export const consultarDatosLotes = async (userID) => {
-  try {
-    const userRef = doc(database, 'Usuario', userID);
-    const subcollectionRef = collection(userRef, 'lotes');
-
-    // Obtener los documentos de la subcolección
-    const querySnapshot = await getDocs(subcollectionRef);
-
-    return querySnapshot;
-
-  } catch (error) {
-    console.error('Error al obtener los datos de la subcolección:', error);
-  }
-};
-
-/*  Obtener Informacion de las conficuraciones */
-export const getDataSettings = async (userID) => {
-  try {
-    const userRef = doc(database, 'Usuario', userID);
-    const subcollectionRef = collection(userRef, 'Settings');
-
-    // Obtener los documentos de la subcolección
-    const querySnapshot = await getDocs(subcollectionRef);
-
-    return querySnapshot;
-
-  } catch (error) {
-    console.error('Error al obtener los datos de la subcolección:', error);
-  }
-};
-
-/* Obtener los recolectores */
-export const getNameRecolector = async (userID) => {
-  try {
-    const userRef = doc(database, 'Usuario', userID);
-    const subcollectionRef = collection(userRef, 'recolectores');
-
-    // Obtener los documentos de la subcolección
-    const querySnapshot = await getDocs(subcollectionRef);
-
-    return querySnapshot;
-
-  } catch (error) {
-    console.error('Error al obtener los datos de la subcolección:', error);
-  }
-};
-
-/* Obtener recoleccion */
-export const getDetailRecolection = async (userID, recolectorID) => {
-  try {
-    const userRef = doc(database, 'Usuario', userID);
-    const recolectoresRef = collection(userRef, 'recolectores');
-    const recolectorDocRef = doc(recolectoresRef, recolectorID)
-    const recoleccionesRef = collection(recolectorDocRef, 'recoleciones');
-
-    // Obtener los documentos de la subcolección
-    const querySnapshot = await getDocs(recoleccionesRef);
-
-    return querySnapshot;
-
-  } catch (error) {
-    console.error('Error al obtener los datos de la subcolección RECOLECIONES:', error);
-  }
-};
-
-/*  Obtener total recolectodo */
-export const getCollecionRecolector = async (userID, recolectorID) => {
-  try {
-    const userRef = doc(database, 'Usuario', userID);
-    const recolectoresRef = collection(userRef, 'recolectores');
-    const recolectorDocRef = doc(recolectoresRef, recolectorID)
-    const recoleccionesRef = collection(recolectorDocRef, 'recoleciones');
-
-    let sumaTotalKg = 0;
-
-    // Obtener los documentos de la subcolección
-    const querySnapshot = await getDocs(recoleccionesRef);
-
-    querySnapshot.forEach(async (doc) => {
-      const recolectionData = doc.data()
-      sumaTotalKg += recolectionData.total;
-    });
-
-    return sumaTotalKg;
-
-  } catch (error) {
-    console.error('Error al obtener los datos de la subcolección:', error);
-  }
-};
-
-/* Obtener Detalle total del recolector */
-export const getPayTotal = async (userID, recolectorID) => {
-  try {
-    const userRef = doc(database, 'Usuario', userID);
-    const recolectoresRef = collection(userRef, 'recolectores');
-    const recolectorDocRef = doc(recolectoresRef, recolectorID)
-    const recoleccionesRef = collection(recolectorDocRef, 'recoleciones');
-
-    let totalPay = 0;
-
-    // Obtener los documentos de la subcolección
-    const querySnapshot = await getDocs(recoleccionesRef);
-
-    for (let doc of querySnapshot.docs) {
-      const recolectionData = doc.data()
-      const settingsID = await getDataSettingsID(userID, recolectionData.settings_id)
-
-      totalPay += recolectionData.total * settingsID
-    };
-
-    return totalPay;
-
-  } catch (error) {
-    console.error('Error al obtener los datos de la subcolección:', error);
-  }
-}
-
-/*  Obtener precio */
-const getDataSettingsID = async (userID, settingsID) => {
-  try {
-    const userRef = doc(database, 'Usuario', userID);
-    const subcollectionRef = collection(userRef, 'Settings');
-    let id = 0
-    // Obtener los documentos de la subcolección
-    const querySnapshot = await getDocs(subcollectionRef);
-
-    for (let doc of querySnapshot.docs) {
-      const data = doc.data();
-      const settings = doc.id;
-      
-      if (settings === settingsID) {
-        id = data.price;
-        break;
-      }
-    }
-
-    return id;
-
-  } catch (error) {
-    console.error('Error al obtener los datos de la subcolección:', error);
-    throw error;
-  }
-};
-
-/* Obtener Nombre del Lote ID */
-export const getNameLoteID = async (userID, loteID) => {
-  try {
-    const userRef = doc(database, 'Usuario', userID);
-    const subcollectionRef = collection(userRef, 'lotes');
-    let nameLote = ""
-    // Obtener los documentos de la subcolección
-    const querySnapshot = await getDocs(subcollectionRef);
-
-    for (let doc of querySnapshot.docs) {
-      const data = doc.data();
-      const lote = doc.id;
-
-      if (lote == loteID) {
-        nameLote = data.lote_name;
-        break;
-      }
-    }
-    
-    return nameLote;
-
-  } catch (error) {
-    console.error('Error al obtener los datos de la subcolección:', error);
-  }
-};
-
-export async function getPriceRecolection(userID, settingsID) {
-  try {
-    const userRef = doc(database, 'Usuario', userID);
-    const subcollectionRef = collection(userRef, 'Settings');
-    let price = 0;
-    let type = ""
-
-    // Obtener los documentos de la subcolección
-    const querySnapshot = await getDocs(subcollectionRef);
-
-    for (let doc of querySnapshot.docs) {
-      const data  = doc.data();
-      const id = doc.id;
-
-      if(id === settingsID) {
-        price = data.price
-
-        if (data.aliment === "yes"){
-          type = "Si"
-        } else { 
-          type = "No"
-        }
-
-        break;
-      }
-    }
-
-    if (price === 0) {
-      throw new Error(`No se encontró un documento con ID ${settingsID}`);
-    }
-
-    return { price, type };
-
-  } catch (error) {
-    console.error('Error al obtener los datos de la subcolección:', error);
   }
 };
 

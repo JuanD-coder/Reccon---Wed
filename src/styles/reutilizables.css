@@ -1,0 +1,142 @@
+@font-face {
+  font-family: 'Confortaa';
+  src: url('../assets/fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Confortaa', sans-serif;
+  text-align: center;
+}
+
+body {
+  background-image: url(../assets/images/background_main.jpeg);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  backdrop-filter: blur(3px); /* desenfocar imagen */
+  display: flex;
+  flex-direction: column;
+  height: 100vh; 
+  color: #ffff;
+  overflow: hidden;
+}
+
+/* Estilos del card View  */
+.card {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.card-header {
+  padding: 6px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  color: var(--color-white);
+  background-color: var(--color-cinnabar);
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px; /* Esquinas redondeadas */
+}
+
+/* Imagen */
+.card-header img {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+}
+
+.card-body {
+  font-weight: bold;
+  display: flex;
+  color: white;
+  flex-direction: row;
+  align-items: center;
+  background-color: var(--color-cinnabar);
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.card-body p {
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+.card-left {
+  width: 50%;
+  height: 100%;
+  color: black;
+  padding-top: 8px;
+  padding-left: 10px;
+  padding-right: 8px;
+  padding-bottom: 8px;
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--color-white);
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  border-bottom-left-radius: 9px;
+}  
+
+.card-left p {
+  font-size: 18px;
+}
+
+.card-right {
+  width: 50%;
+  padding: 10px;
+}
+
+.card-right p{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3px;
+  font-size: 30px;
+}
+
+.card-righ a {
+  font-size: 100px;
+}
+
+.select-recolector {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.select-recolector img {
+  width: 200px;
+  margin-bottom: 12px;
+}
+
+.select-recolector p {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.card-info {
+  margin: 10px;
+  padding: 18px;
+  background-color: #e63333c9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  visibility: hidden;
+}
+
+.card-info.green {
+  background-color: var(--color-hippie-green);
+  visibility: visible;
+}

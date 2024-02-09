@@ -1,7 +1,6 @@
 import { signOut } from "firebase/auth";
-
 import { auth, checkAuthState } from "../login";
-import { consultarDatosLotes, getUserData, getDataSettings } from "../../components/getUserData";
+import { getUserData, lotes, settings } from "../../components/getUserData";
 
 /* ID HTML */
 const logout = document.getElementById("singOut");
@@ -16,9 +15,11 @@ const dropDownMenu = document.getElementById("dropdown-menu");
 const contenedor = document.getElementById('column-center');
 
 export const userID = await checkAuthState();
+const lotesInfo = new lotes(userID);
+const settingsInfo = new settings(userID)
 const getData = await getUserData(userID);
-const getUserSettings = await getDataSettings(userID);
-const getNameLotes = await consultarDatosLotes(userID);
+const getUserSettings = await settingsInfo.getSettings(userID);
+const getNameLotes = await lotesInfo.getLotesData();
 
 /* Show Lotes */
 getNameLotes.forEach((doc) => {
