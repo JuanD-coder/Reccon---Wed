@@ -3,7 +3,7 @@ import { userID } from "../home/user-home"
 
 const loteInfo = new lotes(userID)
 const settingsInfo = new settings(userID)
-let totalCollection, totalPay, cardSelect, cardInfo, recolectorInfo, viewCalendar;
+let totalCollection, totalPay, cardSelect, cardInfo, recolectorInfo, viewCalendar, optionMenu, menuSelect, optionSelect, selectText;
 
 function initDOMVariables() {
   totalCollection = document.getElementById("recolectado");
@@ -12,8 +12,22 @@ function initDOMVariables() {
   cardInfo = document.getElementById("card-info");
   recolectorInfo = document.getElementById('header');
   viewCalendar = document.getElementById("recolector-calendar");
+  optionMenu = document.querySelector(".dropdown");
+  menuSelect = document.querySelector('.dropdown-select');
+  optionSelect = document.querySelectorAll(".dropdown-list__item");;
+  selectText = document.querySelector(".select")
 
   cardInfo.classList.add('green')
+
+  menuSelect.addEventListener("click", () => optionMenu.classList.toggle("active"))
+
+  optionSelect.forEach(item => {
+    item.addEventListener('click', () => {
+      selectText.innerText = item.textContent;
+      optionMenu.classList.remove("active")
+    });
+  })
+
 };
 
 document.addEventListener("DOMContentLoaded", initDOMVariables);
@@ -49,7 +63,7 @@ export async function calendarDayHarvest(dateRecolection) {
                         <p>Precio: $${settings.price}</p>
                     </div>
                     <div class="card-right">
-                        <p> ${doc.recoleccion_total}KG</p>
+                        <p> ${doc.recoleccion.total}KG</p>
                         <h3>Recolectado</h3>
                     </div>
                 </div>

@@ -93,9 +93,7 @@ const generateCalendar = async (month, year) => {
 
   calendar_days.addEventListener('click', async (event) => {
     const target = event.target;
-    console.log(target)
     await showRecolection(target, month, year);
-    
   })
 
 };
@@ -109,12 +107,12 @@ async function showRecolection(today, month, year) {
   const fechaFormateada = `${pad2(month + 1)}-${day}-${year}`;
 
   const dateRecolection = await recolector.getHarverstDate(fechaFormateada)
-  
-  console.log("Fecha: ", fechaFormateada)
+  console.log("Fecha: ", fechaFormateada, today)
 
   if (Array.isArray(dateRecolection) && dateRecolection.length !== 0) {
     updateUI(dateRecolection);
     calendarDayHarvest(dateRecolection);
+    
     today.classList.add('current-date-color');
   } else { 
     updateUI(dateRecolection)

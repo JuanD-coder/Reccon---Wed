@@ -12,7 +12,7 @@ const cardHarvest = document.getElementById("card-recoleccion");
 const toggleBtn = document.getElementById("toggle-btn");
 const toggleBtnIcon = document.getElementById("toggle-btn i");
 const dropDownMenu = document.getElementById("dropdown-menu");
-const contenedor = document.getElementById('column-center');
+const contenedor = document.getElementById('container-lotes');
 
 export const userID = await checkAuthState();
 const lotesInfo = new lotes(userID);
@@ -24,24 +24,30 @@ const getNameLotes = await lotesInfo.getLotesData();
 /* Show Lotes */
 getNameLotes.forEach((doc) => {
   let lotes = doc.data();
-  let nameLoteDiv = document.createElement('p');
+  let nameLoteDiv = document.createElement('div')
+  nameLoteDiv.classList.add('show-lotes')
+  nameLoteDiv.innerHTML = `
+  <div class="right">
+    <p>${lotes.lote_name}</p>
+    <span><b>Variedad: </b>${lotes.type}</span>  
+  </div>
+    <img src="/src/assets/images/icons/granja.png" alt="lotes" width="45px">`
 
-  nameLoteDiv.textContent = lotes.lote_name; 
-  if(contenedor) contenedor.appendChild(nameLoteDiv);
+  if (contenedor) contenedor.appendChild(nameLoteDiv);
 })
 
-if(textUser) textUser.textContent = getData.user_name
+if (textUser) textUser.textContent = getData.user_name
 
-if(cardReport) cardReport.addEventListener('click', function () {
+if (cardReport) cardReport.addEventListener('click', function () {
   window.location.href = '../informes/informes.html';
 });
 
-if(cardHarvest) cardHarvest.addEventListener('click', function () {
+if (cardHarvest) cardHarvest.addEventListener('click', function () {
   window.location.href = '../recoleccion/recoleccion.html'
 });
 
 /* Sing Out */
-if(logout) logout.addEventListener("click", async () => {
+if (logout) logout.addEventListener("click", async () => {
   try {
     await signOut(auth);
     window.location.href = "../login/index.html";
@@ -57,20 +63,20 @@ getUserSettings.forEach((doc) => {
 
   if (userData.state == "active") {
     if (userData.aliment == "yes") {
-      if(!!priceFeed) priceFeed.textContent = `$${userData.price}`
+      if (!!priceFeed) priceFeed.textContent = `$${userData.price}`
     } else {
-      if(!!priceNotFeed) priceNotFeed.textContent = `$${userData.price}`
+      if (!!priceNotFeed) priceNotFeed.textContent = `$${userData.price}`
     }
   }
 
 });
 
 /* Menu desplegable */
-if(toggleBtn) toggleBtn.addEventListener('click', function() {
+if (toggleBtn) toggleBtn.addEventListener('click', function () {
   dropDownMenu.classList.toggle('open');
   const isOpen = dropDownMenu.classList.contains('open');
 
   toggleBtnIcon.classList = isOpen
-  ? 'fa-solid fa-xmark' 
-  : 'fa-solid fa-bars'
+    ? 'fa-solid fa-xmark'
+    : 'fa-solid fa-bars'
 });

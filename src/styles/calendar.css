@@ -127,7 +127,7 @@
 }
 
 .calendar-days {
-  margin-top: -35px;
+  margin-top: -30px;
 }
 
 .calendar-days div span {
@@ -156,7 +156,7 @@
 .month-list {
   position: relative;
   left: 0;
-  top: -18px;
+  top: -10px;
   background-color: #fcf1f1;
   color: var(--light-text);
   display: grid;
@@ -328,7 +328,6 @@
 
 @media (max-width:375px) {
   .month-list>div {
-
     margin: 5px 0px;
   }
 }

@@ -62,25 +62,28 @@
         </div>
       </div>
 
-      <div class="column-center">
-        <h1>Lotes</h1>
-        <img src="/src/assets/images/logo/reccon_pdf_white.png" alt="Logo" width="300px">
-        <p>Nombre de todos los lotes</p>
-        <div id="column-center"></div>
-      </div>
-
       <div class="column-right">
         <h1>Precios actuales</h1>
-        <div class="price">
-          <img src="/src/assets/images/icons/ic_alimentacion.svg" alt="alimentación" width="50px">
-          <h1 id="yesFeeding">$0</h1>
-          <h2>Precio por kilo con alimentación</h2>
+        <div class="precios">
+          <div class="price">
+            <img src="/src/assets/images/icons/ic_alimentacion.svg" alt="alimentación" width="60px">
+            <h1 id="yesFeeding">$0</h1>
+            <p>Precio por kilo con alimentación</p>
+          </div>
+          <div class="price">
+            <img src="/src/assets/images/icons/ic_no_alimentacion.svg" alt="ic_no_alimentacion" width="60px">
+            <h1 id="notFeeding">$0</h1>
+            <p>Precio por kilo sin alimentación</p>
+          </div>
         </div>
-        <div class="price">
-          <img src="/src/assets/images/icons/ic_no_alimentacion.svg" alt="ic_no_alimentacion" width="50px">
-          <h1 id="notFeeding">$0</h1>
-          <h2>Precio por kilo sin alimentación</h2>
+        
+        <div class="lotes">
+          <h1>Lotes Registrados</h1>
+          <div class="scroll-view">
+            <div class="container-lotes" id="container-lotes"> <!-- Name Lotes --> </div>
+          </div>
         </div>
+
       </div>
     </section>
   </main>

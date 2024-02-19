@@ -23,9 +23,9 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100vh; /* desenfocar imagen */
   color: #ffff;
   overflow: hidden;
+  margin: 0;
 }
 
 .container {
@@ -36,31 +36,21 @@ body {
   justify-content: space-between;
 }
 
-.column-left, .column-center, .column-right {
+.column-left, .column-right {
   flex: 1;
+  height: calc(100vh - 60px);
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  padding: 20px;
-}
-
-.column-left {
-  margin-bottom: 50px;
-}
-
-.column-center {
-  margin: 25px 10px;
-}
-
-.column-right {
   margin: 10px;
+  overflow: auto;
 }
 
 /*  Card de seleccion */
 .card {
-  width: 75%;
-  margin-top: 15px;
+  width: 45%;
+  margin: 15px;
   background-color: var(--color-white);
   border-radius: 10px;
   cursor: pointer;
@@ -80,27 +70,113 @@ body {
 .card-body {
   padding: 20px 15px 20px 15px;
   font-weight: bold;
-  font-size: medium;
+  font-size: large;
   color: black;
 }
 
-.recoleccion-header {
+.recoleccion-header, .informe-header  {
   border-top-right-radius: 10px;
   border-top-left-radius: 10px; /* Esquinas redondeadas */
+}
+
+.recoleccion-header {
   background-color: #ff0000; /* Color de fondo rojo */
 }
 
 .informe-header {
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px; /* Esquinas redondeadas */
   background-color: green;
 }
 
+.precios{
+  display: flex;
+  height: 30%;
+}
+
 .price {
-  width: 75%;
-  padding: 8px;
-  margin-top: 5px;
-  margin-bottom: 20px;
+  width: 50%;
+  padding: 5px;
+  margin: 18px 8px;
   background-color: var(--color-cinnabar);
   border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.price p {
+  font-size: 23px;
+  font-weight: bold;
+  padding: 2px;
+}
+
+.lotes {
+  width: auto;
+  margin: 10px 8px;
+}
+
+.container-lotes {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-view {
+  width: 100%;
+  min-height: 300px;
+  max-height: 350px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  padding-right: 12px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.scroll-view::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scroll-view::-webkit-scrollbar-thumb {
+  background-color: rgba(253, 200, 200, 0.39);
+  border-radius: 10px;
+}
+
+.show-lotes {
+  width: 100%;
+  background-color: white;
+  color: black;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.show-lotes p {
+  margin-bottom: 6px;
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+@media (max-height:650px), (max-width: 1120px) {
+  .price p {
+    font-size: 20px;
+  }
+
+  .scroll-view {
+    min-height: 200px;
+    max-height: 250px;
+  }
 }

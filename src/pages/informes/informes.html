@@ -103,24 +103,35 @@
         <img src="/src/assets/images/icons/bebida-caliente-white.png" alt="Informe" width="130px">
         <div class="column-info">
           <span>Seleciones un tipo de informe</span>
-          <select name="Type" id="">
-            <option value="semanal">Informe Semanal</option>
-            <option value="mensual">Informe Mensual</option>
-            <option value="anual">Informe anual</option>
-          </select>
+          <div class="dropdown">
+            <div class="dropdown-select">
+              <p class="select">Informe</p>
+              <i class="fa-solid fa-angle-down"></i>
+            </div>
+            <div class="dropdown-list">
+              <p class="dropdown-list__item">Informe Semenal</p>
+              <p class="dropdown-list__item">Informe Mensual</p>
+              <p class="dropdown-list__item">Informe Anual</p>
+            </div>
+          </div>
           <a href="#" class="singOut" id="generateInforme">Generar Informe</a>
         </div>
       </div>
       <h2>Informes generados</h2>
       <div class="cardHistorialInfome">
-        <img src="/src/assets/images/icons/informe.svg" alt="infome" width="100px">
-        <h1>Nombre: Informe</h1>
-        <h2>Tipo: ${typeInfome}</h2>
-        <h2>Fecha Generado: 2024-10-08</h2>
+        <img src="/src/assets/images/icons/informe-white.png" alt="infome" width="100px">
+        <div class="column-info">
+          <h3>Fecha Generado: 2024-10-08</h3>
+          <div class="informe-info">
+            <p><b>Nombre:</b> Informe N° 25</p>
+            <p><b>Tipo:</b> Infome Semanal</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
+  <script src="https://kit.fontawesome.com/7db13a2d0e.js" crossorigin="anonymous"></script>
   <script src="/dist/calendario.bundle.js" type="module"></script>
   <script src="/dist/informes.bundle.js" type="module"></script>
 

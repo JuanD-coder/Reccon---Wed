@@ -27,13 +27,14 @@ async function generateRecolectorElement() {
 
     const getNameRecolectors = await recolector.getRecolectores();
 
-    getNameRecolectors.forEach(async (doc) => {
+    for (const doc of getNameRecolectors.docs) {
       const recolectorData = doc.data();
       const recolectorID = doc.id
 
-      const newDiv = document.createElement('div');
-      newDiv.classList.add('card');
-      newDiv.innerHTML = `  
+      if (recolectorData.state === true) {
+        const newDiv = document.createElement('div');
+        newDiv.classList.add('card');
+        newDiv.innerHTML = `  
                 <div class="card-header">
                   <img src="/src/assets/images/icons/ic_recolector.svg" alt="recolector" class="name_recolector">
                   <h2 id="recolectorName">${recolectorData.recolector_name}</h2>
@@ -48,29 +49,31 @@ async function generateRecolectorElement() {
                       <h3>Recolectado</h3>
                   </div>
                 </div>`;
-      recolectorElements.push({
-        recolectorID,
-        element: newDiv
+        recolectorElements.push({
+          recolectorID,
+          element: newDiv
+        });
+      }
+    };
+
+    await Promise.all(recolectorElements.map(async ({ recolectorID, element }) => {
+      const dataRecolection = await recolector.getHarverst(recolectorID);
+      const recolectorData = getNameRecolectors.docs.find(doc => doc.id === recolectorID).data();
+
+      const detail = element.querySelector(`#${recolectorID}`);
+      detail.addEventListener('click', () => {
+        showRecolection(dataRecolection);
+        userInformation(recolectorData, dataRecolection.totalKg, dataRecolection.totalPay);
       });
 
-      contenedor.append(...recolectorElements.map(({ element }) => element));
-
-      await Promise.all(recolectorElements.map(async ({ recolectorID, element }) => {
-        const total = await recolector.getHarverst(recolectorID);
-
-        const detail = element.querySelector(`#${recolectorID}`);
-        detail.addEventListener('click', () => {
-          showRecolection(recolectorID);
-          userInformation(recolectorData, total.totalKg, total.totalPay);
-        });
-
-        const cardRight = element.querySelector('.card-right');
-        cardRight.innerHTML = `
-          <p>${total.totalKg} KG</p>
+      const cardRight = element.querySelector('.card-right');
+      cardRight.innerHTML = `
+          <p>${dataRecolection.totalKg} KG</p>
           <h3>Recolectado</h3>`;
-      }));
+    }));
 
-    });
+     contenedor.append(...recolectorElements.map(({ element }) => element));
+
   } catch (error) { console.error('Error al obtener datos de recolecciones:', error); }
 }
 
@@ -80,12 +83,10 @@ function userInformation(data, totalKg, totalPay) {
   titlePay.textContent = `Total a pagar: $${totalPay}`
 }
 
-async function showRecolection(recolectorID) {
+async function showRecolection(dataRecolection) {
+  const recolectionData = dataRecolection.recolecciones.docs
   const contenedor = document.getElementById("information-recolector");
   contenedor.innerHTML = '<h1> Recoleciones registradas</h1>';
-
-  const dataRecolection = await recolector.getHarverst(recolectorID);
-  const recolectionData = dataRecolection.recolecion.docs
 
   updateUI(dataRecolection, contenedor)
 
@@ -109,7 +110,6 @@ function updateUI(dateRecolection, contenedor) {
 
 async function renderRecolectionCards(contenedor, recolectionData) {
   const recolectionCards = [];
-
   for (const doc of recolectionData) {
     const getDataRecolection = doc.data();
     const getNameLote = await lote.getNameLote(getDataRecolection.lote_id);

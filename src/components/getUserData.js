@@ -1,4 +1,4 @@
-import { getDoc, doc, collection, getDocs } from "firebase/firestore";
+import { getDoc, doc, collection, getDocs, } from "firebase/firestore";
 import { database } from "../firebase/firebaseConfig";
 
 class FirestoreCollection {
@@ -30,24 +30,22 @@ export class recolectores {
   /* Obtener los recolectores */
   async getRecolectores() {
     try {
-      const recolectores = FirestoreCollection.getCollecionRef(this.userId, this.recolectores);
-
-      return recolectores;
-
+      return await FirestoreCollection.getCollecionRef(this.userId, this.recolectores);
     } catch (error) {
       console.error(`Error al obtener los datos de la subcolección: ${error}`);
+      throw error;
     };
   }
 
   /* Obtener Detalle, total de kg y a pagar del recolector */
   async getHarverst(recolectorId) {
     try {
-      const recolecion = await FirestoreCollection.getSubCollecionRef(this.userId, this.recolectores, recolectorId, this.recoleciones);
+      const recolecciones = await FirestoreCollection.getSubCollecionRef(this.userId, this.recolectores, recolectorId, this.recoleciones);
 
       let totalPay = 0;
       let totalKg = 0;
 
-      for (const recoletorDoc of recolecion.docs) {
+      for (const recoletorDoc of recolecciones.docs) {
         const hasvertsData = recoletorDoc.data();
         const price = await this.settings.getPriceRecolection(hasvertsData.settings_id);
 
@@ -55,10 +53,11 @@ export class recolectores {
         totalPay += hasvertsData.total * price.price
       };
 
-      return { recolecion, totalKg, totalPay }
+      return { recolecciones, totalKg, totalPay }
 
     } catch (error) {
-      console.error(error);
+      console.error(`Error en recolecion consulta ${error}`);
+      throw error;
     }
   };
 
@@ -88,19 +87,19 @@ export class recolectores {
             recoleccion_total: totalPay += recolectionData.total,
             recoleccion_pay: totalharvest += recolectionData.total * total.price
           });
+
         }
       }
 
       const recolecciones = await Promise.all(recoleccion);
-      console.log("Get date recolection: ", recolecciones)
 
-      return recoleccion;
+      return recolecciones;
     } catch (error) {
       console.error(error);
       return [];
     }
   }
-}
+};
 
 export class lotes {
   constructor(userId) {
@@ -111,14 +110,12 @@ export class lotes {
   /* Obtener los lotes */
   async getLotesData() {
     try {
-      const lotesConsulta = FirestoreCollection.getCollecionRef(this.userId, this.lote);
-
-      return lotesConsulta;
+      return  FirestoreCollection.getCollecionRef(this.userId, this.lote);;
     } catch (error) {
       console.error(`Error de lotes: ${error}`)
+      throw error;
     }
   }
-
 
   async getNameLote(lotesId) {
     try {
@@ -151,11 +148,10 @@ export class settings {
   /*  Obtener las conficuraciones */
   async getSettings() {
     try {
-      const settingsRef = await FirestoreCollection.getCollecionRef(this.userId, this.settings)
-
-      return settingsRef;
+      return await FirestoreCollection.getCollecionRef(this.userId, this.settings);
     } catch (error) {
       console.error(`Error al obtener las configuraciones ${error}`)
+      throw error;
     }
   }
 

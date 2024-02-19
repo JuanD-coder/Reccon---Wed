@@ -29,6 +29,8 @@
 
 .scroll-bar {
   width: 55%;
+  padding: auto;
+  margin-bottom: 15px;
   display: flex;
   justify-content: center;
   padding-right: 12px;
