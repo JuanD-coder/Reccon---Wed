@@ -15,7 +15,7 @@
 <body>
   <header>
     <div class="navbar">
-      <div class="logo"><a href="#">Bienvenido a RECCON</a></div>
+      <div class="logo"><a href="#">Bienvenido a RECCON </a></div>
       <ul class="links">
         <li><a href="../home/user-home.html">Inicio</a></li>
         <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>
@@ -87,7 +87,7 @@
 
       <div class="select-recolector" id="select-recolector">
         <div class="card-info" id="card-info">
-          <img id="imgRecolection" src="/src/assets/images/icons/ic_not_recolection.png" alt="recolector">
+          <img id="imgRecolection" src="/src/assets/images/icons/ic_not_recolection.png" alt="recolector" loading="lazy">
           <p id="txtNotReclector">No se encontraron recolecciones para ese día</p>
         </div>
       </div>
@@ -99,8 +99,9 @@
     </div>
 
     <div class="informes">
+
       <div class="generateInforme">
-        <img src="/src/assets/images/icons/bebida-caliente-white.png" alt="Informe" width="130px">
+        <img src="/src/assets/images/icons/bebida-caliente-white.png" alt="Informe" width="100px" loading="lazy">
         <div class="column-info">
           <span>Seleciones un tipo de informe</span>
           <div class="dropdown">
@@ -114,12 +115,13 @@
               <p class="dropdown-list__item">Informe Anual</p>
             </div>
           </div>
-          <a href="#" class="singOut" id="generateInforme">Generar Informe</a>
+          <a href="#" class="singOut" id="btn-informe">Generar Informe</a>
         </div>
       </div>
+
       <h2>Informes generados</h2>
       <div class="cardHistorialInfome">
-        <img src="/src/assets/images/icons/informe-white.png" alt="infome" width="100px">
+        <img src="/src/assets/images/icons/informe-white.png" alt="infome" width="100px" loading="lazy">
         <div class="column-info">
           <h3>Fecha Generado: 2024-10-08</h3>
           <div class="informe-info">
@@ -132,8 +134,8 @@
   </div>
 
   <script src="https://kit.fontawesome.com/7db13a2d0e.js" crossorigin="anonymous"></script>
-  <script src="/dist/calendario.bundle.js" type="module"></script>
-  <script src="/dist/informes.bundle.js" type="module"></script>
+  <script async="async" src="/src/components/calendar.js" type="module"></script>
+  <script async="async" src="/dist/informes.bundle.js" type="module"></script>
 
 </body>
 

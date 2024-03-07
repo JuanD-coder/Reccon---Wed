@@ -1,5 +1,3 @@
-@import '../assets/colors/colors.css';
-
 @font-face {
   font-family: 'Confortaa';
   src: url('../assets/fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
@@ -47,11 +45,10 @@ body {
   overflow: auto;
 }
 
-/*  Card de seleccion */
 .card {
   width: 45%;
   margin: 15px;
-  background-color: var(--color-white);
+  background-color: white;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -64,7 +61,7 @@ body {
 .card-header {
   padding: 10px;
   width: 100%; /* Ancho del título */
-  color: var(--color-white);
+  color: white;
 }
 
 .card-body {
@@ -96,7 +93,7 @@ body {
   width: 50%;
   padding: 5px;
   margin: 18px 8px;
-  background-color: var(--color-cinnabar);
+  background-color: #e63933;
   border-radius: 20px;
   display: flex;
   flex-direction: column;

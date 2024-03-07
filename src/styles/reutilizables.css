@@ -39,8 +39,8 @@ body {
   display: flex;
   align-items: center;
   flex-direction: row;
-  color: var(--color-white);
-  background-color: var(--color-cinnabar);
+  color: white;
+  background-color: #e63933;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px; /* Esquinas redondeadas */
 }
@@ -58,7 +58,7 @@ body {
   color: white;
   flex-direction: row;
   align-items: center;
-  background-color: var(--color-cinnabar);
+  background-color: #e63933;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
 }
@@ -80,7 +80,7 @@ body {
   align-items: start;
   flex-direction: column;
   justify-content: center;
-  background-color: var(--color-white);
+  background-color: white;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
   border-bottom-left-radius: 9px;
@@ -137,6 +137,6 @@ body {
 }
 
 .card-info.green {
-  background-color: var(--color-hippie-green);
+  background-color: #4a784a;
   visibility: visible;
 }

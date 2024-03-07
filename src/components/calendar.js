@@ -1,13 +1,8 @@
-import { userID } from "../pages/home/user-home";
-import { calendarDayHarvest, updateUI } from "../pages/informes/informes";
-import { recolectores } from "./getUserData";
-
 const todayShowTime = document.querySelector('.time-formate');
 const todayShowDate = document.querySelector('.date-formate');
 const timeFormate = document.querySelector('.time-formate');
 const dateFormate = document.querySelector('.date-formate');
 const dayTextFormate = document.querySelector('.day-text-formate');
-const recolector = new recolectores(userID)
 
 let calendar = document.querySelector('.calendar');
 let month_list = calendar.querySelector('.month-list');
@@ -83,7 +78,6 @@ const generateCalendar = async (month, year) => {
 
       if (isCurrentDate) {
         day.classList.add('current-date');
-        await showRecolection(day, month, year)
       }
     }
     calendarHTML.push(day.outerHTML);
@@ -93,30 +87,15 @@ const generateCalendar = async (month, year) => {
 
   calendar_days.addEventListener('click', async (event) => {
     const target = event.target;
-    await showRecolection(target, month, year);
+    await getDate(target, month, year);
+    target.classList.add('current-date-color');
   })
 
 };
 
-async function showRecolection(today, month, year) {
-  const pad2 = (num) => {
-    return num.toString().padStart(2, '0');
-  };
-
-  const day = String(today.innerHTML).padStart(2, '0');
-  const fechaFormateada = `${pad2(month + 1)}-${day}-${year}`;
-
-  const dateRecolection = await recolector.getHarverstDate(fechaFormateada)
-  console.log("Fecha: ", fechaFormateada, today)
-
-  if (Array.isArray(dateRecolection) && dateRecolection.length !== 0) {
-    updateUI(dateRecolection);
-    calendarDayHarvest(dateRecolection);
-    
-    today.classList.add('current-date-color');
-  } else { 
-    updateUI(dateRecolection)
-  }
+async function getDate(today, month, year) {
+  const event = new CustomEvent('recolectionClicked', { detail: { today, month, year } });
+  document.dispatchEvent(event);
 };
 
 /* Obtener dias del mes selecionado */

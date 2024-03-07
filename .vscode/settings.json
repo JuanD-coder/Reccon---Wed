@@ -1,18 +1,10 @@
 {
-    "doki.sticker.path": "/home/bocchi/Imágenes/Personal/stiker_miku.webp",
-    "doki.statusbar.name": "Miku",
-    "doki.sticker.css": "z-index:100;background-position:105% 101%; background-size: 300px;",
     "workbench.preferredDarkColorTheme": "Default Dark Modern",
     "workbench.iconTheme": "material-icon-theme",
-    "doki.background.path": "",
-    "doki.wallpaper.path": "/home/bocchi/Imágenes/Wallpapers/rika.jpp",
-    "doki.wallpaper.enabled": true,
     "editor.fontLigatures": true,
     "editor.fontSize": 15,
-    "terminal.integrated.fontFamily": "MesloLGS Nerd Font",
+    "terminal.integrated.fontFamily": "FiraCode Nerd Font",
     "editor.fontFamily": "Fira Code, 'Droid Sans Mono'",
     "window.autoDetectColorScheme": false,
     "workbench.colorTheme": "Monokai Night",
-    "vscode_vibrancy.theme": "Tokyo Night Storm",
-    "vscode_vibrancy.type": "auto" /*'monospace', monospace, MesloLGS Nerd Font*/
 }

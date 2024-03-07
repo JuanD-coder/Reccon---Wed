@@ -1,74 +1,115 @@
-import { lotes, settings } from "../../components/getUserData"
-import { userID } from "../home/user-home"
+import { userID } from "../home/user-home";
+import { lotes, settings, recolectores } from "../../components/getUserData";
+import { createPdfInforme } from "../../components/DocumentPdf";
 
 const loteInfo = new lotes(userID)
 const settingsInfo = new settings(userID)
-let totalCollection, totalPay, cardSelect, cardInfo, recolectorInfo, viewCalendar, optionMenu, menuSelect, optionSelect, selectText;
+const getRecolector = new recolectores(userID)
 
-function initDOMVariables() {
-  totalCollection = document.getElementById("recolectado");
-  totalPay = document.getElementById("pagar");
-  cardSelect = document.getElementById("select-recolector");
-  cardInfo = document.getElementById("card-info");
-  recolectorInfo = document.getElementById('header');
-  viewCalendar = document.getElementById("recolector-calendar");
-  optionMenu = document.querySelector(".dropdown");
-  menuSelect = document.querySelector('.dropdown-select');
-  optionSelect = document.querySelectorAll(".dropdown-list__item");;
-  selectText = document.querySelector(".select")
+const totalCollection = document.getElementById("recolectado");
+const totalPayText = document.getElementById("pagar");
+const cardSelect = document.getElementById("select-recolector");
+const cardInfo = document.getElementById("card-info");
+const recolectorInfoCard = document.getElementById('header');
+const viewCalendar = document.getElementById("recolector-calendar");
+const generateInforme = document.getElementById('btn-informe');
 
-  cardInfo.classList.add('green')
+const optionMenu = document.querySelector(".dropdown");
+const menuSelect = document.querySelector('.dropdown-select');
+const optionSelect = document.querySelectorAll(".dropdown-list__item");
+const selectText = document.querySelector(".select");
 
-  menuSelect.addEventListener("click", () => optionMenu.classList.toggle("active"))
+document.addEventListener("DOMContentLoaded", await initDOMVariables(cardInfo));
+document.addEventListener('recolectionClicked', async (event) => {
+  const { today, month, year } = event.detail;
+  await showRecolection(today, month, year)
+});
 
-  optionSelect.forEach(item => {
-    item.addEventListener('click', () => {
-      selectText.innerText = item.textContent;
-      optionMenu.classList.remove("active")
-    });
-  })
+menuSelect.addEventListener("click", () => optionMenu.classList.toggle("active"));
+generateInforme.addEventListener('click', () => createPdfInforme());
 
+optionSelect.forEach(item => {
+  item.addEventListener('click', () => {
+    selectText.innerText = item.textContent;
+    optionMenu.classList.remove("active")
+  });
+})
+
+async function initDOMVariables(cardInfoHTML) {
+  await getDateActual()
+  cardInfoHTML.classList.add('green');
 };
 
-document.addEventListener("DOMContentLoaded", initDOMVariables);
+async function getDateActual() {
+  const currentDate = new Date();
 
-export async function calendarDayHarvest(dateRecolection) {
+  const day = currentDate.getDate();
+  const month = currentDate.getMonth() + 1;
+  const year = currentDate.getFullYear();
 
-  if (!totalCollection) {
-    initDOMVariables();
+  await showRecolection(day, month, year)
+}
+
+async function showRecolection(today, month, year) {
+  const pad2 = (num) => num.toString().padStart(2, '0');
+  const day = String(today.innerHTML).padStart(2, '0');
+  const fechaFormateada = `${pad2(month + 1)}-${day}-${year}`;
+
+  const dateRecolection = await getRecolector.getHarverstDate(fechaFormateada)
+
+  if (Array.isArray(dateRecolection) && dateRecolection.length !== 0) {
+
+    today.classList.remove('current-date-color')
+    today.classList.add('current-date')
+
+    updateUI(dateRecolection);
+    calendarDayHarvest(dateRecolection);
+  } else {
+    updateUI(dateRecolection)
   }
+}
 
+function updateUI(dateRecolection) {
+  let isEmpty = dateRecolection.length !== 0;
+  let displayStyle = isEmpty ? "block" : "none";
+  let flexStyle = isEmpty ? "none" : "flex";
+
+  cardInfo.style.display = flexStyle;
+  recolectorInfoCard.style.display = displayStyle;
+  viewCalendar.style.display = displayStyle;
+  cardSelect.style.display = flexStyle;
+};
+
+async function calendarDayHarvest(dateRecolection) {
   viewCalendar.innerHTML = '<h1>Recolectores</h1>'
 
-  dateRecolection.forEach(async (doc) => {
-    try {
-      const nameLotes = await loteInfo.getNameLote(doc.recoleccion.lote_id)
-      const settings = await settingsInfo.getPriceRecolection(doc.recoleccion.settings_id)
+  const promises = dateRecolection.map(async (doc) => {
+    const nameRecolector = doc.recolector_name
+    const total = doc.recoleccion.total
+    const totalPay = doc.recoleccion_pay
+    const toatalKg = doc.recoleccion_total
 
-      totalCollection.textContent = `Total recolectado: ${doc.recoleccion_total} Kg`;
-      totalPay.textContent = `Total a pagar: $${doc.recoleccion_pay}`
+    const nameLotes = await loteInfo.getNameLote(doc.recoleccion.lote_id)
+    const settings = await settingsInfo.getPriceRecolection(doc.recoleccion.settings_id)
+
+    return Promise.all([nameRecolector, nameLotes, settings, total, totalPay, toatalKg])
+  });
+
+  const results = await Promise.all(promises)
+
+  results.forEach(async ([nameRecolector, nameLotes, settings, total, totalPay, totalKg]) => {
+    try {
+      totalCollection.textContent = `Total recolectado: ${totalKg} Kg`;
+      totalPayText.textContent = `Total a pagar: $${totalPay}`
 
       let nuevoDiv = document.createElement('div');
-      nuevoDiv.innerHTML = `
-            <div class="card">
-                <div class="card-header">
-                    <img src="/src/assets/images/icons/ic_recolector.svg" alt="recolector">
-                    <h2 id="recolectorName">${doc.recolector_name}</h2>
-                </div>
-                <div class="card-body">
-                    <div class="card-left">
-                        <p>Lote: ${nameLotes}</p>
-                        <p>Hora: 07:25</p>
-                        <p>Alimentacion: ${settings.type}</p>
-                        <p>Precio: $${settings.price}</p>
-                    </div>
-                    <div class="card-right">
-                        <p> ${doc.recoleccion.total}KG</p>
-                        <h3>Recolectado</h3>
-                    </div>
-                </div>
-            </div> `
-
+      nuevoDiv.innerHTML = cardRecolectorHTML(
+        nameRecolector,
+        nameLotes,
+        settings.type,
+        settings.price,
+        total
+      );
       viewCalendar.appendChild(nuevoDiv)
 
     } catch (error) {
@@ -77,20 +118,25 @@ export async function calendarDayHarvest(dateRecolection) {
   })
 };
 
-export async function updateUI(dateRecolection) {
-  if (!totalCollection) {
-    initDOMVariables();
-  }
-
-  let isEmpty = dateRecolection.length !== 0
-
-  cardInfo.style.display = isEmpty ? "none" : "block";
-  recolectorInfo.style.display = isEmpty ? "block" : "none";
-  viewCalendar.style.display = isEmpty ? "block" : "none";
-  cardSelect.style.display = isEmpty ? "none" : "flex";
-
+const cardRecolectorHTML = (name, nameLote, feeding, price, total) => {
+  return `
+  <div class="card">
+    <div class="card-header">
+      <img src="/src/assets/images/icons/ic_recolector.svg" alt="recolector" loading="lazy">
+      <h2 id="recolectorName">${name}</h2>
+    </div>
+    <div class="card-body">
+      <div class="card-left">
+        <p>Lote: ${nameLote}</p>
+        <p>Hora: 07:25</p>
+        <p>Alimentacion: ${feeding}</p>
+        <p>Precio: $${price}</p>
+    </div>
+    <div class="card-right">
+      <p> ${total}KG</p>
+      <h3>Recolectado</h3>
+      </div>
+    </div>
+  </div> `
 }
-
-
-
 

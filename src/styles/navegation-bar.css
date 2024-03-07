@@ -1,5 +1,3 @@
-@import '../assets/colors/colors.css';
-
 li {
   list-style: none;
 }
@@ -56,8 +54,8 @@ header {
 
 /* Cerrar Sesion */
 .singOut {
-  background-color: var(--color-white);
-  color: var(--color-cinnabar);
+  background-color: white;
+  color: #e63933;
   padding: 0.5rem 1rem;
   border: none;
   outline: none;
@@ -84,7 +82,7 @@ header {
   top: 60px;
   height: 0;
   width: 300px;
-  background: rgba(255, 255, 255, 0.1);
+  background: #e63933a2;
   backdrop-filter: blur(15px);
   border-radius: 10px;
   overflow: hidden;

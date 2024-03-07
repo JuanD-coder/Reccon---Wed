@@ -1,14 +1,25 @@
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-
 import { app } from "../../firebase/firebaseConfig";
 import { getUserData } from "../../components/getUserData";
 
 export const auth = getAuth(app);
 
-/* ID HTML */
 const signUpForm = document.querySelector("#sigup-form");
 const errorMessage = document.getElementById("error-message");
+const container = document.querySelector("#container");
+const registerBtn = document.querySelector("#register");
+const loginBtn = document.querySelector("#login");
 
+if(!registerBtn && loginBtn){
+  registerBtn.addEventListener("click", () => {
+    container.classList.add("active");
+  });
+  
+  loginBtn.addEventListener("click", () => {
+    container.classList.remove("active");
+  });
+}
+ 
 /* User Autentication */
 const handleSignIn = async (email, password) => {
   try {

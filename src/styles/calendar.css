@@ -1,5 +1,3 @@
-@import '../assets/colors/colors.css';
-
 .calendar {
   width: max-content;
   height: 660px;
@@ -11,7 +9,7 @@
 }
 
 .calendar {
-  box-shadow: var(--shadow);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   overflow-y: auto;
 }
 
@@ -20,12 +18,12 @@
 }
 
 .calendar-header {
-  background: var(--color-hippie-green);
+  background: #4a784a;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-weight: 700;
-  color: var(--white);
+  color: white;
   padding: 10px;
   border-radius: 10px 10px 0px 0px;
 }
@@ -51,7 +49,6 @@
 .calendar-week-days div {
   display: grid;
   place-items: center;
-  color: var(--bg-second);
   height: 50px;
 }
 
@@ -81,11 +78,7 @@
 }
 
 .month-picker:hover {
-  background-color: var(--color-hover);
-}
-
-.month-picker:hover {
-  color: var(--color-txt);
+  background-color: #f0f0f0;
 }
 
 .year-picker {
@@ -104,14 +97,11 @@
 }
 
 .year-change:hover {
-  background-color: var(--light-btn);
-  transition: all .2s ease-in-out;
+  background-color: #96f0b1 all .2s ease-in-out;
   transform: scale(1.12);
 }
 
-.year-change:hover pre {
-  color: var(--bg-body);
-}
+
 
 .calendar-footer {
   padding: 10px;
@@ -136,20 +126,20 @@
 
 .calendar-days div:hover {
   transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
-  background-color: var(--color-Ligth-Green);
+  background-color: #3878254a;
   border-radius: 20%;
-  color: var(--dark-text);
+  color: #f8fbff;
 }
 
 .calendar-days div.current-date {
-  color: var(--dark-text);
-  background-color: var(--color-hippie-green);
+  color: #f8fbff;
+  background-color: #4a784a;
   border-radius: 20%;
 }
 
 .calendar-days div.current-date-color {
-  color: var(--dark-text);
-  background-color: var(--color-Ligth-Green);
+  color: #f8fbff;
+  background-color: #3878254a;
   border-radius: 20%;
 }
 
@@ -158,7 +148,7 @@
   left: 0;
   top: -10px;
   background-color: #fcf1f1;
-  color: var(--light-text);
+  color: #151426;
   display: grid;
   grid-template-columns: repeat(2, auto);
   gap: 5px;
@@ -179,8 +169,8 @@
 }
 
 .month-list>div>div:hover {
-  background-color: var(--color-hippie-green);
-  color: var(--dark-text);
+  background-color: #4a784a;
+  color: #f8fbff;
   transform: scale(0.9);
   transition: all 0.2s ease-in-out;
 }
@@ -217,7 +207,7 @@
   font-family: Microsoft JhengHei UI;
   font-size: 1.4rem;
   padding-right: 5%;
-  border-right: 3px solid var(--color-hippie-green);
+  border-right: 3px solid #4a784a;
   position: absolute;
 }
 
