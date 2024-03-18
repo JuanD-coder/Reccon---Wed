@@ -1,4 +1,4 @@
-import { getDoc, doc, collection, getDocs, } from "firebase/firestore";
+import { getDoc, doc, collection, getDocs, query, where, } from "firebase/firestore";
 import { database } from "../firebase/firebaseConfig";
 
 class FirestoreCollection {
@@ -64,36 +64,29 @@ export class recolectores {
   async getHarverstDate(Date) {
     try {
       const recolector = await FirestoreCollection.getCollecionRef(this.userId, this.recolectores);
-      const recoleccion = [];
       let totalPay = 0;
       let totalharvest = 0;
+      
+      const recoleccion = await Promise.all(recolector.docs.map ( async (recolectorDoc) => {
+        const q = query(collection(recolectorDoc.ref, this.recoleciones), where("date", "==", Date))
+        const recolecionesSnapshot = await getDocs(q);
 
-      for (const recoletorDoc of recolector.docs) {
-        const recolectorData = recoletorDoc.data();
+        const recoleccionData = recolecionesSnapshot.docs.map( async (doc) => {
+          const data = doc.data();
+          const total = await this.settings.getPriceRecolection(data.settings_id);
 
-        const recoleccionesRef = collection(recoletorDoc.ref, this.recoleciones);
-        const recolecionesSnapshot = await getDocs(recoleccionesRef);
+          return {
+            recoleccion: data,
+            recolector_name: recolectorDoc.data().recolector_name,
+            recoleccion_total: totalPay += data.total,
+            recoleccion_pay: totalharvest += data.total * total.price
+          }
+        })
 
-        const filteredRecolecciones = recolecionesSnapshot.docs
-          .filter(recoleccionDoc => recoleccionDoc.data().date === Date);
+        return await Promise.all(recoleccionData)
+      }))
 
-        for (const recoleccionDoc of filteredRecolecciones) {
-          const recolectionData = recoleccionDoc.data();
-          const total = await this.settings.getPriceRecolection(recolectionData.settings_id);
-
-          recoleccion.push({
-            recoleccion: recolectionData,
-            recolector_name: recolectorData.recolector_name,
-            recoleccion_total: totalPay += recolectionData.total,
-            recoleccion_pay: totalharvest += recolectionData.total * total.price
-          });
-
-        }
-      }
-
-      const recolecciones = await Promise.all(recoleccion);
-
-      return recolecciones;
+      return recoleccion.flat();
     } catch (error) {
       console.error(error);
       return [];
@@ -120,21 +113,19 @@ export class lotes {
   async getNameLote(lotesId) {
     try {
       const querySnapshot = await FirestoreCollection.getCollecionRef(this.userId, this.lote)
-      let nameLote = ""
+      let loteName = ""
 
       querySnapshot.forEach((doc) => {
-        let dataLote = doc.data();
-        let id = doc.id
-
-        if (id === lotesId) {
-          nameLote = dataLote.lote_name;
+        if (doc.id === lotesId) {
+          loteName += doc.data().lote_name;
         }
       });
-
-      return nameLote;
+      
+      return loteName;
 
     } catch (error) {
       console.log(`Error al obtener el nombre del lote ${error}`)
+      throw error
     }
   }
 }

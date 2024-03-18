@@ -1,6 +1,8 @@
 import { userID } from "../home/user-home";
 import { lotes, settings, recolectores } from "../../components/getUserData";
 import { createPdfInforme } from "../../components/DocumentPdf";
+import { getDownloadURL, list, listAll, ref } from "firebase/storage";
+import { storege } from "../../firebase/firebaseConfig";
 
 const loteInfo = new lotes(userID)
 const settingsInfo = new settings(userID)
@@ -26,7 +28,15 @@ document.addEventListener('recolectionClicked', async (event) => {
 });
 
 menuSelect.addEventListener("click", () => optionMenu.classList.toggle("active"));
-generateInforme.addEventListener('click', () => createPdfInforme());
+generateInforme.addEventListener('click', async () => {
+  const loadingScreen = document.getElementById('loading-screen');
+  loadingScreen.style.display = 'block'
+
+  const filePath = await createPdfInforme();
+  const pdfURL = URL.createObjectURL(filePath)
+
+  window.open(pdfURL, '_blank')
+});
 
 optionSelect.forEach(item => {
   item.addEventListener('click', () => {
@@ -36,8 +46,12 @@ optionSelect.forEach(item => {
 })
 
 async function initDOMVariables(cardInfoHTML) {
-  await getDateActual()
+  const loadingMessage = document.getElementById("loadingMessage");
+  loadingMessage.style.display = "none";
+
   cardInfoHTML.classList.add('green');
+  await getDateActual();
+  await showHistorialInformes();
 };
 
 async function getDateActual() {
@@ -48,6 +62,34 @@ async function getDateActual() {
   const year = currentDate.getFullYear();
 
   await showRecolection(day, month, year)
+}
+
+async function showHistorialInformes() {
+  try {
+
+    let ruta = `/${userID}/Informes/`
+    const reference = ref(storege, ruta)
+
+    const listPdf = await listAll(reference)
+    const containerList = document.getElementById('card-list-pdf')
+
+    listPdf.items.forEach(async (item) => {
+      const url = await getDownloadURL(item)
+      let nuevoDiv = document.createElement('div');
+
+      nuevoDiv.innerHTML = cardListPDFHistory(item.name)
+      containerList.appendChild(nuevoDiv)
+
+      nuevoDiv.addEventListener('click', () => {
+        window.open(url, '_blank')
+      })
+
+    })
+
+  } catch (error) {
+    console.error("Error al listar archivos:", error);
+    throw error;
+  }
 }
 
 async function showRecolection(today, month, year) {
@@ -87,35 +129,36 @@ async function calendarDayHarvest(dateRecolection) {
     const nameRecolector = doc.recolector_name
     const total = doc.recoleccion.total
     const totalPay = doc.recoleccion_pay
-    const toatalKg = doc.recoleccion_total
+    const totalKg = doc.recoleccion_total
 
-    const nameLotes = await loteInfo.getNameLote(doc.recoleccion.lote_id)
-    const settings = await settingsInfo.getPriceRecolection(doc.recoleccion.settings_id)
+    const [nameLotes, settings] = await Promise.all([
+      loteInfo.getNameLote(doc.recoleccion.lote_id),
+      settingsInfo.getPriceRecolection(doc.recoleccion.settings_id)
+    ]);
 
-    return Promise.all([nameRecolector, nameLotes, settings, total, totalPay, toatalKg])
+    return { nameRecolector, nameLotes, settings, total, totalPay, totalKg };
   });
 
   const results = await Promise.all(promises)
+  const fragment = document.createDocumentFragment();
 
-  results.forEach(async ([nameRecolector, nameLotes, settings, total, totalPay, totalKg]) => {
-    try {
-      totalCollection.textContent = `Total recolectado: ${totalKg} Kg`;
-      totalPayText.textContent = `Total a pagar: $${totalPay}`
+  results.forEach(({ nameRecolector, nameLotes, settings, total, totalPay, totalKg }) => {
+    totalCollection.textContent = `Total recolectado: ${totalKg} Kg`;
+    totalPayText.textContent = `Total a pagar: $${totalPay}`
 
-      let nuevoDiv = document.createElement('div');
-      nuevoDiv.innerHTML = cardRecolectorHTML(
-        nameRecolector,
-        nameLotes,
-        settings.type,
-        settings.price,
-        total
-      );
-      viewCalendar.appendChild(nuevoDiv)
+    let nuevoDiv = document.createElement('div');
+    nuevoDiv.innerHTML = cardRecolectorHTML(
+      nameRecolector,
+      nameLotes,
+      settings.type,
+      settings.price,
+      total
+    );
 
-    } catch (error) {
-      console.error("Error al cargar la recolecion", error)
-    }
-  })
+    fragment.appendChild(nuevoDiv);
+  });
+
+  viewCalendar.appendChild(fragment)
 };
 
 const cardRecolectorHTML = (name, nameLote, feeding, price, total) => {
@@ -138,5 +181,19 @@ const cardRecolectorHTML = (name, nameLote, feeding, price, total) => {
       </div>
     </div>
   </div> `
+}
+
+const cardListPDFHistory = (name) => {
+  return `
+  <div class="cardHistorialInfome">
+    <img src="/src/assets/images/icons/informe-white.png" alt="infome" width="100px" loading="lazy">
+    <div class="column-info">
+      <h3>${name}</h3>
+      <div class="informe-info">
+        <p><b>Tipo:</b> Infome {tipo}</p>
+      </div>
+    </div>
+  </div>
+  `
 }
 

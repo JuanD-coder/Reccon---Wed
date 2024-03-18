@@ -70,7 +70,8 @@
   border-radius: 10px;
 }
 
-.card-body, .card-header {
+.card-body,
+.card-header {
   background-color: #4a784a;
 }
 
@@ -124,15 +125,19 @@
   border-radius: 10px;
 }
 
+.cardHistorialInfome:hover {
+  scale: 1.08;
+  color: white;
+}
+
 .cardHistorialInfome img {
   padding: 2px;
   margin-right: 10px;
 }
 
 .informe-info {
-  width: 100%;
-  height: 65%;
-  padding: 10px;
+  width: 90%;
+  padding: 20px;
   color: black;
   border-radius: 10px;
   display: flex;
@@ -169,11 +174,11 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-.dropdown-select i{
+.dropdown-select i {
   transition: 0.3s;
 }
 
-.dropdown.active .dropdown-select i{
+.dropdown.active .dropdown-select i {
   transform: rotate(-180deg);
 }
 
@@ -198,4 +203,24 @@
 
 .dropdown-list__item:hover {
   background-color: #3878254a;
+}
+
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 9999;
+}
+
+#loading-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 24px;
 }

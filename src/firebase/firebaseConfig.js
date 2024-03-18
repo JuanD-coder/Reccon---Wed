@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { getStorage, ref } from "firebase/storage"
 
 const firebaseConfig = {
   apiKey: "AIzaSyCdQvgdfBV1MESRPFeXJokJBAA1ZlaTcxk",
@@ -16,6 +17,7 @@ const firebaseConfig = {
 /* Initialize Firebase */
 export const app = initializeApp(firebaseConfig);
 export const database = getFirestore(app);
+export const storege = getStorage();
 const analytics = getAnalytics(app);
 
 logEvent(analytics, 'notification_received');

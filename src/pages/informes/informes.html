@@ -86,8 +86,10 @@
       </div>
 
       <div class="select-recolector" id="select-recolector">
+        <div id="loadingMessage" style="display: block;">Cargando...</div>
         <div class="card-info" id="card-info">
-          <img id="imgRecolection" src="/src/assets/images/icons/ic_not_recolection.png" alt="recolector" loading="lazy">
+          <img id="imgRecolection" src="/src/assets/images/icons/ic_not_recolection.png" alt="recolector"
+            loading="lazy">
           <p id="txtNotReclector">No se encontraron recolecciones para ese día</p>
         </div>
       </div>
@@ -119,23 +121,20 @@
         </div>
       </div>
 
-      <h2>Informes generados</h2>
-      <div class="cardHistorialInfome">
-        <img src="/src/assets/images/icons/informe-white.png" alt="infome" width="100px" loading="lazy">
-        <div class="column-info">
-          <h3>Fecha Generado: 2024-10-08</h3>
-          <div class="informe-info">
-            <p><b>Nombre:</b> Informe N° 25</p>
-            <p><b>Tipo:</b> Infome Semanal</p>
-          </div>
-        </div>
+      <!-- Pantalla de carga -->
+      <div id="loading-screen">
+        <div id="loading-message">Generando PDF...</div>
       </div>
+
+      <h2>Informes generados</h2>
+      <div id="card-list-pdf"></div>
+      
     </div>
   </div>
 
-  <script src="https://kit.fontawesome.com/7db13a2d0e.js" crossorigin="anonymous"></script>
-  <script async="async" src="/src/components/calendar.js" type="module"></script>
-  <script async="async" src="/dist/informes.bundle.js" type="module"></script>
+  <script src="https://kit.fontawesome.com/7db13a2d0e.js" crossorigin="anonymous" defer></script>
+  <script async="async" src="/src/components/calendar.js" type="module" defer></script>
+  <script async="async" src="/dist/informes.bundle.js" type="module" defer></script>
 
 </body>
 

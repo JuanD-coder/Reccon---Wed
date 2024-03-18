@@ -1,19 +1,27 @@
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import { ref, uploadBytes } from "firebase/storage";
+import { storege } from "../firebase/firebaseConfig";
 import { getActivesPrices, userID } from '../pages/home/user-home';
 import { lotes, recolectores } from './getUserData';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 const getPrices = await getActivesPrices()
+let totalKg = 0
+let totalPay = 0
 
 const docDefinition = {
+  info: {
+    title: `Informe {tipoInfome} ${date()}`
+  },
   content: [
+    /* Encabezado */
     {
       image: await getImageBase64('../../assets/images/header.png'),
-      width: 600, 
-      height: 230, 
-      absolutePosition: { x: -1, y: -1 },      
+      width: 600,
+      height: 230,
+      absolutePosition: { x: -1, y: -1 },
     },
     {
       alignment: 'justify',
@@ -35,6 +43,7 @@ const docDefinition = {
         }
       ],
     },
+    /* Precios */
     {
       text: 'Precios Vigentes: ',
       color: 'black',
@@ -53,7 +62,6 @@ const docDefinition = {
       layout: 'headerLineOnly'
     },
     {
-      /* Historial de informes */
       style: 'tableExample',
       table: {
         widths: [165, 80],
@@ -72,18 +80,19 @@ const docDefinition = {
         }
       }
     },
+    /* Resumen de la Recoleccion */
     {
-      text: 'Resumen ${Tipo de Informe} de la Recolección del Café:',
-      color: 'black',
       margin: [15, 5, 0, 0],
-      style: 'textBold'
+      bold: true,
+      fontSize: 18,
+      color: 'black',
+      text: 'Resumen ${Tipo de Informe} de la Recolección del Café:',
     },
     {
       /* Tabla del Resumen */
-      margin: [15, 5, 0, 0],
+      style: 'tableExample',
       table: {
         widths: ['auto', 'auto', 'auto', 'auto', 'auto'],
-        /* headerRows: 2, */
         body: await tableDetail(),
       },
       layout: {
@@ -113,13 +122,59 @@ const docDefinition = {
         },
       }
     },
-    /* {
-      /* Total de la Recoleccion 
-      table: {
-        widths: ['auto'],
-        body: [["total"]]
-      }
-    } */
+    {
+
+      style: 'tableExample',
+      alignment: 'justify',
+      columns: [
+        {
+          with: 500,
+          text: " ",
+          alignment: "right"
+        },
+        {
+          with: 500,
+          text: " ",
+          alignment: "right"
+        },
+        {
+          with: 500,
+          text: "Total: ",
+          alignment: 'right',
+          fontSize: 18,
+        },
+        {
+          with: 5,
+          text: `${totalKg} Kg`,
+          alignment: 'right',
+          fontSize: 18,
+        },
+        {
+          with: 5,
+          text: `$ ${totalPay}`,
+          alignment: 'right',
+          fontSize: 18,
+        }
+      ],
+    },
+    /* Pie de Pagina */
+    {
+      margin: [0, 100, 0, 0],
+      columns: [
+        {
+          width: "*",
+          text: "Con cada semana de recolección, avanzamos hacia la \n excelencia en nuestra producción cafetera. \n ¡Sigamos cosechando éxitos juntos!",
+          alignment: 'left',
+          fontSize: 13,
+          bold: true
+        },
+        {
+          width: 100,
+          image: await getImageBase64('../../assets/images/icons/granja.png'),
+          alignment: 'right'
+        }
+      ]
+    }
   ],
   styles: {
     header: {
@@ -152,14 +207,39 @@ const docDefinition = {
   }
 };
 
+function date() {
+  const currentDate = new Date();
+
+  const pad2 = (num) => num.toString().padStart(2, '0');
+  const month = currentDate.getMonth();
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const fechaFormateada = `${pad2(month + 1)}-${day}-${currentDate.getFullYear()}`;
+
+  return fechaFormateada
+}
+
+export let pdfDocGenerator = pdfMake.createPdf(docDefinition)
 export async function createPdfInforme() {
-  pdfMake.createPdf(docDefinition).open({}, window.open('', '_blank'));
+  return new Promise((resolve, reject) => {
+    pdfDocGenerator.getBlob(async function (blob) {
+      try {
+        let storageRef = ref(storege, `${userID}/Informes/Informe-{tipoInfome}-${date()}`)
+        await uploadBytes(storageRef, blob);
+
+        resolve(blob)
+      } catch (error) {
+        console.error('Error al subir el archivo:', error);
+        reject(error)
+      }
+    });
+  })
+
 }
 
 async function getImageBase64(imageUrl) {
   return new Promise((resolve, reject) => {
     const cachedImage = sessionStorage.getItem(imageUrl);
-    
+
     if (cachedImage) {
       resolve(cachedImage);
       return;
@@ -228,19 +308,20 @@ async function tableDetail() {
 
     const rowSpan = lotesArray.length;
 
+    totalKg += getRecolecion.totalKg
+    totalPay += getRecolecion.totalPay
+
     lotesArray.forEach((loteName, index) => {
       columnTable.push([
         { rowSpan: index === 0 ? rowSpan : 0, text: index === 0 ? recolectorName : '', style: 'tableReportHeader', fontSize: 15 },
-        { rowSpan: index === 0 ? rowSpan : 0, text: '', fontSize: 15 }, 
-        { text: loteName, fontSize: 15 },
-        { rowSpan: index === 0 ? rowSpan : 0, text: `${getRecolecion.totalKg} Kg`, fontSize: 15 }, 
-        { rowSpan: index === 0 ? rowSpan : 0, text: `$${getRecolecion.totalPay}`, fontSize: 15 } 
+        { rowSpan: index === 0 ? rowSpan : 0, text: '', style: 'tableBody', fontSize: 15 },
+        { text: loteName, style: 'tableBody', fontSize: 15 },
+        { rowSpan: index === 0 ? rowSpan : 0, text: `${getRecolecion.totalKg} Kg`, style: 'tableBody', fontSize: 15 },
+        { rowSpan: index === 0 ? rowSpan : 0, text: `$${getRecolecion.totalPay}`, style: 'tableBody', fontSize: 15 }
       ]);
     });
   }
 
   return columnTable;
 }
-
-
 
