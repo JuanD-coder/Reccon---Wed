@@ -1,4 +1,4 @@
-import { lotes, recolectores, settings } from "../../components/getUserData";
+import { lotes, Recolectores, settings } from "../../components/getUserData";
 import { userID } from "../home/user-home";
 
 /* ID HTML */
@@ -11,7 +11,7 @@ const txtCardSelect = document.getElementById("txtNotReclector");
 const header = document.getElementById("header");
 const cardInfo = document.getElementById('card-info');
 
-const recolector = new recolectores(userID)
+const recolector = new Recolectores(userID)
 const getNameRecolectors = await recolector.getRecolectores();
 const lote = new lotes(userID);
 const settingsInfo = new settings(userID)
@@ -33,11 +33,10 @@ async function generateRecolectorElement() {
       let recolectorID = element.recolectorID
 
       if (element.state === true) {
-        const cardHTML = createRecolectionCard(element.name, recolectorID)
         const newDiv = document.createElement('div');
 
         newDiv.classList.add('card');
-        newDiv.innerHTML = cardHTML; /* generar el card */
+        newDiv.innerHTML = createRecolectionCard(element.name, recolectorID)
 
         recolectorElements.push({
           recolectorID,
@@ -136,16 +135,17 @@ function userInformation(data, totalKg, totalPay) {
 }
 
 function createRecolectionCardDetail(data, getNameLote, getSettings) {
+  let stringDate = data.date.split("Hora: ")
   return `
     <div class="card-header">
       <img src="/src/assets/images/icons/bolsa-de-cafe-white.png" alt="recolector" class="name_recolector" loading="lazy">
-      <h2 id="recolectorName">${data.date}</h2>
+      <h3 id="recolectorName">${stringDate[0].trim()}</h3>
     </div>
     <div class="card-body">
       <div class="card-left left">
-        <p>Lote: ${getNameLote}</p>
-        <p>Hora: 07:25</p>
-        <p>Alimentacion: ${getSettings.type}</p>
+        <p>Lote: ${getNameLote.trim()}</p>
+        <p>Hora: ${stringDate[1].trim()}</p>
+        <p>Alimentación: ${getSettings.type.trim()}</p>
         <p>Precio: $${getSettings.price}</p>
       </div>
       <div class="card-right">

@@ -1,4 +1,6 @@
 const path = require('path');
+/* const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin"); */
 
 module.exports = {
   mode: 'development',
@@ -13,5 +15,17 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
+  /* optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        parallel: true, // Aprovechar el paralelismo para una compilación más rápida
+      }),
+      new CssMinimizerPlugin(),
+    ],
+    splitChunks: {
+      chunks: 'all',
+    }
+  }, */
   watch: true
 };

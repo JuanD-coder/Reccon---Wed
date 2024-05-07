@@ -6,33 +6,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/src/styles/navegation-bar.css"> <!-- barra de navegacion -->
-  <link rel="stylesheet" href="/src/styles/user-home.css">
+  <link rel="stylesheet" href="./user-home.css">
   <title>Inicio</title>
 </head>
 
 <body>
   <header>
-    <div class="navbar">
+    <nav>
       <div class="logo"><a href="#">Bienvenido a RECCON</a></div>
-      <ul class="links">
-        <li><a href="./user-home.html">Inicio</a></li>
-        <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>
-        <li><a href="../informes/informes.html">Informes</a></li>
-        <li><a href="Ayuda">Ayuda</a></li>
-      </ul>
-      <a href="#" class="singOut" id="singOut">Cerrar Sesion</a>
+      <a href="#" class="singOut button" id="singOut">Cerrar Sesion</a>
       <div class="toggle-btn" id="toggle-btn">
         <i class="fa-solid fa-bars" id="toggle-btn i"></i>
       </div>
-    </div>
+    </nav>
 
     <div class="dropdown-menu" id="dropdown-menu">
-      <li><a href="./user-home.html">Inicio</a></li>
-      <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>
-      <li><a href="../informes/informes.html">Informes</a></li>
       <li><a href="Ayuda">Ayuda</a></li>
-      <li><a href="#" class="singOut" id="singOut">Cerrar Sesión</a></li>
+      <li><a href="#" class="singOut button" id="singOut">Cerrar Sesión</a></li>
     </div>
+
   </header>
 
   <main>
@@ -71,12 +63,13 @@
             <p>Precio por kilo con alimentación</p>
           </div>
           <div class="price">
-            <img src="/src/assets/images/icons/ic_no_alimentacion.svg" alt="ic_no_alimentacion" width="60px" loading="lazy">
+            <img src="/src/assets/images/icons/ic_no_alimentacion.svg" alt="ic_no_alimentacion" width="60px"
+              loading="lazy">
             <h1 id="notFeeding">$0</h1>
             <p>Precio por kilo sin alimentación</p>
           </div>
         </div>
-        
+
         <div class="lotes">
           <h1>Lotes Registrados</h1>
           <div class="scroll-view">

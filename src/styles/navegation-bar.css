@@ -1,28 +1,13 @@
-li {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-  color: #fff;
-  font-size: 1rem;
-}
-
-a:hover {
-  color: #b9da9a;
-}
-
 header {
   width: 100%;
   position: relative;
   padding: 5px 2rem;
 }
 
-.navbar {
+nav {
   height: 60px;
-  margin: 15px 0px 0px 0px;
-  padding-left: 18px;
-  padding-right: 18px;
+  margin: 15px 0;
+  padding: 0 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -30,23 +15,48 @@ header {
   border-radius: 20px;
 }
 
-.navbar .logo a {
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+}
+
+a:hover {
+  color: #b9da9a;
+}
+
+.button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.9rem;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  transition: transform 0.2 ease;
+}
+
+.logo a {
   font-size: 1.5rem;
   font-weight: bold;
 }
 
-.navbar .links {
+.links {
   display: flex;
   gap: 2rem;
 }
 
 .links li:hover {
-  scale: 1.1;
+  transform: scale(1.1);
   color: red;
 }
 
-.navbar .toggle-btn {
-  color: #fff;
+.toggle-btn {
+  color: white;
   font-size: 1.5rem;
   cursor: pointer;
   display: none;
@@ -56,41 +66,33 @@ header {
 .singOut {
   background-color: white;
   color: #e63933;
-  padding: 0.5rem 1rem;
-  border: none;
-  outline: none;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: scale 0.2 ease;
 }
 
 .singOut:hover {
-  scale: 1.05;
+  transform: scale(1.05);
   color: red;
 }
 
 .singOut:active {
-  scale: 0.95;
+  transform: scale(0.95)
 }
 
 /* Dropdow menu */
 .dropdown-menu {
-  position: absolute;
-  right: 2rem;
-  top: 60px;
+  top: 70px;
   height: 0;
+  right: 2rem;
   width: 300px;
+  overflow: hidden;
+  position: absolute;
+  border-radius: 10px;
   background: #e63933a2;
   backdrop-filter: blur(15px);
-  border-radius: 10px;
-  overflow: hidden;
   transition: heigth 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .dropdown-menu.open {
-  height: 240px;
+  height: 180px;
 }
 
 .dropdown-menu li {
@@ -108,12 +110,12 @@ header {
 
 /* Responsive */
 @media (max-width: 992px) {
-  .navbar .links,
-  .navbar .singOut {
+  nav .links,
+  nav .singOut {
     display: none;
   }
 
-  .navbar .toggle-btn {
+  nav .toggle-btn {
     display: block;
   }
 

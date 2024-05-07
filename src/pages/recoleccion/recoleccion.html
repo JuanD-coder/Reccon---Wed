@@ -7,39 +7,37 @@
   <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/src/styles/navegation-bar.css"> <!-- Encabezado -->
   <link rel="stylesheet" href="/src/styles/reutilizables.css"> <!-- Card View y background -->
-  <link rel="stylesheet" href="/src/styles/recoleccion.css">
+  <link rel="stylesheet" href="./recoleccion.css">
   <title>Recolección</title>
 </head>
 
 <body>
   <header>
-    <div class="navbar">
+    <nav>
       <div class="logo"><a href="#">Bienvenido</a></div>
       <ul class="links">
         <li><a href="../home/user-home.html">Inicio</a></li>
         <li><a href="../informes/informes.html">Informes</a></li>
         <li><a href="Ayuda">Ayuda</a></li>
       </ul>
-      <a href="#" class="singOut" id="singOut">Cerrar Sesion</a>
+      <a href="#" class="singOut button" id="singOut">Cerrar Sesion</a>
       <div class="toggle-btn" id="toggle-btn">
         <i class="fa-solid fa-bars" id="toggle-btn i"></i>
       </div>
-    </div>
+    </nav>
 
     <div class="dropdown-menu" id="dropdown-menu">
       <li><a href="../home/user-home.html">Inicio/a></li>
       <li><a href="../informes/informes.html">Informes</a></li>
       <li><a href="Ayuda">Ayuda</a></li>
-      <li><a href="#" class="singOut" id="singOut">Cerrar Sesion</a></li>
+      <li><a href="#" class="singOut button" id="singOut">Cerrar Sesion</a></li>
     </div>
   </header>
 
   <main>
-    <section class="container">
-
       <div class="colum-left">
         <h1>Recolectores</h1>
-        <div class="scroll-bar">
+        <div class="overflow">
           <div class="card recolectors" id="cardRecolector">
             <p> Recolectores registrados</p>
           </div>
@@ -60,14 +58,13 @@
           </div>
         </div>
 
-        <div class="scroll-bar">
-          <div id="information-recolector" class="information-recolector">
+        <div class="overflow">
+          <div id="information-recolector" class="card recolectors">
             <!-- Contenido -->
           </div>
         </div>
       </div>
 
-    </section>
   </main>
 
   <script src="/dist/recoleccion.bundle.js" type="module"></script>

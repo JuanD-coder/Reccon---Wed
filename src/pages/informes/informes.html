@@ -5,49 +5,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="/src/styles/navegation-bar.css"> <!-- EStilos de barra de navegacion -->
-  <link rel="stylesheet" href="/src/styles/calendar.css"> <!-- Estilos del calendario -->
+  <link rel="stylesheet" href="/src/styles/navegation-bar.css"> <!-- Estilos de barra de navegacion -->
   <link rel="stylesheet" href="/src/styles/reutilizables.css"> <!-- Card View y background -->
-  <link rel="stylesheet" href="/src/styles/informes.css">
+  <link rel="stylesheet" href="/src/styles/calendar.css"> <!-- Estilos del calendario -->
+  <link rel="stylesheet" href="./informes.css">
   <title>Informes</title>
 </head>
 
 <body>
   <header>
-    <div class="navbar">
+    <nav>
       <div class="logo"><a href="#">Bienvenido a RECCON </a></div>
       <ul class="links">
         <li><a href="../home/user-home.html">Inicio</a></li>
         <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>
         <li><a href="Ayuda">Ayuda</a></li>
       </ul>
-      <a href="#" class="singOut" id="singOut">Cerrar Sesión</a>
+      <a href="#" class="singOut button" id="singOut">Cerrar Sesión</a>
       <div class="toggle-btn" id="toggle-btn">
         <i class="fa-solid fa-bars" id="toggle-btn i"></i>
       </div>
-    </div>
+    </nav>
 
     <div class="dropdown-menu" id="dropdown-menu">
-      <<li><a href="../home/user-home.html">Inicio</a></li>
-        <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>>
-        <li><a href="Ayuda">Ayuda</a></li>
-        <li><a href="#" class="singOut" id="singOut">Cerrar Sesión</a></li>
+      <li><a href="../home/user-home.html">Inicio</a></li>
+      <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>
+      <li><a href="Ayuda">Ayuda</a></li>
+      <li><a href="#" class="singOut button" id="singOut">Cerrar Sesión</a></li>
     </div>
   </header>
 
-  <div class="container">
-    <div class="column-left">
+  <main>
+    <div class="column-left center">
       <!-- calendario -->
-      <div class="calendar">
+      <div class="calendar ">
         <div class="calendar-header">
           <span class="month-picker" id="month-picker"> May </span>
           <div class="year-picker" id="year-picker">
             <span class="year-change" id="pre-year">
-              <pre><</pre>
+              <pre> < </pre>
             </span>
             <span id="year">2020 </span>
             <span class="year-change" id="next-year">
-              <pre>></pre>
+              <pre> > </pre>
             </span>
           </div>
         </div>
@@ -75,11 +75,12 @@
             <div class="date-formate">23 - july - 2022</div>
           </div>
         </div>
-        <div class="month-list"></div>
+        <div class="month-list"> <!-- lista de los meses --> </div>
       </div>
     </div>
 
-    <div class="recolector-info">
+    <div class="recolector-info center">
+
       <div id="header" class="header-info-calendar">
         <p id="recolectado">Total recolectado: Kg</p>
         <p id="pagar">Total a pagar: $ </p>
@@ -94,21 +95,22 @@
         </div>
       </div>
 
-      <div id="recolector-calendar" class="recolector-calendar">
+      <div id="recolector-calendar" class="recolectors-day overflow">
         <!-- Lista de recoleciones -->
       </div>
 
     </div>
 
-    <div class="informes">
+    <div class="informes center">
 
       <div class="generateInforme">
-        <img src="/src/assets/images/icons/bebida-caliente-white.png" alt="Informe" width="100px" loading="lazy">
-        <div class="column-info">
+        <img src="/src/assets/images/icons/bebida-caliente-white.png" alt="Informe" width="105px" loading="lazy">
+        <div class="column-info center">
           <span>Seleciones un tipo de informe</span>
+
           <div class="dropdown">
             <div class="dropdown-select">
-              <p class="select">Informe</p>
+              <p class="select">Tipo informe</p>
               <i class="fa-solid fa-angle-down"></i>
             </div>
             <div class="dropdown-list">
@@ -117,20 +119,29 @@
               <p class="dropdown-list__item">Informe Anual</p>
             </div>
           </div>
-          <a href="#" class="singOut" id="btn-informe">Generar Informe</a>
+
+          <a href="#" class="button singOut" id="btn-informe">Generar Informe</a>
         </div>
       </div>
 
       <!-- Pantalla de carga -->
       <div id="loading-screen">
-        <div id="loading-message">Generando PDF...</div>
+        <div id="loading-message" class="center">
+          <div class="loading">
+            <div class="pelotas"></div>
+            <div class="pelotas"></div>
+            <div class="pelotas"></div>
+          </div>
+
+          <span class="texto-cargando"> <b>Generando Informe PDF ...</b> </span>
+        </div>
       </div>
 
       <h2>Informes generados</h2>
-      <div id="card-list-pdf"></div>
-      
+      <div id="card-list-pdf" class="overflow center"> <!-- Historial de PDF --> </div>
+
     </div>
-  </div>
+  </main>
 
   <script src="https://kit.fontawesome.com/7db13a2d0e.js" crossorigin="anonymous" defer></script>
   <script async="async" src="/src/components/calendar.js" type="module" defer></script>

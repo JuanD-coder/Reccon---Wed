@@ -19,7 +19,7 @@ class FirestoreCollection {
   }
 }
 
-export class recolectores {
+export class Recolectores {
   constructor(userId) {
     this.userId = userId
     this.settings = new settings(userId)
@@ -27,7 +27,6 @@ export class recolectores {
     this.recolectores = 'recolectores'
   }
 
-  /* Obtener los recolectores */
   async getRecolectores() {
     try {
       return await FirestoreCollection.getCollecionRef(this.userId, this.recolectores);
@@ -41,12 +40,11 @@ export class recolectores {
   async getHarverst(recolectorId) {
     try {
       const recolecciones = await FirestoreCollection.getSubCollecionRef(this.userId, this.recolectores, recolectorId, this.recoleciones);
-
       let totalPay = 0;
       let totalKg = 0;
 
-      for (const recoletorDoc of recolecciones.docs) {
-        const hasvertsData = recoletorDoc.data();
+      for (const recoleccion of recolecciones.docs) {
+        const hasvertsData = recoleccion.data();
         const price = await this.settings.getPriceRecolection(hasvertsData.settings_id);
 
         totalKg += hasvertsData.total;
@@ -59,39 +57,74 @@ export class recolectores {
       console.error(`Error en recolecion consulta ${error}`);
       throw error;
     }
-  };
+  }
 
-  async getHarverstDate(Date) {
+  getHarverstDateWeek(weekDays) {
+    return this.getHarvestByYearAndMonth(weekDays)
+  }
+
+  getHarverstDateCalendar(Date) {
+    return this.getHarvestByYearAndMonth(Date);
+  }
+
+  getHarverstDateMonth(month, year) {
+    return this.getHarvestByYearAndMonth(year, month)
+  }
+
+  getHarverstDateYear(year) {
+    return this.getHarvestByYearAndMonth(year)
+  }
+
+  async getHarvestByYearAndMonth(yearOrWeekDays, month = null) {
     try {
       const recolector = await FirestoreCollection.getCollecionRef(this.userId, this.recolectores);
-      let totalPay = 0;
-      let totalharvest = 0;
-      
-      const recoleccion = await Promise.all(recolector.docs.map ( async (recolectorDoc) => {
-        const q = query(collection(recolectorDoc.ref, this.recoleciones), where("date", "==", Date))
+      const recolecciones = [];
+
+      const filterByDate = (fecha) => {
+        if (Array.isArray(yearOrWeekDays)) {  /* Si se obtienen los dias de la semana actual */
+          return yearOrWeekDays.some(day => fecha.includes(day));
+        }
+
+        if (month !== null) { /* se obtine el mes del año */
+          return fecha.includes(yearOrWeekDays) && fecha.includes(month);
+        }
+
+        return fecha.includes(yearOrWeekDays); /* solo se obtine solo el año */
+      };
+
+      for (const recolectorDoc of recolector.docs) {
+        const q = query(collection(recolectorDoc.ref, this.recoleciones));
         const recolecionesSnapshot = await getDocs(q);
 
-        const recoleccionData = recolecionesSnapshot.docs.map( async (doc) => {
-          const data = doc.data();
-          const total = await this.settings.getPriceRecolection(data.settings_id);
+        const data = recolecionesSnapshot.docs
+          .filter(doc => filterByDate(doc.data().date))
+          .map(doc => this.getInfomationDate(doc.data(), recolectorDoc));
 
-          return {
-            recoleccion: data,
-            recolector_name: recolectorDoc.data().recolector_name,
-            recoleccion_total: totalPay += data.total,
-            recoleccion_pay: totalharvest += data.total * total.price
-          }
-        })
+        recolecciones.push(...await Promise.all(data));
+      }
 
-        return await Promise.all(recoleccionData)
-      }))
-
-      return recoleccion.flat();
-    } catch (error) {
-      console.error(error);
+      return recolecciones;
+    } catch (e) {
+      console.error(e);
       return [];
     }
   }
+
+  async getInfomationDate(data, doc) {
+    let totalPay = 0;
+    let totalharvest = 0;
+
+    const total = await this.settings.getPriceRecolection(data.settings_id);
+
+    return {
+      recoleccion: data,
+      recolector_name: doc.data().recolector_name,
+      recoleccion_total: totalPay += data.total,
+      recoleccion_pay: totalharvest += data.total * total.price
+    }
+
+  }
+
 };
 
 export class lotes {
@@ -103,7 +136,7 @@ export class lotes {
   /* Obtener los lotes */
   async getLotesData() {
     try {
-      return  FirestoreCollection.getCollecionRef(this.userId, this.lote);;
+      return FirestoreCollection.getCollecionRef(this.userId, this.lote);;
     } catch (error) {
       console.error(`Error de lotes: ${error}`)
       throw error;
@@ -120,7 +153,7 @@ export class lotes {
           loteName += doc.data().lote_name;
         }
       });
-      
+
       return loteName;
 
     } catch (error) {

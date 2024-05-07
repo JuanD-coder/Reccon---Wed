@@ -1,16 +1,12 @@
 .calendar {
-  width: max-content;
   height: 660px;
-  background-color: rgba(255, 255, 255, 0.719);
-  border-radius: 25px;
-  overflow: hidden;
-  padding: 20px 50px 0px 50px;
+  width: max-content;
+  overflow: hidden auto;
   margin-bottom: 10px;
-}
-
-.calendar {
+  border-radius: 25px;
+  padding: 20px 50px 0;
+  background-color: rgba(255, 255, 255, 0.719);
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  overflow-y: auto;
 }
 
 .calendar::-webkit-scrollbar {
@@ -18,13 +14,13 @@
 }
 
 .calendar-header {
-  background: #4a784a;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 700;
-  color: white;
   padding: 10px;
+  color: white;
+  font-weight: 700;
+  align-items: center;
+  background: #4a784a;
+  justify-content: space-between;
   border-radius: 10px 10px 0px 0px;
 }
 
@@ -34,10 +30,16 @@
 
 .calendar-week-days {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  font-weight: 600;
   cursor: pointer;
+  font-weight: 600;
   color: rgb(17, 17, 17);
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-week-days div {
+  height: 50px;
+  display: grid;
+  place-items: center;
 }
 
 .calendar-week-days div:hover {
@@ -46,78 +48,24 @@
   transition: all .2s ease-in-out;
 }
 
-.calendar-week-days div {
-  display: grid;
-  place-items: center;
-  height: 50px;
-}
-
 .calendar-days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
   gap: 2px;
+  display: grid;
   color: black;
+  margin-top: -30px;
+  grid-template-columns: repeat(7, 1fr);
 }
 
 .calendar-days div {
   width: 37px;
   height: 33px;
+  padding: 5px;
   display: flex;
+  cursor: pointer;
+  position: relative;
   align-items: center;
   justify-content: center;
-  padding: 5px;
-  position: relative;
-  cursor: pointer;
   animation: to-top 1s forwards;
-}
-
-.month-picker {
-  padding: 5px 10px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.month-picker:hover {
-  background-color: #f0f0f0;
-}
-
-.year-picker {
-  display: flex;
-  align-items: center;
-}
-
-.year-change {
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  margin: 0px 10px;
-  cursor: pointer;
-}
-
-.year-change:hover {
-  background-color: #96f0b1 all .2s ease-in-out;
-  transform: scale(1.12);
-}
-
-
-
-.calendar-footer {
-  padding: 10px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-#year:hover {
-  cursor: pointer;
-  transform: scale(1.2);
-  transition: all 0.2 ease-in-out;
-}
-
-.calendar-days {
-  margin-top: -30px;
 }
 
 .calendar-days div span {
@@ -131,54 +79,71 @@
   color: #f8fbff;
 }
 
-.calendar-days div.current-date {
+.calendar-days div.current-date,
+.calendar-days div.current-date-color {
   color: #f8fbff;
-  background-color: #4a784a;
   border-radius: 20%;
+}
+
+.calendar-days div.current-date {
+  background-color: #4a784a;
 }
 
 .calendar-days div.current-date-color {
-  color: #f8fbff;
   background-color: #3878254a;
-  border-radius: 20%;
+}
+
+.calendar-footer {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.month-picker {
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.month-picker:hover {
+  background-color: #f0f0f0;
+  color: #4a784a;
 }
 
 .month-list {
-  position: relative;
   left: 0;
-  top: -10px;
-  background-color: #fcf1f1;
-  color: #151426;
-  display: grid;
-  grid-template-columns: repeat(2, auto);
   gap: 5px;
+  top: -10px;
+  display: grid;
+  color: white;
+  position: relative;
   border-radius: 20px;
+  background-color: #4a784ada;
+  grid-template-columns: repeat(2, auto);
 }
 
 .month-list>div {
   display: grid;
-  place-content: center;
-  margin: 5px 10px;
-  transition: all 0.2s ease-in-out;
-}
-
-.month-list>div>div {
-  border-radius: 15px;
   padding: 10px;
   cursor: pointer;
+  margin: 5px 10px;
+  border-radius: 15px;
+  place-content: center;
+  transition: all 0.2s ease-in-out;
 }
 
-.month-list>div>div:hover {
-  background-color: #4a784a;
-  color: #f8fbff;
+.month-list>div:hover {
+  color: #4a784a;
+  font-weight: bold;
   transform: scale(0.9);
-  transition: all 0.2s ease-in-out;
+  background-color: white;
 }
 
 .month-list.show {
   visibility: visible;
   pointer-events: visible;
-  transition: 0.6s ease-in-out;
+  transition: visibility 0s, opacity 0.6s ease-in-out;
   animation: to-left .71s forwards;
 }
 
@@ -188,38 +153,66 @@
 
 .month-list.hide {
   animation: to-right 1s forwards;
-  visibility: none;
-  pointer-events: none;
+}
+
+.year-picker {
+  display: flex;
+  align-items: center;
+}
+
+.year-change {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  cursor: pointer;
+  margin: 0px 10px;
+  border-radius: 50%;
+  place-items: center;
+}
+
+.year-change:hover {
+  background-color: #61915c9a;
+  transform: scale(1.12);
+}
+
+#year:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: all 0.2 ease-in-out;
+}
+
+.date-formate {
+  margin-top: 6px;
 }
 
 .date-time-formate {
+  top: 90px;
+  color: black;
+  position: relative;
   width: max-content;
   height: max-content;
-  font-family: Dubai Light, Century Gothic;
-  position: relative;
   display: inline-table;
-  top: 90px;
   justify-content: center;
-  color: black;
-}
-
-.day-text-formate {
-  font-family: Microsoft JhengHei UI;
-  font-size: 1.4rem;
-  padding-right: 5%;
-  border-right: 3px solid #4a784a;
-  position: absolute;
+  font-family: Dubai Light, Century Gothic;
 }
 
 .date-time-value {
-  display: flex;
-  height: max-content;
   width: max-content;
+  height: max-content;
+  display: flex;
+  margin-top: 1px;
+  text-align: center;
   align-items: center;
   flex-direction: column;
   justify-content: flex-start;
-  margin-top: 1px;
-  text-align: center;
+}
+
+.day-text-formate {
+  padding-right: 5%;
+  font-size: 1.4rem;
+  position: absolute;
+  border-right: 3px solid #4a784a;
+  font-family: Microsoft JhengHei UI;
 }
 
 .time-formate {
@@ -228,31 +221,15 @@
   margin-top: 2px;
 }
 
-.date-formate {
-  margin-top: 6px;
-}
-
-.time-formate.hideTime {
-  animation: hidetime 1.5s forwards;
-}
-
+.time-formate.hideTime,
+.date-formate.hideTime,
 .day-text-formate.hidetime {
   animation: hidetime 1.5s forwards;
 }
 
-.date-formate.hideTime {
-  animation: hidetime 1.5s forwards;
-}
-
+.time-formate.showtime,
+.date-formate.showtime,
 .day-text-formate.showtime {
-  animation: showtime 1s forwards;
-}
-
-.time-formate.showtime {
-  animation: showtime 1s forwards;
-}
-
-.date-formate.showtime {
   animation: showtime 1s forwards;
 }
 

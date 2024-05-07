@@ -22,7 +22,7 @@ const analytics = getAnalytics(app);
 
 logEvent(analytics, 'notification_received');
 
-console.log("Se conecto con FireBase")
+console.log("Se conecto con FireBase DB")
 
 
 
