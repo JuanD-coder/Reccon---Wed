@@ -1,17 +1,18 @@
 @font-face {
   font-family: 'Confortaa';
-  src: url('../assets/fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
+  src: url(/src/assets/fonts/Comfortaa-VariableFont_wght.ttf) format('truetype');
 }
 
-*{
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
-   font-family: 'Confortaa', sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Confortaa', sans-serif;
+  text-align: center;
 }
 
 body{
-  background-image: url(../assets/images/background_main.jpeg);
+  background-image: url(/src/assets/images/background_main.jpeg);
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
@@ -83,14 +84,14 @@ body{
 }
 
 .container input{
-  background-color: #eee;
-  border: none;
-  border-radius: 8px;
-  margin: 5px 0;
-  padding: 10px 15px;
-  font-size: 13px;
   width: 100%;
-  outline: none;
+  border: none;
+  margin: 5px 0;
+  font-size: 13px;
+  text-align: start;
+  border-radius: 8px;
+  padding: 10px 15px;
+  background-color: #eee;
 }
 
 .form-container {
@@ -238,5 +239,9 @@ body{
 
 .container.active .toggle-righ {
   transform: rotateX(200%);
+}
+
+.contacto span {
+  font-size: 15px;
 }
 

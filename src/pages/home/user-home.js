@@ -1,17 +1,15 @@
 import { signOut } from "firebase/auth";
 import { auth, checkAuthState } from "../login";
-import { getUserData, lotes, settings } from "../../components/getUserData";
+import { getUserData, Lotes, Settings } from "../../components/getUserData";
 
 export const userID = await checkAuthState();
-const lotesInfo = new lotes(userID);
-const settingsInfo = new settings(userID)
 const getData = await getUserData(userID);
-const getUserSettings = await settingsInfo.getSettings(userID);
-const getNameLotes = await lotesInfo.getLotesData();
+const settingsInfo = new Settings(userID)
+const lotesInfo = new Lotes(userID);
 
 /* Show Lotes */
 const contenedor = document.getElementById('container-lotes');
-
+const getNameLotes = await lotesInfo.getLotesData();
 getNameLotes.forEach((doc) => {
   let lotes = doc.data();
   let nameLoteDiv = document.createElement('div')
@@ -19,7 +17,7 @@ getNameLotes.forEach((doc) => {
   nameLoteDiv.classList.add('show-lotes')
   nameLoteDiv.innerHTML = `
   <div class="right">
-    <p>${lotes.lote_name}</p>
+    <p>${lotes.name}</p>
     <span><b>Variedad: </b>${lotes.type}</span>  
   </div>
     <img src="/src/assets/images/icons/granja.png" alt="lotes" width="45px" loading="lazy">`
@@ -35,7 +33,7 @@ if (!!priceFeed) priceFeed.textContent = `$${getPrices.activePriceData.yesAlimen
 if (!!priceNotFeed) priceNotFeed.textContent = `$${getPrices.activePriceData.notAliment}`
 
 const userName = document.getElementById("userName");
-if (userName) userName.textContent = getData.user_name
+if (userName) userName.textContent = getData.userName
 
 const cardReport = document.getElementById("card-informe");
 const cardHarvest = document.getElementById("card-recoleccion");
@@ -70,10 +68,11 @@ if (toggleBtn) toggleBtn.addEventListener('click', function () {
   dropDownMenu.classList.toggle('open');
   const isOpen = dropDownMenu.classList.contains('open');
 
-  toggleBtnIcon.classList = isOpen? 'fa-solid fa-xmark': 'fa-solid fa-bars'
+  toggleBtnIcon.classList = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'
 });
 
 export async function getActivesPrices() {
+  const getUserSettings = await settingsInfo.getSettings(userID);
   let activePriceData = {}
   let priceData = []
 
@@ -86,12 +85,12 @@ export async function getActivesPrices() {
       } else {
         activePriceData.notAliment = userData.price
       }
-    } 
+    }
 
     if (userData.state === "save") {
-        priceData.push({alimentacion: userData.aliment, price: userData.price})
+      priceData.push({ alimentacion: userData.aliment, price: userData.price })
     }
   });
 
-  return {activePriceData, priceData};
+  return { activePriceData, priceData };
 }

@@ -21,7 +21,7 @@
         <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>
         <li><a href="Ayuda">Ayuda</a></li>
       </ul>
-      <a href="#" class="singOut button" id="singOut">Cerrar Sesión</a>
+      <a href="#" class="singOut button" id="singOut"> <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a>
       <div class="toggle-btn" id="toggle-btn">
         <i class="fa-solid fa-bars" id="toggle-btn i"></i>
       </div>
@@ -138,6 +138,25 @@
       </div>
 
       <h2>Informes generados</h2>
+      <div class="filter">
+        <span> Filtar Informe:</span>
+        <div class="column-info center">
+          <div class="dropdown">
+            <div class="dropdown-select">
+              <p class="select">Tipo informe</p>
+              <i class="fa-solid fa-angle-down"></i>
+            </div>
+            <div class="dropdown-list">
+              <p class="dropdown-list__item">Informe Semenal</p>
+              <p class="dropdown-list__item">Informe Mensual</p>
+              <p class="dropdown-list__item">Informe Anual</p>
+            </div>
+          </div>
+
+          <a href="#" class="button singOut" id="btn-filter"> <i class="fa-solid fa-filter"></i> Filtrar</a>
+        </div>
+      </div>
+
       <div id="card-list-pdf" class="overflow center"> <!-- Historial de PDF --> </div>
 
     </div>

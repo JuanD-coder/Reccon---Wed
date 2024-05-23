@@ -20,7 +20,7 @@
         <li><a href="../informes/informes.html">Informes</a></li>
         <li><a href="Ayuda">Ayuda</a></li>
       </ul>
-      <a href="#" class="singOut button" id="singOut">Cerrar Sesion</a>
+      <a href="#" class="singOut button" id="singOut"> <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
       <div class="toggle-btn" id="toggle-btn">
         <i class="fa-solid fa-bars" id="toggle-btn i"></i>
       </div>
@@ -35,35 +35,33 @@
   </header>
 
   <main>
-      <div class="colum-left">
-        <h1>Recolectores</h1>
-        <div class="overflow">
-          <div class="card recolectors" id="cardRecolector">
-            <p> Recolectores registrados</p>
-          </div>
+    <div class="colum-left">
+      <h1>Recolectores</h1>
+      <div class="overflow">
+        <div class="card recolectors" id="cardRecolector">
+          <p> Recolectores registrados</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="colum-rigth">
+      <div id="header" class="title-information">
+        <h1 id="titleName">Informacion del recolector Name</h1>
+        <h1 id="titleHarverst">Total Recolectado: 0 KG</h1>
+        <h1 id="titlePay">Total a Pagar: $0 </h1>
+      </div>
+
+      <div id="select-recolector" class="select-recolector">
+        <div id="card-info" class="card-info">
+          <img id="imgRecolection" src="/src/assets/images/icons/ic_recolector.svg" alt="recolector" loading="lazy">
+          <p id="txtNotReclector">Selecione un recolector para mas Información</p>
         </div>
       </div>
 
-      <div class="colum-rigth">
-        <div id="header" class="title-information">
-          <h1 id="titleName">Informacion del recolector "Selecionado"</h1>
-          <h1 id="titleHarverst">Total Recolectado: 0 KG</h1>
-          <h1 id="titlePay">Total a Pagar: $0 </h1>
-        </div>
-
-        <div id="select-recolector" class="select-recolector">
-          <div id="card-info" class="card-info">
-            <img id="imgRecolection" src="/src/assets/images/icons/ic_recolector.svg" alt="recolector" loading="lazy">
-            <p id="txtNotReclector">Selecione un recolector para mas Información</p>
-          </div>
-        </div>
-
-        <div class="overflow">
-          <div id="information-recolector" class="card recolectors">
-            <!-- Contenido -->
-          </div>
-        </div>
+      <div class="overflow">
+        <div id="information-recolector" class="card recolectors"> <!-- Contenido --> </div>
       </div>
+    </div>
 
   </main>
 

@@ -1,21 +1,18 @@
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { storege } from "../../firebase/firebaseConfig";
 import { userID } from "../home/user-home";
-import { lotes, settings, Recolectores } from "../../components/getUserData";
+import { Lotes, Settings, Recolectores } from "../../components/getUserData";
 import { createPdfInforme } from "../../components/DocumentPdf";
 
-const loteInfo = new lotes(userID)
-const settingsInfo = new settings(userID)
+const loteInfo = new Lotes(userID)
+const settingsInfo = new Settings(userID)
 const getRecolector = new Recolectores(userID)
+
+let tipoInforme
 
 const cardInfo = document.getElementById("card-info");
 const viewCalendar = document.getElementById("recolector-calendar");
-
-const optionMenu = document.querySelector(".dropdown");
-const menuSelect = document.querySelector('.dropdown-select');
-const optionSelect = document.querySelectorAll(".dropdown-list__item");
-const selectText = document.querySelector(".select");
-let tipoInforme
+const optionMenus = document.querySelectorAll(".dropdown");
 
 document.addEventListener("DOMContentLoaded", await initDOMVariables(cardInfo));
 document.addEventListener('recolectionClicked', async (event) => {
@@ -23,17 +20,24 @@ document.addEventListener('recolectionClicked', async (event) => {
   await showRecolection(today, month, year)
 });
 
-menuSelect.addEventListener("click", () => optionMenu.classList.toggle("active"));
+optionMenus.forEach(optionMenu => {
+  const menuSelect = optionMenu.querySelector('.dropdown-select');
+  const optionSelects = optionMenu.querySelectorAll(".dropdown-list__item");
+  const selectText = optionMenu.querySelector(".select");
 
-optionSelect.forEach(item => {
-  item.addEventListener('click', () => {
-    selectText.innerText = item.textContent;
-    tipoInforme = item.textContent
-    optionMenu.classList.remove("active")
+  menuSelect.addEventListener("click", () => optionMenu.classList.toggle("active"));
+
+  optionSelects.forEach(optionSelect => {
+    optionSelect.addEventListener('click', () => {
+      selectText.innerText = optionSelect.textContent;
+      tipoInforme = optionSelect.textContent;
+      optionMenu.classList.remove("active");
+    });
   });
 })
 
 async function initDOMVariables(cardInfoHTML) {
+  const btnFilter = document.getElementById('btn-filter');
   const btnGenerateInforme = document.getElementById('btn-informe');
   const loadingMessage = document.getElementById("loadingMessage");
   loadingMessage.style.display = "none";
@@ -43,11 +47,17 @@ async function initDOMVariables(cardInfoHTML) {
   await showHistorialInformes();
 
   btnGenerateInforme.addEventListener('click', generateInformePDF);
+  btnFilter.addEventListener('click', () => {
+    if (!tipoInforme) {
+      window.alert("Por favor, seleccione un tipo de informe antes de aplicar el filtro");
+      return;
+    }
+    showHistorialInformes(tipoInforme)
+  })
 };
 
 async function generateInformePDF() {
-
-  if (selectText.innerText === "Tipo informe") {
+  if (tipoInforme === "Tipo informe") {
     window.alert("Selecione un tipo de Informe")
     return;
   }
@@ -56,7 +66,7 @@ async function generateInformePDF() {
   loadingScreen.style.display = 'block'
 
   try {
-    const filePath = await createPdfInforme(selectText.innerText);
+    const filePath = await createPdfInforme(tipoInforme);
     window.open(filePath, '_blank')
 
   } catch (e) {
@@ -78,26 +88,26 @@ async function getDateActual() {
   await showRecolection(day, month, year)
 }
 
-async function showHistorialInformes() {
+async function showHistorialInformes(type = '') {
   try {
-
-    let ruta = `/${userID}/Informes/`
+    const ruta = `/${userID}/Informes/`
     const reference = ref(storege, ruta)
-
     const listPdf = await listAll(reference)
     const containerList = document.getElementById('card-list-pdf')
 
+    containerList.innerHTML = '';
+
     listPdf.items.forEach(async (item) => {
       const url = await getDownloadURL(item)
-      let nuevoDiv = document.createElement('div');
+      if (type === '' || item.name.includes(type)) {
+        let informeDiv = document.createElement('div');
+        informeDiv.innerHTML = cardListPDFHistory(item.name);
+        containerList.appendChild(informeDiv)
 
-      nuevoDiv.innerHTML = cardListPDFHistory(item.name)
-      containerList.appendChild(nuevoDiv)
-
-      nuevoDiv.addEventListener('click', () => {
-        window.open(url, '_blank')
-      })
-
+        informeDiv.addEventListener('click', () => {
+          window.open(url, '_blank')
+        });
+      }
     })
 
   } catch (error) {
@@ -146,19 +156,21 @@ function updateUI(dateRecolection) {
 async function calendarDayHarvest(dateRecolection) {
   viewCalendar.innerHTML = '<h1>Recolectores</h1>'
 
+  let totalKg = 0
   const infoRecolector = dateRecolection.map(async (doc) => {
-    const nameRecolector = doc.recolector_name
-    const total = doc.recoleccion.total
-    const totalPay = doc.recoleccion_pay
-    const totalKg = doc.recoleccion_total
-
     const [nameLotes, settings] = await Promise.all([
-      loteInfo.getNameLote(doc.recoleccion.lote_id),
-      settingsInfo.getPriceRecolection(doc.recoleccion.settings_id)
+      loteInfo.getNameLote(doc.recoleccion.lote),
+      settingsInfo.getPriceRecolection(doc.recoleccion.configuracion)
     ]);
 
-    return { nameRecolector, nameLotes, settings, total, totalPay, totalKg };
-
+    return {
+      nameLotes,
+      settings,
+      nameRecolector: doc.recolector_name,
+      total: doc.recoleccion.cantidad,
+      totalPay: doc.recoleccion_pay,
+      totalKg: totalKg += doc.recoleccion_total
+    }
   });
 
   const results = await Promise.all(infoRecolector)

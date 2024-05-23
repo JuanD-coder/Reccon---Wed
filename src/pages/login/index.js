@@ -4,22 +4,19 @@ import { getUserData } from "../../components/getUserData";
 
 export const auth = getAuth(app);
 
-const signUpForm = document.querySelector("#sigup-form");
 const errorMessage = document.getElementById("error-message");
 const container = document.querySelector("#container");
-const registerBtn = document.querySelector("#register");
-const loginBtn = document.querySelector("#login");
 
-if(!registerBtn && loginBtn){
-  registerBtn.addEventListener("click", () => {
-    container.classList.add("active");
-  });
-  
-  loginBtn.addEventListener("click", () => {
-    container.classList.remove("active");
-  });
-}
- 
+const registerBtn = document.querySelector("#register");
+if (registerBtn) registerBtn.addEventListener("click", () => {
+  container.classList.add("active");
+});
+
+const loginBtn = document.querySelector("#login");
+if (loginBtn) loginBtn.addEventListener("click", () => {
+  container.classList.remove("active");
+});
+
 /* User Autentication */
 const handleSignIn = async (email, password) => {
   try {
@@ -32,16 +29,16 @@ const handleSignIn = async (email, password) => {
   } catch (error) {
     const errorCode = error.code;
     const errorMessageText = handleAuthError(errorCode);
-    
+
     errorMessage.style.display = "block";
     return errorMessage.textContent = errorMessageText;
   }
 };
 
 /* Manejar Errores */
-const handleAuthError = (error) => {
+const handleAuthError = (errorCode) => {
 
-  switch (error) {
+  switch (errorCode) {
     case 'auth/invalid-credential':
       return "Correo o Contraseña es incorrecta";
 
@@ -70,16 +67,19 @@ const handleAuthError = (error) => {
 
 /* funcion para verificar el estado de autenticacion */
 export const checkAuthState = async () => {
+  const currentPage = window.location.pathname.split('/').pop();
   const user = await new Promise((resolve) => {
     onAuthStateChanged(auth, (user) => {
       resolve(user);
     });
   });
 
-  const isLoggedIn = user !== null;
-  const currentPage = window.location.pathname.split('/').pop();
+  if (!user && currentPage !== 'index.html') {
+    window.location.href = "../login/index.html";
+    return null;
+  }
 
-  if (isLoggedIn && currentPage == 'index.html') {
+  if (user && currentPage == 'index.html') {
     const uid = user.uid;
     console.log("Usuario encontrado:", uid);
     await getUserData(uid);
@@ -87,20 +87,16 @@ export const checkAuthState = async () => {
     window.location.href = "../home/user-home.html";
   }
 
-  if (!isLoggedIn && currentPage !== 'index.html') {
-    console.log("Usuario no autenticado o no encontrado");
-    window.location.href = "../login/index.html";
-  }
-
   return user.uid;
 };
 
 /* Manejar envio y evento del Login */
+const signUpForm = document.querySelector("#sigup-form");
 if (signUpForm) {
   signUpForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = signUpForm['sigup-email'].value //document.querySelector("#sigup-email").value;
-    const password = signUpForm['sigup-password'].value; //document.querySelector("#sigup-password").value;
+    const email = signUpForm['sigup-email'].value
+    const password = signUpForm['sigup-password'].value;
 
     await handleSignIn(email, password);
   });

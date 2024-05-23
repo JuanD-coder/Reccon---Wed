@@ -3,7 +3,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storege } from "../firebase/firebaseConfig";
 import { getActivesPrices, userID } from '../pages/home/user-home';
-import { lotes, Recolectores } from './getUserData';
+import { Lotes, Recolectores } from './getUserData';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 
@@ -75,17 +75,20 @@ async function informe() {
         },
         layout: 'headerLineOnly'
       },
-      {
+      { /* Precios Anteriores */
         style: 'tableExample',
         table: {
           widths: [165, 80],
           body: [
             [{ text: 'Precios Anteriores', colSpan: 2, style: 'tableReportHeader', fontSize: 15 }, {}],
-            ...getPrices.priceData.map((element) => {
-              if (element.alimentacion === 'yes') return [{ text: 'Con Alimentacion:', fontSize: 15 }, { text: `$${element.price}`, style: 'tableBody' }];
-              if (element.alimentacion === 'no') return [{ text: 'Sin Alimentacion:', fontSize: 15 }, { text: `$${element.price}`, style: 'tableBody' }];
-              return ["No hay precios establecidos anteriormente"];
-            })
+            ...getPrices.priceData.length > 0 ?
+              getPrices.priceData.map((element) => {
+                if (element.alimentacion === 'yes') return [{ text: 'Con Alimentacion:', fontSize: 15 }, { text: `$${element.price}`, style: 'tableBody' }];
+                if (element.alimentacion === 'no') return [{ text: 'Sin Alimentacion:', fontSize: 15 }, { text: `$${element.price}`, style: 'tableBody' }];
+                return ["No hay precios establecidos anteriormente"];
+              })
+              :
+              [[{ text: 'No hay precios establecidos anteriormente', colSpan: 2, fontSize: 15 }]]
           ]
         },
         layout: {
@@ -227,6 +230,8 @@ export async function createPdfInforme(type) {
   return new Promise(async (resolve, reject) => {
     typePdf = type;
     const pdf = await informe()
+    totalKg = 0
+    totalPay = 0
     let pdfDocGenerator = pdfMake.createPdf(pdf)
 
     pdfDocGenerator.getBlob(async function (blob) {
@@ -279,7 +284,7 @@ async function getImageBase64(imageUrl) {
 }
 
 async function tableDetail() {
-  const lotesInfo = new lotes(userID);
+  const lotesInfo = new Lotes(userID);
   const docsHarvest = await typeInforme(typePdf);
 
   // Función para contar las ocurrencias de cada recolector
@@ -305,7 +310,7 @@ async function tableDetail() {
 
     for (const recolectorDoc of docsHarvest) {
       const recolectorName = recolectorDoc.recolector_name;
-      const loteId = recolectorDoc.recoleccion.lote_id;
+      const loteId = recolectorDoc.recoleccion.lote;
       const loteName = await lotesInfo.getNameLote(loteId);
       const totalOccurrences = recolectorOccurrences[recolectorName];
 
@@ -326,7 +331,7 @@ async function tableDetail() {
 
     if (columnTable.length <= 1) {
       columnTable.push([
-        { colSpan: 5, border: [false, false, false, false], text: "No se registraron recoleciones para este informe", style: 'tableBody', fontSize: 20 },
+        { colSpan: 5, text: "No se registraron recoleciones para este informe", style: 'tableBody', fontSize: 20 },
       ])
     }
 
@@ -341,7 +346,6 @@ async function tableDetail() {
 
 async function typeInforme(type) {
   const currentDate = new Date()
-  console.log(type)
 
   switch (type) {
     case "Informe Semenal":
