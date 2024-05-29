@@ -1,6 +1,6 @@
 const path = require('path');
-/* const TerserPlugin = require('terser-webpack-plugin');
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin"); */
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -13,19 +13,34 @@ module.exports = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
   },
-  /* optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        parallel: true, // Aprovechar el paralelismo para una compilación más rápida
-      }),
-      new CssMinimizerPlugin(),
-    ],
-    splitChunks: {
-      chunks: 'all',
-    }
-  }, */
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/images/[name][ext]',
+        },
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        type: 'asset/resource',
+        generator: {
+            filename: 'assets/fonts/[name].[contenthash:7][ext]',
+        },
+    },
+    ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin({ filename: 'css/[name].css',}),
+    new CleanWebpackPlugin(),
+  ],
   watch: true
 };

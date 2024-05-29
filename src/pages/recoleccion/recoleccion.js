@@ -1,5 +1,9 @@
 import { Lotes, Recolectores, Settings } from "../../components/getUserData";
 import { userID } from "../home/user-home";
+/* Estilos para la configuracion de webpack */
+import "/src/styles/navegation-bar.css";
+import "/src/styles/reutilizables.css";
+import "./recoleccion.css";
 
 const recolector = new Recolectores(userID)
 const lote = new Lotes(userID);
@@ -73,11 +77,10 @@ async function generateRecolectorElement() {
 async function showRecolection(dataRecolection, nameRecolector) {
   const recolectionData = dataRecolection.recolecciones.docs
   const contenedor = document.getElementById("information-recolector");
-  contenedor.innerHTML = '<h1>Recoleciones registradas</h1>';
 
-  updateUI(dataRecolection, contenedor)
+  updateUI(dataRecolection, contenedor, nameRecolector)
 
-  if (!dataRecolection.empty) {
+  if (isEmptyObject(dataRecolection) === false) {
     renderRecolectionCards(contenedor, recolectionData, nameRecolector);
   }
 }
@@ -87,7 +90,6 @@ async function renderRecolectionCards(contenedor, recolectionData, nameRecolecto
 
   for (const doc of recolectionData) {
     const getDataRecolection = doc.data();
-    console.log(getDataRecolection)
     const getNameLote = await lote.getNameLote(getDataRecolection.lote);
     const getSettings = await settingsInfo.getPriceRecolection(getDataRecolection.configuracion);
 
@@ -97,25 +99,33 @@ async function renderRecolectionCards(contenedor, recolectionData, nameRecolecto
 
     recolectionCards.push(newDiv);
   };
-
   contenedor.append(...recolectionCards);
 }
 
-function updateUI(dateRecolection, contenedor) {
+function isEmptyObject(obj) {
+  const esTotalKgCero = obj.totalKg === 0;
+  const esTotalPayCero = obj.totalPay === 0;
+
+  return esTotalKgCero && esTotalPayCero;
+}
+
+function updateUI(dateRecolection, contenedor, nameRecolector) {
   const cardSelect = document.getElementById("select-recolector");
   const txtCardSelect = document.getElementById("txtNotReclector");
   const imgHarverst = document.getElementById("imgRecolection");
   const header = document.getElementById("header");
-  const isEmpty = dateRecolection.empty;
+  const title = document.getElementById("title-information")
+  const isEmpty = isEmptyObject(dateRecolection);
 
   header.style.display = isEmpty ? "none" : "block";
   contenedor.style.display = isEmpty ? "none" : "block";
   cardSelect.style.display = isEmpty ? "flex" : "none";
+  title.innerHTML = isEmpty ? " " : '<h1>Recoleciones registradas</h1>';
 
   if (isEmpty) {
-    imgHarverst.src = "/src/assets/images/icons/ic_not_recolection.png";
-    txtCardSelect.textContent = "No se encontraron recolecciones en este trabajador";
-  }
+    imgHarverst.src = `${require('../../assets/images/icons/ic_not_recolection.png')}`;
+    txtCardSelect.textContent = `${nameRecolector} no se le regitraron recoleciones hasta ahora`;
+  } 
 }
 
 function userInformation(totalKg, totalPay, name) {
@@ -123,7 +133,7 @@ function userInformation(totalKg, totalPay, name) {
   const titleHarverst = document.getElementById("titleHarverst");
   const titlePay = document.getElementById("titlePay");
 
-  titleName.textContent = `Información del recolector ${name}`;
+  titleName.textContent = `Recolector: ${name}`;
   titleHarverst.textContent = `Total Recolectado: ${totalKg} KG`
   titlePay.textContent = `Total a pagar: $${totalPay}`
 }
@@ -140,7 +150,7 @@ function createRecolectionCardDetail(data, getNameLote, getSettings, getNameReco
 
   return `
     <div class="card-header">
-      <img src="/src/assets/images/icons/bolsa-de-cafe-white.png" alt="recolector" class="name_recolector" loading="lazy">
+      <img src="${require('../../assets/images/icons/bolsa-de-cafe-white.png')}" alt="recolector" class="name_recolector">
       <h3 id="recolectorName">${dateParts[0].trim()}</h3>
     </div>
     <div class="card-body">
@@ -160,12 +170,12 @@ function createRecolectionCardDetail(data, getNameLote, getSettings, getNameReco
 function createRecolectionCard(recolectorName, id) {
   return `  
     <div class="card-header">
-      <img src="/src/assets/images/icons/ic_recolector.svg" alt="recolector" class="name_recolector" loading="lazy">
+      <img src="${require('../../assets/images/icons/ic_recolector.svg')}" alt="recolector" class="name_recolector" loading="lazy">
       <h2 id="recolectorName">${recolectorName}</h2>
     </div>
     <div class="card-body ">
       <div class="card-left" id="element${id}">
-        <img src="/src/assets/images/icons/bolsa-de-cafe.png" alt="granos-de-cafe" width="45px" loading="lazy">
+        <img src="${require('../../assets/images/icons/bolsa-de-cafe.png')}" alt="granos-de-cafe" width="45px" loading="lazy">
         <p>Detalle</p>
       </div>
       <div class="card-right">

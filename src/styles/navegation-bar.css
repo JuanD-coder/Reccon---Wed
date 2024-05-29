@@ -26,7 +26,8 @@ a {
 }
 
 a:hover {
-  color: #b9da9a;
+  font-style: oblique;
+  color: #e4ffca;
 }
 
 .button {
@@ -47,7 +48,7 @@ a:hover {
 
 .links {
   display: flex;
-  gap: 2rem;
+  gap: 4rem;
 }
 
 .links li:hover {
@@ -93,10 +94,12 @@ a:hover {
 
 .dropdown-menu.open {
   height: 180px;
+  padding: 10px;
 }
 
 .dropdown-menu li {
   padding: 0.7rem;
+  margin-top: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,6 +113,14 @@ a:hover {
 
 /* Responsive */
 @media (max-width: 992px) {
+  a:hover {
+    width: 60%;
+    padding: 5px;
+    color: #f80000;
+    background-color: white;
+    border-radius: 10px;
+  }
+
   nav .links,
   nav .singOut {
     display: none;

@@ -4,6 +4,11 @@ import { userID } from "../home/user-home";
 import { Lotes, Settings, Recolectores } from "../../components/getUserData";
 import { createPdfInforme } from "../../components/DocumentPdf";
 
+import "../../styles/navegation-bar.css"; 
+import "../../styles/reutilizables.css";
+import "../../styles/calendar.css"
+import "./informes.css";
+
 const loteInfo = new Lotes(userID)
 const settingsInfo = new Settings(userID)
 const getRecolector = new Recolectores(userID)
@@ -92,7 +97,7 @@ async function showHistorialInformes(type = '') {
   try {
     const ruta = `/${userID}/Informes/`
     const reference = ref(storege, ruta)
-    const listPdf = await listAll(reference)
+    const listPdf = await listAll(reference) /* aqui */
     const containerList = document.getElementById('card-list-pdf')
 
     containerList.innerHTML = '';
@@ -131,16 +136,16 @@ async function showRecolection(today, month, year) {
     if (today?.classList) today.classList.remove('current-date-color')
     if (today?.classList) today.classList.add('current-date')
 
-    updateUI(dateRecolection);
+    updateUI(dateRecolection, "");
     await calendarDayHarvest(dateRecolection);
-
   } else {
-    updateUI(dateRecolection)
+    updateUI(dateRecolection, fechaFormateada)
   }
 }
 
-function updateUI(dateRecolection) {
+function updateUI(dateRecolection, fecha) {
   const cardSelect = document.getElementById("select-recolector");
+  const textInformation = document.getElementById("txtNotReclector")
   const recolectorInfoCard = document.getElementById('header');
 
   let isEmpty = dateRecolection.length !== 0;
@@ -151,10 +156,12 @@ function updateUI(dateRecolection) {
   recolectorInfoCard.style.display = displayStyle;
   viewCalendar.style.display = displayStyle;
   cardSelect.style.display = flexStyle;
+  textInformation.textContent = `No se encontro recoleciones registradas para el dia ${fecha}`
 };
 
 async function calendarDayHarvest(dateRecolection) {
-  viewCalendar.innerHTML = '<h1>Recolectores</h1>'
+  const title = document.getElementById("titleRecolector")
+  title.innerHTML = '<h1>Recolectores</h1>'
 
   let totalKg = 0
   const infoRecolector = dateRecolection.map(async (doc) => {
@@ -202,7 +209,7 @@ function cardRecolectorHTML(name, nameLote, feeding, price, total) {
   return `
   <div class="card recolector-calendar">
     <div class="card-header">
-      <img src="/src/assets/images/icons/ic_recolector.svg" alt="recolector" loading="lazy">
+      <img src="${require('../../assets/images/icons/ic_recolector.svg')}" alt="recolector" loading="lazy">
       <h2 id="recolectorName">${name}</h2>
     </div>
     <div class="card-body">
@@ -224,7 +231,7 @@ function cardListPDFHistory(name) {
   const type = name.split(' ')
   return `
   <div class="cardHistorialInfome">
-    <img src="/src/assets/images/icons/informe-white.png" alt="infome" width="100px" loading="lazy">
+    <img src="${require('../../assets/images/icons/informe-white.png')}" alt="infome" width="100px" loading="lazy">
     <div class="column-info center">
       <h3>${name}</h3>
       <div class="informe-info">

@@ -4,8 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/src/assets/images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/src/styles/navegation-bar.css"> <!-- barra de navegacion -->
+  <link rel="stylesheet" href="/src/styles/reutilizables.css">
   <link rel="stylesheet" href="./user-home.css">
   <title>Inicio</title>
 </head>
@@ -21,15 +22,15 @@
     </nav>
 
     <div class="dropdown-menu" id="dropdown-menu">
-      <li><a href="Ayuda">Ayuda</a></li>
-      <li><a href="#" class="singOut button" id="singOut">Cerrar Sesión</a></li>
+      <li> </li>
+      <a href="#" class="singOut button" id="singOut"> <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesion</a>
     </div>
 
   </header>
 
-  <main>
+  <main style="overflow:hidden">
     <section class="container">
-      <div class="column-left">
+      <div class="column-left overflow">
         <h1 id="userName"> Nombre del lote </h1>
         <div id="card-recoleccion" class="card">
           <div class="card-header recoleccion-header">
@@ -54,7 +55,7 @@
         </div>
       </div>
 
-      <div class="column-right">
+      <div class="column-right overflow">
         <h1>Precios actuales</h1>
         <div class="precios">
           <div class="price">
@@ -72,7 +73,7 @@
 
         <div class="lotes">
           <h1>Lotes Registrados</h1>
-          <div class="scroll-view">
+          <div class="scroll-view overflow">
             <div class="container-lotes" id="container-lotes"> <!-- Name Lotes --> </div>
           </div>
         </div>
@@ -81,8 +82,8 @@
     </section>
   </main>
 
-  <script src="/dist/home.bundle.js" type="module"></script>
   <script src="https://kit.fontawesome.com/7db13a2d0e.js" crossorigin="anonymous"></script>
+  <script async="async" src="/dist/home.bundle.js" type="module" defer></script>
 </body>
 
 </html>

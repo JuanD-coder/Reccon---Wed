@@ -2,6 +2,9 @@ import { signOut } from "firebase/auth";
 import { auth, checkAuthState } from "../login";
 import { getUserData, Lotes, Settings } from "../../components/getUserData";
 
+import '../../styles/navegation-bar.css';
+import './user-home.css';
+
 export const userID = await checkAuthState();
 const getData = await getUserData(userID);
 const settingsInfo = new Settings(userID)
@@ -20,7 +23,7 @@ getNameLotes.forEach((doc) => {
     <p>${lotes.name}</p>
     <span><b>Variedad: </b>${lotes.type}</span>  
   </div>
-    <img src="/src/assets/images/icons/granja.png" alt="lotes" width="45px" loading="lazy">`
+    <img src="${require('../../assets/images/icons/granja.png')}" alt="lotes" width="45px" loading="lazy">`
 
   if (contenedor) contenedor.appendChild(nameLoteDiv);
 })

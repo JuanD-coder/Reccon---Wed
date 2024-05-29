@@ -1,5 +1,3 @@
-const todayShowTime = document.querySelector('.time-formate');
-const todayShowDate = document.querySelector('.date-formate');
 const timeFormate = document.querySelector('.time-formate');
 const dateFormate = document.querySelector('.date-formate');
 const dayTextFormate = document.querySelector('.day-text-formate');
@@ -7,6 +5,22 @@ const dayTextFormate = document.querySelector('.day-text-formate');
 let calendar = document.querySelector('.calendar');
 let month_list = calendar.querySelector('.month-list');
 let month_picker = document.querySelector('#month-picker');
+
+let currentDate = new Date();
+let currentMonth = { value: currentDate.getMonth() };
+let currentYear = { value: currentDate.getFullYear() };
+
+const currshowDate = new Date();
+const showCurrentDateOption = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  weekday: 'long',
+};
+const currentDateFormate = new Intl.DateTimeFormat(
+  'es-MX',
+  showCurrentDateOption
+).format(currshowDate);
 
 const month_names = [
   'Enero',
@@ -34,19 +48,6 @@ const isLeapYear = (year) => {
 
 const getFebDays = (year) => {
   return isLeapYear(year) ? 29 : 28;
-};
-
-month_picker.onclick = () => {
-  month_list.classList.remove('hideonce');
-  month_list.classList.remove('hide');
-  month_list.classList.add('show');
-
-  dayTextFormate.classList.remove('showtime');
-  dayTextFormate.classList.add('hidetime');
-  timeFormate.classList.remove('showtime');
-  timeFormate.classList.add('hideTime');
-  dateFormate.classList.remove('showtime');
-  dateFormate.classList.add('hideTime');
 };
 
 const generateCalendar = async (month, year) => {
@@ -98,6 +99,23 @@ async function getDate(today, month, year) {
   document.dispatchEvent(event);
 };
 
+(function () {
+  month_list.classList.add('hideonce');
+})();
+
+month_picker.onclick = () => {
+  month_list.classList.remove('hideonce');
+  month_list.classList.remove('hide');
+  month_list.classList.add('show');
+
+  dayTextFormate.classList.remove('showtime');
+  dayTextFormate.classList.add('hidetime');
+  timeFormate.classList.remove('showtime');
+  timeFormate.classList.add('hideTime');
+  dateFormate.classList.remove('showtime');
+  dateFormate.classList.add('hideTime');
+};
+
 /* Obtener dias del mes selecionado */
 month_names.forEach((e, index) => {
   let month = document.createElement('div');
@@ -117,10 +135,6 @@ month_names.forEach((e, index) => {
   };
 });
 
-(function () {
-  month_list.classList.add('hideonce');
-})();
-
 document.querySelector('#pre-year').onclick = () => {
   --currentYear.value;
   generateCalendar(currentMonth.value, currentYear.value);
@@ -130,27 +144,14 @@ document.querySelector('#next-year').onclick = () => {
   generateCalendar(currentMonth.value, currentYear.value);
 };
 
-let currentDate = new Date();
-let currentMonth = { value: currentDate.getMonth() };
-let currentYear = { value: currentDate.getFullYear() };
 generateCalendar(currentMonth.value, currentYear.value);
 
-const currshowDate = new Date();
-const showCurrentDateOption = {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-  weekday: 'long',
-};
-const currentDateFormate = new Intl.DateTimeFormat(
-  'es-MX',
-  showCurrentDateOption
-).format(currshowDate);
-
+const todayShowDate = document.querySelector('.date-formate');
 todayShowDate.textContent = currentDateFormate;
 
 /* Formatar para que muestre la hora con los segundos */
 setInterval(() => {
+  const todayShowTime = document.querySelector('.time-formate');
   const timer = new Date();
   const option = {
     hour: 'numeric',
@@ -167,3 +168,4 @@ setInterval(() => {
   )}: ${`${timer.getSeconds()}`.padStart(2, '0')}`;
   todayShowTime.textContent = formateTimer;
 }, 1000);
+

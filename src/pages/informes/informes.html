@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/src/assets/images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/src/styles/navegation-bar.css"> <!-- Estilos de barra de navegacion -->
   <link rel="stylesheet" href="/src/styles/reutilizables.css"> <!-- Card View y background -->
   <link rel="stylesheet" href="/src/styles/calendar.css"> <!-- Estilos del calendario -->
@@ -19,7 +19,6 @@
       <ul class="links">
         <li><a href="../home/user-home.html">Inicio</a></li>
         <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>
-        <li><a href="Ayuda">Ayuda</a></li>
       </ul>
       <a href="#" class="singOut button" id="singOut"> <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a>
       <div class="toggle-btn" id="toggle-btn">
@@ -28,9 +27,9 @@
     </nav>
 
     <div class="dropdown-menu" id="dropdown-menu">
+      <li> </li>
       <li><a href="../home/user-home.html">Inicio</a></li>
       <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>
-      <li><a href="Ayuda">Ayuda</a></li>
       <li><a href="#" class="singOut button" id="singOut">Cerrar Sesión</a></li>
     </div>
   </header>
@@ -43,11 +42,11 @@
           <span class="month-picker" id="month-picker"> May </span>
           <div class="year-picker" id="year-picker">
             <span class="year-change" id="pre-year">
-              <pre> < </pre>
+              <pre> ← </pre>
             </span>
             <span id="year">2020 </span>
             <span class="year-change" id="next-year">
-              <pre> > </pre>
+              <pre> → </pre>
             </span>
           </div>
         </div>
@@ -80,7 +79,6 @@
     </div>
 
     <div class="recolector-info center">
-
       <div id="header" class="header-info-calendar">
         <p id="recolectado">Total recolectado: Kg</p>
         <p id="pagar">Total a pagar: $ </p>
@@ -95,10 +93,8 @@
         </div>
       </div>
 
-      <div id="recolector-calendar" class="recolectors-day overflow">
-        <!-- Lista de recoleciones -->
-      </div>
-
+      <div id="titleRecolector"></div>
+      <div id="recolector-calendar" class="recolectors-day overflow"> <!-- Lista de recoleciones --> </div>
     </div>
 
     <div class="informes center">
@@ -157,7 +153,7 @@
         </div>
       </div>
 
-      <div id="card-list-pdf" class="overflow center"> <!-- Historial de PDF --> </div>
+      <div id="card-list-pdf" class="overflow"> <!-- Historial de PDF --> </div>
 
     </div>
   </main>

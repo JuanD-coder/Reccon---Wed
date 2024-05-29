@@ -118,8 +118,8 @@ nav {
 }
 
 .cardHistorialInfome:hover {
-  scale: 1.02;
-  color: white;
+  transform: scale(1.02);
+  background-color: #5b784ae3;
 }
 
 .cardHistorialInfome img {

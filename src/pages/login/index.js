@@ -2,6 +2,8 @@ import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebas
 import { app } from "../../firebase/firebaseConfig";
 import { getUserData } from "../../components/getUserData";
 
+import "./index.css";
+
 export const auth = getAuth(app);
 
 const errorMessage = document.getElementById("error-message");
@@ -23,7 +25,7 @@ const handleSignIn = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
     const user = userCredential.user;
 
-    window.location.href = "../home/user-home.html";
+    window.location.href = "./user-home.html";
     return user;
 
   } catch (error) {
@@ -75,7 +77,7 @@ export const checkAuthState = async () => {
   });
 
   if (!user && currentPage !== 'index.html') {
-    window.location.href = "../login/index.html";
+    window.location.href = "./index.html";
     return null;
   }
 
@@ -84,7 +86,7 @@ export const checkAuthState = async () => {
     console.log("Usuario encontrado:", uid);
     await getUserData(uid);
 
-    window.location.href = "../home/user-home.html";
+    window.location.href = "./user-home.html";
   }
 
   return user.uid;

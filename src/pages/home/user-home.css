@@ -1,53 +1,30 @@
-@font-face {
-  font-family: 'Confortaa';
-  src: url('/src/assets/fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Confortaa', sans-serif;
-  text-align: center;
-}
-
 body {
-  background-image: url(/src/assets/images/background_main.jpeg);
-  background-position: center;
-  background-size: cover;
-  background-attachment: fixed;
-  backdrop-filter: blur(3px);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  color: #ffff;
-  overflow: hidden;
   margin: 0;
 }
 
 .container {
   height: calc(100vh - 60px);
-  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
-.column-left, .column-right {
-  flex: 1;
-  height: calc(100vh - 60px);
+.column-left,
+.column-right {
+  width: 100%;
+  flex-grow: 1;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  margin: 10px;
   overflow: auto;
 }
 
 .card {
   width: 45%;
-  margin: 15px;
+  margin: 10px auto;
   background-color: white;
   border-radius: 10px;
   cursor: pointer;
@@ -59,8 +36,9 @@ body {
 }
 
 .card-header {
+  flex-direction: column;
   padding: 10px;
-  width: 100%; /* Ancho del título */
+  width: 100%;
   color: white;
 }
 
@@ -69,22 +47,24 @@ body {
   font-weight: bold;
   font-size: large;
   color: black;
+  background-color: white;
 }
 
-.recoleccion-header, .informe-header  {
+.recoleccion-header,
+.informe-header {
   border-top-right-radius: 10px;
-  border-top-left-radius: 10px; /* Esquinas redondeadas */
+  border-top-left-radius: 10px;
 }
 
 .recoleccion-header {
-  background-color: #ff0000; /* Color de fondo rojo */
+  background-color: #ff0000;
 }
 
 .informe-header {
   background-color: green;
 }
 
-.precios{
+.precios {
   display: flex;
   height: 30%;
 }
@@ -123,23 +103,10 @@ body {
 .scroll-view {
   width: 100%;
   min-height: 300px;
-  max-height: 350px;
-  margin-bottom: 15px;
+  max-height: 450px;
   display: flex;
   align-items: start;
   justify-content: center;
-  padding-right: 12px;
-  overflow: hidden;
-  overflow-y: auto;
-}
-
-.scroll-view::-webkit-scrollbar {
-  width: 4px;
-}
-
-.scroll-view::-webkit-scrollbar-thumb {
-  background-color: rgba(253, 200, 200, 0.39);
-  border-radius: 10px;
 }
 
 .show-lotes {
@@ -167,13 +134,53 @@ body {
   align-items: start;
 }
 
-@media (max-height:650px), (max-width: 1120px) {
-  .price p {
-    font-size: 20px;
+@media (max-height:650px),
+(max-width: 1120px) {
+  .scroll-view {
+    height: 85%;
   }
 
-  .scroll-view {
-    min-height: 200px;
-    max-height: 250px;
+  .card {
+    width: 75%;
+    margin: 10px auto;
+  }
+}
+
+
+@media (max-width: 750px) {
+  .container {
+    flex-direction: column-reverse;
+  }
+
+  .column-left,
+  .column-right {
+    width: 100%;
+    height: 100%;
+    justify-content: flex-start;
+  }
+
+  .column-right {
+    max-height: calc(100vh - 200px);
+  }
+
+  .price,
+  .lotes {
+    width: 90%;
+    max-width: 100%;
+  }
+
+  .price {
+    display: flex;
+    flex-direction: column;
+    height: 125%; 
+  }
+
+  .lotes {
+    margin-top: 60px;
+  }
+
+  .card {
+    width: 75%;
+    margin: 10px auto;
   }
 }
