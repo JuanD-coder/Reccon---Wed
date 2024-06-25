@@ -1,6 +1,6 @@
 import { getDownloadURL, listAll, ref } from "firebase/storage";
 import { storege } from "../../firebase/firebaseConfig";
-import { userID } from "../home/user-home";
+import { userID } from "../home/home";
 import { Lotes, Settings, Recolectores } from "../../components/getUserData";
 import { createPdfInforme } from "../../components/DocumentPdf";
 

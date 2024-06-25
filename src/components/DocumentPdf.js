@@ -2,7 +2,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storege } from "../firebase/firebaseConfig";
-import { getActivesPrices, userID } from '../pages/home/user-home';
+import { getActivesPrices, userID } from '../pages/home/home';
 import { Lotes, Recolectores } from './getUserData';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs

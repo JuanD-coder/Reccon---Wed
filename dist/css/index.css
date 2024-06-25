@@ -248,4 +248,22 @@ body{
   font-size: 15px;
 }
 
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+.input-container input[type="password"], .input-container input[type="text"] {
+  width: 100%;
+  padding-right: 40px; /* espacio para el icono */
+}
+
+.input-container .toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 45%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
 

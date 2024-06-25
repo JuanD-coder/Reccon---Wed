@@ -7,19 +7,19 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const pages = [
     {
         name: 'index', template: './src/pages/login/index.html',
-        entry: './src/pages/login/index.js', chunks: ['index', 'navegation-bar']
+        entry: './src/pages/login/index.js', chunks: ['index']
     },
     {
-        name: 'user-home', template: './src/pages/home/user-home.html',
-        entry: './src/pages/home/user-home.js', chunks: ['user-home', 'navegation-bar']
-    },
-    {
-        name: 'informes', template: './src/pages/informes/informes.html',
-        entry: './src/pages/informes/informes.js', chunks: ['informes', 'navegation-bar', 'reutilizables', 'calendar']
+        name: 'home', template: './src/pages/home/home.html',
+        entry: './src/pages/home/home.js', chunks: ['navegation-bar', 'reutilizables', 'home',]
     },
     {
         name: 'recoleccion', template: './src/pages/recoleccion/recoleccion.html',
-        entry: './src/pages/recoleccion/recoleccion.js', chunks: ['recoleccion', 'navegation-bar', 'reutilizables']
+        entry: './src/pages/recoleccion/recoleccion.js', chunks: ['navegation-bar', 'reutilizables', 'recoleccion',]
+    },
+    {
+        name: 'informes', template: './src/pages/informes/informes.html',
+        entry: './src/pages/informes/informes.js', chunks: ['navegation-bar', 'reutilizables', 'calendar', 'informes']
     },
 ];
 
@@ -58,15 +58,6 @@ const config = {
                 generator: {
                     filename: 'assets/images/[name][ext]',
                 },
-                /* use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: 'assets/images/',
-                        },
-                    },
-                ], */
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -93,3 +84,8 @@ const config = {
 }
 
 module.exports = config
+
+/* Scrits
+    "build:dev": "webpack --config ./build/webpack.dev.js",
+    "build:pro": "webpack -- config ./build/webpack.prod.js"
+*/

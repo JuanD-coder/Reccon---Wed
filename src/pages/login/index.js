@@ -25,7 +25,7 @@ const handleSignIn = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password)
     const user = userCredential.user;
 
-    window.location.href = "./user-home.html";
+    window.location.href = "../home/home.html";
     return user;
 
   } catch (error) {
@@ -77,7 +77,7 @@ export const checkAuthState = async () => {
   });
 
   if (!user && currentPage !== 'index.html') {
-    window.location.href = "./index.html";
+    window.location.href = "../login/index.html";
     return null;
   }
 
@@ -86,7 +86,7 @@ export const checkAuthState = async () => {
     console.log("Usuario encontrado:", uid);
     await getUserData(uid);
 
-    window.location.href = "./user-home.html";
+    window.location.href = "../home/home.html";
   }
 
   return user.uid;
@@ -106,3 +106,19 @@ if (signUpForm) {
 
 /* Verificar el estado del usuario */
 checkAuthState();
+
+var togglePasswordIcons = document.querySelectorAll('.toggle-password');
+
+togglePasswordIcons.forEach(function (icon) {
+  icon.addEventListener('click', function () {
+    var targetId = this.getAttribute('data-target');
+    var targetField = document.getElementById(targetId);
+    if (targetField.type === 'password') {
+      targetField.type = 'text';
+      this.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+    } else {
+      targetField.type = 'password';
+      this.innerHTML = '<i class="fa-solid fa-eye"></i>';
+    }
+  });
+});

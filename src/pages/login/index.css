@@ -12,7 +12,7 @@
 }
 
 body{
-  background-image: url(/src/assets/images/background_main.jpeg);
+  background-image: url(/src/assets/images/background/background_main.jpeg);
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
@@ -243,5 +243,23 @@ body{
 
 .contacto span {
   font-size: 15px;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+.input-container input[type="password"], .input-container input[type="text"] {
+  width: 100%;
+  padding-right: 40px; /* espacio para el icono */
+}
+
+.input-container .toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 45%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 

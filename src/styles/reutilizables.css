@@ -12,7 +12,7 @@
 }
 
 body {
-  background-image: url('/src/assets/images/background_main.jpeg');
+  background-image: url('/src/assets/images/background/background_main.jpeg');
   background-position: center;
   background-size: cover;
   background-attachment: fixed;

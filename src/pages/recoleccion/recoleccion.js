@@ -1,5 +1,5 @@
 import { Lotes, Recolectores, Settings } from "../../components/getUserData";
-import { userID } from "../home/user-home";
+import { userID } from "../home/home";
 /* Estilos para la configuracion de webpack */
 import "/src/styles/navegation-bar.css";
 import "/src/styles/reutilizables.css";

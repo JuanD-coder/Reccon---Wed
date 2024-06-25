@@ -14,12 +14,18 @@
   <div class="container" id="container">
     <div class="form-container sign-up">
       <form>
-        <h1> Contacta con nosotros </h1>
-        <span> - Deja tu mensaje - </span>
-        <input type="text" placeholder="Name">
-        <input type="email" placeholder="E-mail">
-        <input type="text" id="sig-up-messaje" placeholder="Tu Mensaje">
-        <button>Enviar Mensaje</button>
+        <h1>Crear una Cuenta</h1> <br>
+        <span> ¡Gracias por unirte a nuestra comunidad de amantes del café! </span> <br>
+        
+        <input type="text" placeholder="Nombre" id="name" name="name" required>
+        <input type="email" placeholder="E-mail" required>
+        <div class="input-container">
+          <input type="password" id="password" name="password" placeholder="Contraseña" required>
+          <span class="toggle-password" data-target="password"><i class="fa-solid fa-eye"></i></span>
+          <!-- Unicode icon for eye -->
+        </div>
+
+        <button>Crear Cuenta</button>
       </form>
     </div>
 
@@ -29,14 +35,15 @@
         <img src="/src/assets/images/logo/reccon_LOGO.png" width="85px">
         <span> <b>Recolección y Contabilidad</b> </span>
 
-        <div class="input-with-icon">
-          <i class="fa-solid fa-envelope"> </i>
+        <div class="input-container">
+          <i class="fa-solid fa-envelope toggle-password"> </i>
           <input type="email" id="sigup-email" placeholder="E-mail" required>
         </div>
 
-        <div class="input-with-icon">
-          <i class="fa-solid fa-lock"> </i>
-          <input type="password" id="sigup-password" placeholder="Contraseña" required>
+        <div class="input-container">
+          <input type="password" id="password-sing-in" name="password-sing-in" placeholder="Contraseña" required>
+          <span class="toggle-password" data-target="password-sing-in"><i class="fa-solid fa-eye"></i></span>
+          <!-- Unicode icon for eye -->
         </div>
 
         <a id="error-message" style="color: red; display: none; margin: 1.5%;"></a>
@@ -49,22 +56,14 @@
     <!-- Mensajes del Login -->
     <div class="toggle-container">
       <div class="toggle">
+
         <div class="toggle-panel toggle-left">
-          <h1> Síguenos!</h1>
-          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium expedita molestiae nemo odio voluptate quis quo ex ea, maiores quasi enim, qui ut sequi accusantium voluptatibus, saepe hic.</p>
-          <div class="contacto">
-            <i class="fa-brands fa-square-facebook"></i>
-            <span> <b>Reccon</b> </span>
-          </div>
-          <div class="contacto">
-            <i class="fa-solid fa-envelope"></i>
-            <span> <b>reccon@gmail.com</b> </span>
-          </div>
-          <div>
-            <i class="fa-solid fa-phone"></i>
-            <span> <b>+57 310 2854 729</b> </span>
-          </div>
-          <button class="hidden" id="login"> Volver a iniciar Sesión </button>
+          <h1> ¡Regístrate ahora! </h1>
+          <p> ¡Nos alegra muchísimo tenerte aquí!. Al unirte a nuestra comunidad, podrás gestionar tu lote cafetero de
+            manera eficiente y efectiva. Completa los campos a continuación para crear tu cuenta y descubre todas las
+            herramientas y recursos que tenemos para ofrecerte.</p>
+          <span> <b> ¿Ya tienes una cuenta? </b> </span>
+          <button class="hidden" id="login"> Iniciar Sesión </button>
         </div>
 
         <div class="toggle-panel toggle-right">
@@ -79,6 +78,7 @@
   </div>
 
   <script src="https://kit.fontawesome.com/7db13a2d0e.js" crossorigin="anonymous"></script>
+  <script src="/dist/index.bundle.js" type="module"></script>
 
 </body>
 

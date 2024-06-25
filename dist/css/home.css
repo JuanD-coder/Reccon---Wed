@@ -248,6 +248,24 @@ body{
   font-size: 15px;
 }
 
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+.input-container input[type="password"], .input-container input[type="text"] {
+  width: 100%;
+  padding-right: 40px; /* espacio para el icono */
+}
+
+.input-container .toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 45%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
 
 /*!*********************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/navegation-bar.css ***!
@@ -400,8 +418,171 @@ a:hover {
 
 
 /*!********************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js!./src/pages/home/user-home.css ***!
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/styles/reutilizables.css ***!
   \********************************************************************************/
+@font-face {
+  font-family: 'Confortaa';
+  src: url(../assets/fonts/Comfortaa-VariableFont_wght.4d2ab5d.ttf) format('truetype');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Confortaa', sans-serif;
+  text-align: center;
+}
+
+body {
+  background-image: url(../assets/images/background_main.jpeg);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  backdrop-filter: blur(3px); /* desenfocar imagen */
+  display: flex;
+  flex-direction: column;
+  height: 100vh; 
+  color: #ffff;
+  overflow: hidden;
+}
+
+main {
+  height: calc(100vh - 60px);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+/* Estilos del card View  */
+.card {
+  width: 100%;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.card-body,
+.card-header {
+  display: flex;
+  color: white;
+  flex-direction: row;
+  align-items: center;
+  background-color: #e63933;
+}
+
+.card-header {
+  width: 100%;
+  padding: 6px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-header img {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+}
+
+.card-body {
+  font-weight: bold;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.card-body p {
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+.card-left {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  color: black;
+  align-items: start;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  padding: 8px 10px 8px 8px;
+  border-radius: 0px 50px 50px 9px;
+}  
+
+.card-left p {
+  font-size: 18px;
+}
+
+.card-right {
+  width: 45%;
+  padding: 10px;
+}
+
+.card-right p{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3px;
+  font-size: 30px;
+}
+
+.card-righ a {
+  font-size: 100px;
+}
+
+.card-info {
+  margin: 10px;
+  display: flex;
+  padding: 18px;
+  border-radius: 25px;
+  visibility: hidden;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #e63333c9;
+}
+
+.card-info.green {
+  background-color: #4a784a;
+  visibility: visible;
+}
+
+.select-recolector {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.select-recolector img {
+  width: 200px;
+  margin-bottom: 12px;
+}
+
+.select-recolector p {
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.overflow {
+  overflow: hidden;
+  overflow-y: auto;
+  padding-right: 8px;
+  margin-bottom: 5px;
+}
+
+.overflow::-webkit-scrollbar {
+  width: 4px;
+}
+
+.overflow::-webkit-scrollbar-thumb {
+  background-color: rgba(239, 253, 200, 0.39);
+  border-radius: 10px;
+}
+/*!***************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./src/pages/home/home.css ***!
+  \***************************************************************************/
 body {
   display: flex;
   align-items: center;
