@@ -6,14 +6,14 @@ module.exports = {
   mode: 'development',
   devtool: 'eval-source-map',
   entry: {
-    index: './src/pages/login/index.js',
-    home: './src/pages/home/home.js',
-    informes: './src/pages/informes/informes.js',
-    recoleccion: './src/pages/recoleccion/recoleccion.js'
+    login: './public/src/pages/login/login.js',
+    home: './public/src/pages/home/home.js',
+    informes: './public/src/pages/informes/informes.js',
+    recoleccion: './public/src/pages/recoleccion/recoleccion.js'
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'public/dist'),
     clean: true,
   },
   module: {

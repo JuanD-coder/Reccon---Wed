@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: 'Confortaa';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('./assets/fonts/Comfortaa-VariableFont_wght.ttf') format('truetype');
+    }
+
+    html {
+        font-family: 'Confortaa';
+    }
+}
+
+@layer components {
+    .card-characteristic {
+        @apply bg-red-50 hover:bg-red-100 rounded-lg shadow-md p-6 space-y-4 shadow-red-300 transition-shadow duration-300;
+    }
+
+    .card-version {
+        @apply rounded-lg shadow-lg p-6 transition-colors h-full flex flex-col justify-between;
+    }
+
+    .list-version {
+        @apply text-gray-600 mb-4 text-left;
+    }
+
+    .btn-custom {
+        @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 text-white;
+    }
+
+    .btn-about {
+        @apply text-white flex my-1.5 rounded-lg p-2;
+    }
+
+    .section-custom {
+        @apply container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 px-4 md:px-8 items-center;
+    }
+
+}

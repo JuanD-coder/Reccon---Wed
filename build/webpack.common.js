@@ -1,13 +1,15 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 
 const pages = [
     {
-        name: 'index', template: './src/pages/login/index.html',
-        entry: './src/pages/login/index.js', chunks: ['index']
+        name: 'index', template: './src/pages/index/index.html',
+        entry: './src/pages/index/index.js', chunks: ['index']
+    },
+    {
+        name: 'login', template: './src/pages/login/login.html',
+        entry: './src/pages/login/login.js', chunks: ['login']
     },
     {
         name: 'home', template: './src/pages/home/home.html',
@@ -31,7 +33,6 @@ const htmlPlugins = pages.map(page => {
         inject: 'body',
         minify: {
             removeComments: true,
-            /* collapseWhitespace: true, */
             removeAttributeQuotes: true,
             removeRedundantAttributes: true
         },
@@ -73,8 +74,6 @@ const config = {
         new MiniCssExtractPlugin({
             filename: 'css/[name].css',
         }),
-        new CleanWebpackPlugin(),
-        new WebpackManifestPlugin(),
     ],
     optimization: {
         splitChunks: {

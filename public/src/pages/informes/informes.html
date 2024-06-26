@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="../../styles/navegation-bar.css"> <!-- Estilos de barra de navegacion -->
+  <link rel="stylesheet" href="../../styles/reutilizables.css"> <!-- Card View y background -->
+  <link rel="stylesheet" href="../../styles/calendar.css"> <!-- Estilos del calendario -->
+  <link rel="stylesheet" href="./informes.css">
+  <title>Informes</title>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="logo"><a href="#">Bienvenido a RECCON </a></div>
+      <ul class="links">
+        <li><a href="../home/home.html">Inicio</a></li>
+        <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>
+      </ul>
+      <a href="#" class="singOut button" id="singOut"> <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a>
+      <div class="toggle-btn" id="toggle-btn">
+        <i class="fa-solid fa-bars" id="toggle-btn i"></i>
+      </div>
+    </nav>
+
+    <div class="dropdown-menu" id="dropdown-menu">
+      <li> </li>
+      <li><a href="../home/home.html">Inicio</a></li>
+      <li><a href="../recoleccion/recoleccion.html">Recoleción</a></li>
+      <li><a href="#" class="singOut button" id="singOut">Cerrar Sesión</a></li>
+    </div>
+  </header>
+
+  <main>
+    <div class="column-left center">
+      <!-- calendario -->
+      <div class="calendar ">
+        <div class="calendar-header">
+          <span class="month-picker" id="month-picker"> May </span>
+          <div class="year-picker" id="year-picker">
+            <span class="year-change" id="pre-year">
+              <pre> ← </pre>
+            </span>
+            <span id="year">2020 </span>
+            <span class="year-change" id="next-year">
+              <pre> → </pre>
+            </span>
+          </div>
+        </div>
+
+        <div class="calendar-body">
+          <div class="calendar-week-days">
+            <div>Dom</div>
+            <div>Lun</div>
+            <div>Mar</div>
+            <div>Mie</div>
+            <div>Jue</div>
+            <div>Vie</div>
+            <div>Sab</div>
+          </div>
+          <div class="calendar-days">
+            <!-- dias del mes -->
+          </div>
+        </div>
+        <div class="calendar-footer">
+        </div>
+        <div class="date-time-formate">
+          <div class="day-text-formate">TODAY</div>
+          <div class="date-time-value">
+            <div class="time-formate">02:51:20</div>
+            <div class="date-formate">23 - july - 2022</div>
+          </div>
+        </div>
+        <div class="month-list"> <!-- lista de los meses --> </div>
+      </div>
+    </div>
+
+    <div class="recolector-info center">
+      <div id="header" class="header-info-calendar">
+        <p id="recolectado">Total recolectado: Kg</p>
+        <p id="pagar">Total a pagar: $ </p>
+      </div>
+
+      <div class="select-recolector" id="select-recolector">
+        <div id="loadingMessage" style="display: block;">Cargando...</div>
+        <div class="card-info" id="card-info">
+          <img id="imgRecolection" src="../../assets/images/icons/ic_not_recolection.png" alt="recolector"
+            loading="lazy">
+          <p id="txtNotReclector">No se encontraron recolecciones para ese día</p>
+        </div>
+      </div>
+
+      <div id="titleRecolector"></div>
+      <div id="recolector-calendar" class="recolectors-day overflow"> <!-- Lista de recoleciones --> </div>
+    </div>
+
+    <div class="informes center">
+
+      <div class="generateInforme">
+        <img src="../../assets/images/icons/bebida-caliente-white.png" alt="Informe" width="105px" loading="lazy">
+        <div class="column-info center">
+          <span>Seleciones un tipo de informe</span>
+
+          <div class="dropdown">
+            <div class="dropdown-select">
+              <p class="select">Tipo informe</p>
+              <i class="fa-solid fa-angle-down"></i>
+            </div>
+            <div class="dropdown-list">
+              <p class="dropdown-list__item">Informe Semenal</p>
+              <p class="dropdown-list__item">Informe Mensual</p>
+              <p class="dropdown-list__item">Informe Anual</p>
+            </div>
+          </div>
+
+          <a href="#" class="button singOut" id="btn-informe">Generar Informe</a>
+        </div>
+      </div>
+
+      <!-- Pantalla de carga -->
+      <div id="loading-screen">
+        <div id="loading-message" class="center">
+          <div class="loading">
+            <div class="pelotas"></div>
+            <div class="pelotas"></div>
+            <div class="pelotas"></div>
+          </div>
+
+          <span class="texto-cargando"> <b>Generando Informe PDF ...</b> </span>
+        </div>
+      </div>
+
+      <h2>Informes generados</h2>
+      <div class="filter">
+        <span> Filtar Informe:</span>
+        <div class="column-info center">
+          <div class="dropdown">
+            <div class="dropdown-select">
+              <p class="select">Tipo informe</p>
+              <i class="fa-solid fa-angle-down"></i>
+            </div>
+            <div class="dropdown-list">
+              <p class="dropdown-list__item">Informe Semenal</p>
+              <p class="dropdown-list__item">Informe Mensual</p>
+              <p class="dropdown-list__item">Informe Anual</p>
+            </div>
+          </div>
+
+          <a href="#" class="button singOut" id="btn-filter"> <i class="fa-solid fa-filter"></i> Filtrar</a>
+        </div>
+      </div>
+
+      <div id="card-list-pdf" class="overflow"> <!-- Historial de PDF --> </div>
+
+    </div>
+  </main>
+
+  <script src="https://kit.fontawesome.com/7db13a2d0e.js" crossorigin="anonymous" defer></script>
+  <script async="async" src="../../components/calendar.js" type="module" defer></script>
+  <script async="async" src="../../../dist/informes.bundle.js" type="module" defer></script>
+
+</body>
+
+</html>

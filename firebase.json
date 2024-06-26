@@ -1,0 +1,32 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/",
+        "destination": "/src/pages/index/index.html"
+      },
+      {
+        "source": "/home",
+        "destination": "/src/pages/home/home.html"
+      },
+      {
+        "source": "/informes",
+        "destination": "/src/pages/informes/informes.html"
+      },
+      {
+        "source": "/login",
+        "destination": "/src/pages/login/login.html"
+      },
+      {
+        "source": "/recoleccion",
+        "destination": "/src/pages/recoleccion/recoleccion.html"
+      }
+    ]
+  }
+}

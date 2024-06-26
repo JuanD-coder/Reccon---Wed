@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./login.css">
+  <title>Reccon Wed</title>
+</head>
+
+<body>
+
+  <div class="container" id="container">
+    <div class="form-container sign-up">
+      <form>
+        <h1>Crear una Cuenta</h1> <br>
+        <span> ¡Gracias por unirte a nuestra comunidad de amantes del café! </span> <br>
+        
+        <input type="text" placeholder="Nombre" id="name" name="name" required>
+        <input type="email" placeholder="E-mail" required>
+        <div class="input-container">
+          <input type="password" id="password" name="password" placeholder="Contraseña" required>
+          <span class="toggle-password" data-target="password"><i class="fa-solid fa-eye"></i></span>
+        </div>
+
+        <button>Crear Cuenta</button>
+      </form>
+    </div>
+
+    <div class="form-container sign-in">
+      <form id="sigup-form">
+        <h1>Iniciar Sesión</h1>
+        <img src="../../assets/images/logo/reccon_LOGO.png" width="85px">
+        <span> <b>Recolección y Contabilidad</b> </span>
+
+        <div class="input-container">
+          <i class="fa-solid fa-envelope toggle-password"> </i>
+          <input type="email" id="sigup-email" placeholder="E-mail" required>
+        </div>
+
+        <div class="input-container">
+          <input type="password" id="password-sing-in" name="password-sing-in" placeholder="Contraseña" required>
+          <span class="toggle-password" data-target="password-sing-in"><i class="fa-solid fa-eye"></i></span>
+        </div>
+
+        <a id="error-message" style="color: red; display: none; margin: 1.5%;"></a>
+
+        <a href="#">¿ Olvidaste tu contraseña ?</a>
+        <button id="btn-login">Iniciar Sesión</button>
+      </form>
+    </div>
+
+    <!-- Mensajes del Login -->
+    <div class="toggle-container">
+      <div class="toggle">
+
+        <div class="toggle-panel toggle-left">
+          <h1> ¡Regístrate ahora! </h1>
+          <p> ¡Nos alegra muchísimo tenerte aquí!. Al unirte a nuestra comunidad, podrás gestionar tu lote cafetero de
+            manera eficiente y efectiva. Completa los campos a continuación para crear tu cuenta y descubre todas las
+            herramientas y recursos que tenemos para ofrecerte.</p>
+          <span> <b> ¿Ya tienes una cuenta? </b> </span>
+          <button class="hidden" id="login"> Iniciar Sesión </button>
+        </div>
+
+        <div class="toggle-panel toggle-right">
+          <h1>¡Bienvenido a Reccon Wed!</h1>
+          <p>"Supervisa la recolección de tus lotes cafeteros desde cualquier dispositivo en cualquier lugar.
+            Con nuestra plataforma, tendrás acceso a la gestión y seguimiento de la recolección de café,
+            permitiéndote estar al tanto de todo el proceso sin importar dónde te encuentres."</p>
+          <button class="hidden" id="register"> Acerca de nosotros </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://kit.fontawesome.com/7db13a2d0e.js" crossorigin="anonymous"></script>
+  <script src="../../../dist/login.bundle.js" type="module"></script>
+
+</body>
+
+</html>
